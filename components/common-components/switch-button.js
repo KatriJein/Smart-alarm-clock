@@ -1,6 +1,7 @@
 
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
+import { styles as switchButtonStyles } from '../list-screen-components/styles/switch-button-styles';
 
 export default function SwitchButton({onPress, initialColor, enabledColor, initialText, enabledText}) {
     const [isEnabled, setIsEnabled] = useState(false);
@@ -20,35 +21,11 @@ export default function SwitchButton({onPress, initialColor, enabledColor, initi
 
   return (
     <Pressable onPress={() => updateSwitchButton()}>
-        <View style={[styles.alarmSwitchButton, {backgroundColor, justifyContent: circlePos}]}>
-            <View style={styles.circle}>
-                <Text style={styles.circleText}>{circleText}</Text>
+        <View style={[switchButtonStyles.alarmSwitchButton, {backgroundColor, justifyContent: circlePos}]}>
+            <View style={switchButtonStyles.circle}>
+                <Text style={switchButtonStyles.circleText}>{circleText}</Text>
             </View>
         </View>
     </Pressable>
   )
 }
-
-const styles = StyleSheet.create({
-    alarmSwitchButton: {
-        width: 89,
-        height: 44,
-        borderRadius: 35,
-        marginRight: 15,
-        display: "flex",
-        flexDirection: "row"
-    },
-    circle: {
-        width: 36,
-        height: 36,
-        backgroundColor: "rgba(255, 255, 255, 1)",
-        borderRadius: 999,
-        margin: 4,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    circleText: {
-        fontSize: 25
-    }
-})

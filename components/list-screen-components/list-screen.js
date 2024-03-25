@@ -4,34 +4,23 @@ import { Platform } from 'react-native';
 import { PlatformConstants } from 'react-native';
 import AlarmsBar from './alarms-bar';
 import AlarmBlock from './alarm-block';
+import { styles as listScreenStyles } from './styles/list-screen-styles';
 
 export default function AlarmsListScreen() {
   return (
     <View style={commonStyles.container}>
       <AlarmsBar/>
-      <Text style={styles.pageTitle}>Будильники</Text>
-      <ScrollView style={styles.scrollView}>
+      <Text style={listScreenStyles.pageTitle}>Будильники</Text>
+      <ScrollView style={listScreenStyles.scrollView}>
           <AlarmBlock description={"На первую пару"} alarmTime={"6:30"} alarmDays={"Ср, Чт"}/>
-          <AlarmBlock description={"На первую пару"} alarmTime={"6:30"} alarmDays={"Ср, Чт"}/>
-          <AlarmBlock description={"На первую пару"} alarmTime={"6:30"} alarmDays={"Ср, Чт"}/>
-          <AlarmBlock description={"На первую пару"} alarmTime={"6:30"} alarmDays={"Ср, Чт"}/>
-          <AlarmBlock description={"На первую пару"} alarmTime={"6:30"} alarmDays={"Ср, Чт"}/>
-          <AlarmBlock description={"На первую пару"} alarmTime={"6:30"} alarmDays={"Ср, Чт"}/>
+          <AlarmBlock description={"Что"} alarmTime={"08:30"} alarmDays={"Ср, Чт"}/>
+          <AlarmBlock description={"Где"} alarmTime={"14:30"} alarmDays={"Всегда"}/>
+          <AlarmBlock description={"Когда"} alarmTime={"18:30"} alarmDays={"Вчера"}/>
+          <AlarmBlock description={"Ночь"} alarmTime={"06:30"} alarmDays={"..."}/>
+          <AlarmBlock description={"Утро"} alarmTime={"23:30"} alarmDays={"Ср, Чт"}/>
       </ScrollView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  scrollView: {
-    marginTop: 15,
-    width: "90%",
-    marginBottom: 15
-  },
-  pageTitle: {
-    marginTop: 15,
-    fontSize: 38
-  }
-})
 
 

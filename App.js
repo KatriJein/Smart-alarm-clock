@@ -8,8 +8,20 @@ import SettingsScreen from './components/settings-screen-components/settings-scr
 import StatisticsScreen from './components/statistics-screen-components/statistics-screen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StatusBarStyle } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AlarmPage from './components/alarm-settings-components/alarm-page';
 
 const Tab = createBottomTabNavigator();
+const AlarmsNavigationStack = createNativeStackNavigator();
+
+const AlarmsStack = () => {
+  return(
+  <AlarmsNavigationStack.Navigator>
+    <AlarmsNavigationStack.Screen name='AlarmList' component={AlarmsListScreen} options={{headerShown: false}}/>
+    <AlarmsNavigationStack.Screen name='AlarmSettings' component={AlarmPage} options={{headerShown: false}}/>
+  </AlarmsNavigationStack.Navigator>
+  )
+}
 
 export default function App() {
   return (
@@ -25,7 +37,7 @@ export default function App() {
           alignItems: 'center'
         }
       }}>
-        <Tab.Screen name='Alarms' component={AlarmsListScreen} options={{
+        <Tab.Screen name='Alarms' component={AlarmsStack} options={{
           tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
           headerShown: false
         }} />

@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
         width: "90%",
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "flex-end",
         verticalAlign: "middle"
     },
     pressable: {

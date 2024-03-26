@@ -15,7 +15,7 @@ export default function AlarmBlock({description, alarmTime, alarmDays}) {
     const navigation = useNavigation();
 
   return (
-    <Pressable style={alarmBlockStyles.pressArea} onPress={() => navigation.navigate("AlarmSettings")}>
+    <Pressable style={alarmBlockStyles.pressArea} onPress={() => navigation.navigate("AlarmSettings", {alarmTime})}>
         <View style={alarmBlockStyles.alarmBlock}>
             <View style={alarmBlockStyles.info}>
                 <Text style={alarmBlockStyles.description}>{description}</Text>

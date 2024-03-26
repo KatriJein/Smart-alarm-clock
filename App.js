@@ -7,13 +7,48 @@ import AlarmsListScreen from './components/list-screen-components/list-screen';
 import SettingsScreen from './components/settings-screen-components/settings-screen';
 import StatisticsScreen from './components/statistics-screen-components/statistics-screen';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StatusBarStyle } from 'react-native';
+import { useEffect, useState, useCallback } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
 
+
+SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync({
+          'montserrat-alt-medium': require('./assets/fonts/MontserratAlternates-Medium.ttf'),
+          'lato-medium': require('./assets/fonts/Lato-Medium.ttf'),
+          'lato-regular': require('./assets/fonts/Lato-Regular.ttf'),
+          'inter-regular': require('./assets/fonts/Inter-Regular.ttf'),
+          'kyiv-type': require('./assets/fonts/KyivTypeSans.ttf'),
+        });
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
   return (
-    <NavigationContainer>
+    <NavigationContainer onReady={onLayoutRootView}>
       <Tab.Navigator screenOptions={{
         tabBarShowLabel: false,
         tabBarActiveTintColor: '#FFFFFF',
@@ -42,7 +77,7 @@ export default function App() {
           headerShown: false
         }} />
       </Tab.Navigator>
-      <StatusBar style='light' backgroundColor="#F1B6CF"/>
+      <StatusBar style='light' backgroundColor="#F1B6CF" />
     </NavigationContainer>
   );
 }

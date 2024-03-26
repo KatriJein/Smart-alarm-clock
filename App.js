@@ -10,6 +10,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEffect, useState, useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 
 SplashScreen.preventAutoHideAsync();
@@ -48,45 +50,52 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer onReady={onLayoutRootView}>
-      <Tab.Navigator screenOptions={{
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: '#FFFFFF',
-        tabBarInactiveTintColor: '#000000',
-        tabBarStyle: {
-          backgroundColor: '#F1B6CF',
-          height: 60,
-          borderTopWidth: 0,
-          alignItems: 'center'
-        }
-      }}>
-        <Tab.Screen name='Alarms' component={AlarmsListScreen} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
-          headerShown: false
-        }} />
-        <Tab.Screen name='Calendar' component={CalendarScreen} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="calendar-clear-outline" size={41} color={color} />,
-          headerShown: false
-        }} />
-        <Tab.Screen name='Statistics' component={StatisticsScreen} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="stats-chart-outline" size={39} color={color} />,
-          headerShown: false
-        }} />
-        <Tab.Screen name='Settings' component={SettingsScreen} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={40} color={color} />,
-          headerShown: false
-        }} />
-      </Tab.Navigator>
-      <StatusBar style='light' backgroundColor="#F1B6CF" />
-    </NavigationContainer>
+      <NavigationContainer onReady={onLayoutRootView}>
+        <Tab.Navigator screenOptions={{
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: '#FB7DAC',
+          tabBarInactiveTintColor: '#711B3B',
+          tabBarStyle: {
+            backgroundColor: '#ffceec',
+            height: 60,
+            borderTopWidth: 0,
+            alignItems: 'center'
+          }
+        }}>
+          <Tab.Screen name='Alarms' component={AlarmsListScreen} options={{
+            tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
+            headerShown: false
+          }} />
+          <Tab.Screen name='Calendar' component={CalendarScreen} options={{
+            tabBarIcon: ({ color }) => <Ionicons name="calendar-clear-outline" size={41} color={color} />,
+            headerShown: false
+          }} />
+          <Tab.Screen name='Statistics' component={StatisticsScreen} options={{
+            tabBarIcon: ({ color }) => <Ionicons name="stats-chart-outline" size={39} color={color} />,
+            headerShown: false
+          }} />
+          <Tab.Screen name='Settings' component={SettingsScreen} options={{
+            tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={40} color={color} />,
+            headerShown: false
+          }} />
+        </Tab.Navigator>
+        <StatusBar style='light' backgroundColor="transparent" />
+      </NavigationContainer>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1
+  },
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 300,
+    width: '100%',
+    height: '100%',
   },
 });

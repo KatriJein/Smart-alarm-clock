@@ -3,7 +3,7 @@ import { View, Text, Pressable, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
 import { styles as switchButtonStyles } from '../list-screen-components/styles/switch-button-styles';
 
-export default function SwitchButton({onPress, initialColor, enabledColor, initialSign, enabledSign}) {
+export default function SwitchButton({onPress, initialColor, enabledColor, initialSign, enabledSign, width, height, circleSize}) {
     const [isEnabled, setIsEnabled] = useState(false);
     const [backgroundColor, setBackgroundColor] = useState(initialColor)
     const [circleText, setCircleText] = useState(initialSign);
@@ -21,8 +21,8 @@ export default function SwitchButton({onPress, initialColor, enabledColor, initi
 
   return (
     <Pressable onPress={() => updateSwitchButton()}>
-        <View style={[switchButtonStyles.alarmSwitchButton, {backgroundColor, justifyContent: circlePos}]}>
-            <View style={switchButtonStyles.circle}>
+        <View style={[switchButtonStyles.alarmSwitchButton, {backgroundColor, justifyContent: circlePos, width: width, height: height}]}>
+            <View style={[switchButtonStyles.circle, {width: circleSize, height: circleSize}]}>
                 <Image source={circleText}/>
             </View>
         </View>

@@ -4,9 +4,7 @@ import React, { useState } from 'react'
 import { settingOptionStyles } from '../styles/setting-option-styles';
 import nextArrow from "../../../assets/nextArrow.png"
 
-export default function SettingChoiceOption({optionTitle, availableOptions}) {
-
-    const [currentOption, setCurrentOption] = useState(availableOptions[0]);
+export default function SettingChoiceOption({optionTitle, currentOption, onChoiceStart, onChoiceFinish}) {
 
   return (
     <View style={settingOptionStyles.container}>

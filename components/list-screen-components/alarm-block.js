@@ -24,7 +24,7 @@ export default function AlarmBlock({description, alarmTime, alarmDays}) {
             </View>
             <View style={alarmBlockStyles.switchButton}>
                 <SwitchButton onPress={switchAlarmMode} initialColor={"rgba(201, 201, 201, 1)"} enabledColor={"rgba(224, 132, 171, 1)"}
-                initialSign={disabledOption} enabledSign={enabledOption}/>
+                initialSign={disabledOption} enabledSign={enabledOption} width={89} height={44} circleSize={36}/>
             </View>
         </View>
     </Pressable>

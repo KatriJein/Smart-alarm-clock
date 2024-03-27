@@ -32,7 +32,7 @@ export default function AlarmTitle({title, setTitle}) {
     <Pressable style={alarmTitleStyles.container}>
         <View style={alarmTitleStyles.titleView}>
             <TextInput onFocus={() => setIsOriginal(false)} onChangeText={(text) => onInputChange(text)} onEndEditing={() => endInput()}
-            style={alarmTitleStyles.title}>{title}</TextInput>
+            style={alarmTitleStyles.title} maxLength={15}>{title}</TextInput>
             <Image source={pencil} style={[alarmTitleStyles.pencilImage, {display: (pencilVisible ? "flex" : "none")}]}/>
         </View>
     </Pressable>

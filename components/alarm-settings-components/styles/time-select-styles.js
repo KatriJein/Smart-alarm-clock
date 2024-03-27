@@ -4,7 +4,6 @@ export const timeSelectStyles = StyleSheet.create({
     container: {
         marginTop: 30,
         width: 204,
-        height: 144,
         display: "flex",
         alignItems: "center"
     },

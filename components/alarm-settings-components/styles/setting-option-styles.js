@@ -8,10 +8,12 @@ export const settingOptionStyles = StyleSheet.create({
         justifyContent: "space-between"
     },
     optionName: {
-        fontSize: 24
+        fontSize: 24,
+        fontFamily: 'lato-regular'
     },
     optionChoice: {
         fontSize: 24,
+        fontFamily: 'lato-regular',
         marginRight: 10
     },
     choiceView: {

@@ -19,9 +19,11 @@ export const timeSelectStyles = StyleSheet.create({
     },
     otherTime: {
         fontSize: 36,
+        fontFamily: 'lato-regular',
         color: "rgba(98, 98, 98, 1)"
     },
     currentTime: {
-        fontSize: 48
+        fontSize: 48,
+        fontFamily: 'lato-regular'
     }
 })

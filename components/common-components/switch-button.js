@@ -1,7 +1,7 @@
 
 import { View, Text, Pressable, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
-import { styles as switchButtonStyles } from '../list-screen-components/styles/switch-button-styles';
+import { styles as switchButtonStyles } from './styles/switch-button-styles';
 
 export default function SwitchButton({onPress, initialColor, enabledColor, initialSign, enabledSign, width, height, circleSize}) {
     const [isEnabled, setIsEnabled] = useState(false);

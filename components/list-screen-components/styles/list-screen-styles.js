@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     },
     pageTitle: {
       marginTop: 15,
-      fontSize: 38
+      fontSize: 38,
+      fontFamily: "montserrat-alt-medium"
     }
   })

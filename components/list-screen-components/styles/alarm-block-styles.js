@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
     },
     description: {
         color: "rgba(110, 110, 110, 1)",
+        fontFamily: "lato-regular",
         marginLeft: 15,
         marginTop: 10,
         fontSize: 16
@@ -28,13 +29,15 @@ export const styles = StyleSheet.create({
     alarmTime: {
         fontSize: 38,
         marginLeft: 15,
-        marginTop: 2
+        marginTop: 2,
+        fontFamily: "lato-medium"
     },
     alarmDays: {
         color: "rgba(110, 110, 110, 1)",
         marginLeft: 15,
         marginTop: 2,
         fontSize: 18,
+        fontFamily: "lato-regular",
         marginBottom: 10
     }
 })

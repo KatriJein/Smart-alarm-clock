@@ -11,7 +11,8 @@ export const styles = StyleSheet.create({
     backText: {
         fontSize: 24,
         width: 75,
-        marginLeft: 7
+        marginLeft: 7,
+        fontFamily: "lato-regular"
     },
     backView: {
         display: "flex",

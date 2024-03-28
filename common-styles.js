@@ -6,7 +6,6 @@ const commonStyles = StyleSheet.create({
     container: {
         marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
         flex: 1,
-        backgroundColor: '#F1B6CF',
         alignItems: 'center',
         justifyContent: 'center',
     },

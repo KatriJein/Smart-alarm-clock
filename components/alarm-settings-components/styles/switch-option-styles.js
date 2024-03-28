@@ -9,6 +9,7 @@ export const switchOptionStyles = StyleSheet.create({
     },
     optionName: {
         marginLeft: 10,
-        fontSize: 24
+        fontSize: 24,
+        fontFamily: 'lato-regular'
     }
 })

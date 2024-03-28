@@ -13,6 +13,7 @@ export const alarmTitleStyles = StyleSheet.create({
     },
     title: {
         fontSize: 28,
+        fontFamily: 'montserrat-alt-medium'
     },
     titleView: {
         display: "flex",

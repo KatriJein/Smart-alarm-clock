@@ -1,12 +1,10 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { commonStyles } from '../../common-styles';
 import Calendar from './calendar';
-import CalendarList from 'react-native-calendars/src/calendar-list/new';
-import { Button } from 'react-native-web';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { STATUSBAR_HEIGHT } from '../../const';
 
-export default function CalendarScreen() {
+export default function CalendarScreen({ navigation }) {
   return (
     <LinearGradient
       style={{ flex: 1 }}
@@ -22,9 +20,11 @@ export default function CalendarScreen() {
             <Ionicons name="chevron-forward-outline" size={30} color="black" />
           </View>
         </View>
-        <View style={styles.calendar}><Calendar /></View>
+        <View style={styles.calendar}>
+          <Calendar navigation />
+        </View>
       </View>
-      </LinearGradient>
+    </LinearGradient>
 
   );
 }
@@ -32,16 +32,14 @@ export default function CalendarScreen() {
 const stylesHeader = StyleSheet.create({
   header: {
     width: '100%',
-    position: 'absolute',
-    bottom: 600,
-    top: 55,
+    height: '30%',
     alignItems: 'center',
   },
   title: {
     fontFamily: 'montserrat-alt-medium',
     fontSize: 38,
     justifyContent: 'center',
-    marginTop: 30
+    marginTop: '12%'
   },
   sleep: {
     flexDirection: 'row',
@@ -53,7 +51,7 @@ const stylesHeader = StyleSheet.create({
     paddingVertical: 2,
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 20
+    marginTop: '6%'
   },
   sleepText: {
     fontFamily: 'lato-medium',
@@ -67,9 +65,10 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
+    marginTop: STATUSBAR_HEIGHT
   },
   calendar: {
-    position: 'absolute',
-    bottom: 0
+    width: '100%',
+    height: '70%',
   }
 });

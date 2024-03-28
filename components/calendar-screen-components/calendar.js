@@ -2,7 +2,10 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { commonStyles } from '../../common-styles';
 import { LocaleConfig } from 'react-native-calendars';
 import { CalendarList } from 'react-native-calendars';
+import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
 import dayjs from 'dayjs';
+import { useNavigation } from '@react-navigation/native';
+
 
 LocaleConfig.locales['ru'] = {
     monthNames: [
@@ -28,16 +31,25 @@ LocaleConfig.locales['ru'] = {
 LocaleConfig.defaultLocale = 'ru';
 
 export default function Calendar() {
+    const navigation = useNavigation();
+
+    function onPressDay(date) {
+        navigation.navigate("Day details", { date })
+    }
+
+    function dayView({ date, state, marking }) {
+        return <TouchableOpacity onPress={() => onPressDay(date)} activeOpacity={0.6}>
+            <View style={stylesDay.container}>
+                <Text style={stylesDay.text}>{date.day}</Text>
+                <View style={!marking ? stylesDay.marked : ''} />
+            </View>
+        </TouchableOpacity>
+    }
+
     return (
         <CalendarList
-            style={{
-                height: 600,
-                width: '100%',
-                // borderTopWidth: 3,
-                // borderTopColor: '#911e42',
-            }}
+            style={styles.container}
             dayComponent={dayView}
-
             theme={{
                 calendarBackground: 'transparent',
                 'stylesheet.calendar.header': {
@@ -72,31 +84,25 @@ export default function Calendar() {
             scrollEnabled={true}
             showScrollIndicator={true}
             monthFormat={'MMMM, yyyy'}
-            maxDate={dayjs().format('YYYY-MM-DD')}
         />
     );
 }
 
-function dayView({ date, state, marking }) {
-    return <TouchableOpacity activeOpacity={0.8}><View style={stylesDay.container}>
-        <Text style={stylesDay.text}>{date.day}</Text>
-        <View style={!marking ? stylesDay.marked : ''} />
-    </View></TouchableOpacity>
-}
+
 
 const stylesDay = StyleSheet.create({
     marked: {
-        height: 11,
-        width: 46,
+        height: '22%',
+        width: '92%',
         backgroundColor: '#49569B',
-        borderBottomLeftRadius: 8,
-        borderBottomRightRadius: 8,
+        borderBottomLeftRadius: 9,
+        borderBottomRightRadius: 9,
         position: 'absolute',
-        top: 37
+        bottom: '3%'
     },
     container: {
-        width: 50,
-        height: 50,
+        width: vw(12),
+        height: vw(12),
         borderColor: '#fff',
         backgroundColor: '#fff',
         borderRadius: 10,
@@ -105,19 +111,14 @@ const stylesDay = StyleSheet.create({
     },
     text: {
         fontFamily: 'inter-regular',
-        fontSize: 20,
-        position: 'absolute',
-        top: 10
+        fontSize: Math.round(vw(5.5)),
     },
 });
 
 const styles = StyleSheet.create({
     container: {
-        width: 393,
-        height: 544,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
     },
     title: {
         fontFamily: 'montserrat-alt-medium',

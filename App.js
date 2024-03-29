@@ -7,7 +7,10 @@ import AlarmsListScreen from './components/list-screen-components/list-screen';
 import SettingsScreen from './components/settings-screen-components/settings-screen';
 import StatisticsScreen from './components/statistics-screen-components/statistics-screen';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useEffect, useState, useCallback } from 'react';
+import { StatusBarStyle } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AlarmPage from './components/alarm-settings-components/alarm-page';
+import { useCallback, useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -16,10 +19,22 @@ import DayDetails from './components/calendar-screen-components/day-details-comp
 
 
 
+
 SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
+const AlarmsNavigationStack = createNativeStackNavigator();
+
+const AlarmsStack = () => {
+  return(
+  <AlarmsNavigationStack.Navigator>
+    <AlarmsNavigationStack.Screen name='AlarmList' component={AlarmsListScreen} options={{headerShown: false}}/>
+    <AlarmsNavigationStack.Screen name='AlarmSettings' component={AlarmPage} options={{headerShown: false}}/>
+  </AlarmsNavigationStack.Navigator>
+  )
+}
 
 export default function App() {
+
   const [appIsReady, setAppIsReady] = useState(false);
   useEffect(() => {
     async function prepare() {
@@ -65,7 +80,7 @@ export default function App() {
           alignItems: 'center'
         }
       }}>
-        <Tab.Screen name='Alarms' component={AlarmsListScreen} options={{
+        <Tab.Screen name='Alarms' component={AlarmsStack} options={{
           tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
           headerShown: false
         }} />
@@ -102,5 +117,5 @@ const styles = StyleSheet.create({
     height: 300,
     width: '100%',
     height: '100%',
-  },
+  }
 });

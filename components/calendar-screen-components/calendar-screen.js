@@ -1,16 +1,12 @@
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Calendar from './calendar';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { STATUSBAR_HEIGHT } from '../../const';
+import Gradient from '../Gradient';
 
-export default function CalendarScreen({ navigation }) {
+export default function CalendarScreen() {
   return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      colors={['rgba(250, 208, 196, 1)', 'rgba(251, 194, 235, 1)']}
-      start={{ x: 1, y: 0 }}
-      end={{ x: 0, y: 1 }}>
+    <Gradient>
       <View style={styles.container}>
         <View style={stylesHeader.header}>
           <Text style={stylesHeader.title}>Трекер</Text>
@@ -21,10 +17,10 @@ export default function CalendarScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.calendar}>
-          <Calendar navigation />
+          <Calendar />
         </View>
       </View>
-    </LinearGradient>
+    </Gradient>
 
   );
 }

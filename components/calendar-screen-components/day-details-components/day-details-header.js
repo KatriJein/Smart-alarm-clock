@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { NAME_OF_MONTHS } from '../../../const';
-import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
+import { vw } from 'react-native-expo-viewport-units';
 
 
 export default function DayDetailsHeader(props) {

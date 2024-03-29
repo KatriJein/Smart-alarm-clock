@@ -1,14 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
+import { vw } from 'react-native-expo-viewport-units';
 
 
 export default function OptionsList(props) {
-    // const data = {
-    //     title: 'Качество сна',
-    //     options: ['крепкий', 'прерывистый', 'плохой', 'крепкий', 'что-то ещё']
-    // };
     const { data } = props;
-    console.log(data);
 
     function listItem({ text, index }) {
         return (<TouchableOpacity key={index}>

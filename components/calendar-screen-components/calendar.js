@@ -1,9 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { commonStyles } from '../../common-styles';
 import { LocaleConfig } from 'react-native-calendars';
 import { CalendarList } from 'react-native-calendars';
-import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
-import dayjs from 'dayjs';
+import { vw} from 'react-native-expo-viewport-units';
 import { useNavigation } from '@react-navigation/native';
 
 

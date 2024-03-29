@@ -1,27 +1,54 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { commonStyles } from '../../common-styles';
-import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import SettingsList from './settings-list';
+import { STATUSBAR_HEIGHT } from '../../const';
+import { vw } from 'react-native-expo-viewport-units';
+import Gradient from '../Gradient';
+
+const userImg = require('../../assets/user-img.png');
 
 export default function SettingsScreen() {
   return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      colors={['rgba(250, 208, 196, 1)', 'rgba(251, 194, 235, 1)']}
-      start={{ x: 1, y: 0 }}
-      end={{ x: 0, y: 1 }}>
-      <View style={commonStyles.container}>
-        <Text>Экран для настроек</Text>
+    <Gradient>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={[styles.text, styles.title]}>Настройки</Text>
+        </View>
+        <View style={styles.user}>
+          <Image source={userImg}></Image>
+          <Text style={[styles.text, styles.desc]}>Имя</Text>
+        </View>
+        <SettingsList />
       </View>
-    </LinearGradient>
-
+    </Gradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: STATUSBAR_HEIGHT,
   },
+  user: {
+    width: '100%',
+    height: '20%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  header: {
+    width: '100%',
+    height: '15%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    fontFamily: 'montserrat-alt-medium',
+    color: '#000'
+  },
+  title: {
+    fontSize: 38
+  },
+  desc: {
+    fontSize: Math.round(vw(6.5)),
+    marginTop: '1%'
+  }
 });

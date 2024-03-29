@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CalendarScreen from './components/calendar-screen-components/calendar-screen';
@@ -13,6 +13,12 @@ import AlarmPage from './components/alarm-settings-components/alarm-page';
 import { useCallback, useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { LinearGradient } from 'expo-linear-gradient';
+import CalendarStack from './components/calendar-screen-components/calendar-navigations';
+import DayDetails from './components/calendar-screen-components/day-details-components/day-details';
+
+
+
 
 SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
@@ -38,7 +44,7 @@ export default function App() {
           'lato-medium': require('./assets/fonts/Lato-Medium.ttf'),
           'lato-regular': require('./assets/fonts/Lato-Regular.ttf'),
           'inter-regular': require('./assets/fonts/Inter-Regular.ttf'),
-          'kyiv-type': require('./assets/fonts/KyivTypeSans.ttf'),
+          'kyiv-type': require('./assets/fonts/KyivTypeSans-Regular.ttf'),
         });
       } catch (e) {
         console.warn(e);
@@ -61,7 +67,8 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer onReady={onLayoutRootView}>
+    <SafeAreaView style={styles.container}>
+      <NavigationContainer onReady={onLayoutRootView}>
       <Tab.Navigator screenOptions={{
         tabBarShowLabel: false,
         tabBarActiveTintColor: '#FB7DAC',
@@ -77,7 +84,7 @@ export default function App() {
           tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
           headerShown: false
         }} />
-        <Tab.Screen name='Calendar' component={CalendarScreen} options={{
+        <Tab.Screen name='Calendar' component={CalendarStack} options={{
           tabBarIcon: ({ color }) => <Ionicons name="calendar-clear-outline" size={41} color={color} />,
           headerShown: false
         }} />
@@ -90,14 +97,17 @@ export default function App() {
           headerShown: false
         }} />
       </Tab.Navigator>
-      <StatusBar style='light' backgroundColor="#F1B6CF"/>
+      <StatusBar style='light' backgroundColor="transparent" />
     </NavigationContainer>
+    </SafeAreaView>
+
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   background: {
     position: 'absolute',

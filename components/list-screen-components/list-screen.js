@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AlarmPage from '../alarm-settings-components/alarm-page';
 import { LinearGradient } from "expo-linear-gradient"
 
+
 export default function AlarmsListScreen({navigation}) {
   return (
     <LinearGradient
@@ -33,4 +34,8 @@ export default function AlarmsListScreen({navigation}) {
   );
 }
 
-
+const styles = StyleSheet.create({
+  background: {
+    flex: 1
+  }
+})

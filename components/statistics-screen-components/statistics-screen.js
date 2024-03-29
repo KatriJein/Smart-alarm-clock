@@ -8,6 +8,7 @@ import { dataObject, fillDataObject, updateLabels, updateSleepChartData, updateS
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 
+
 export default function StatisticsScreen() {
 
   const periods = useRef(['За неделю', 'За месяц', 'За год']);

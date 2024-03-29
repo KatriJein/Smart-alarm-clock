@@ -9,7 +9,7 @@ export default function DayDetailsOptions() {
     return (
         <ScrollView style={styles.container}>
             <OptionsInput />
-            {OPTIONS_LIST.map((item) => <OptionsList data={item} />)}
+            {OPTIONS_LIST.map((item, index) => <OptionsList data={item} key={index} />)}
         </ScrollView>
     );
 }

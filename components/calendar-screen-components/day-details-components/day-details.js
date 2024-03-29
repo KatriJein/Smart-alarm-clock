@@ -6,9 +6,9 @@ import Gradient from '../../Gradient';
 
 
 export default function DayDetails({ route }) {
-      const { date } = route.params;
+    const { date } = route.params;
     return (
-        <Gradient>
+        <Gradient key={date.dateString}>
             <View style={styles.container}>
                 <DayDetailsHeader date={date} />
                 <DayDetailsOptions />

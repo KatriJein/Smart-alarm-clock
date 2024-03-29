@@ -5,7 +5,7 @@ import { SETTINGS } from '../../const';
 export default function SettingsList() {
     return (
         <ScrollView style={styles.container}>
-            {SETTINGS.map((item) => <SettingsListItem data={item} />)}
+            {SETTINGS.map((item) => <SettingsListItem key={item.title} data={item} />)}
         </ScrollView>
     );
 }

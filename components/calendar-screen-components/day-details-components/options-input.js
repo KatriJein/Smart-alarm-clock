@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 export default function OptionsInput() {
     const [hours, setHours] = useState('');
-    console.log(hours);
     return (
         <View style={styles.container}>
             <Text style={[styles.text, styles.title]}>Часов сна</Text>

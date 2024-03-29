@@ -3,6 +3,7 @@ import { LocaleConfig } from 'react-native-calendars';
 import { CalendarList } from 'react-native-calendars';
 import { vw} from 'react-native-expo-viewport-units';
 import { useNavigation } from '@react-navigation/native';
+import dayjs from 'dayjs';
 
 
 LocaleConfig.locales['ru'] = {
@@ -79,8 +80,8 @@ export default function Calendar() {
                 }
             }}
             firstDay={1}
-            scrollEnabled={true}
-            showScrollIndicator={true}
+            // scrollEnabled={true}
+            // showScrollIndicator={true}
             monthFormat={'MMMM, yyyy'}
         />
     );

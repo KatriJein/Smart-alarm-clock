@@ -3,7 +3,7 @@ import { vw } from 'react-native-expo-viewport-units';
 
 export default function SettingsListItem({ data }) {
     return (
-        <View key={data.text} style={styles.container}>
+        <View style={styles.container}>
             <Text style={[styles.text, styles.title]}>{data.title}</Text>
             <Text style={[styles.text, styles.desc]}>{data.info}</Text>
         </View>

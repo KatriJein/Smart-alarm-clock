@@ -5,8 +5,8 @@ import { vw } from 'react-native-expo-viewport-units';
 export default function OptionsList(props) {
     const { data } = props;
 
-    function listItem({ text, index }) {
-        return (<TouchableOpacity key={index}>
+    function listItem({ text }) {
+        return (<TouchableOpacity key={text} >
             <View style={[styles.listItem]}>
                 <Text style={[styles.description, styles.text]}>{text}</Text>
             </View>
@@ -16,7 +16,7 @@ export default function OptionsList(props) {
     return (
         <View key={data.title} style={styles.container}>
             <Text style={[styles.text, styles.title]}>{data.title}</Text>
-            <View style={styles.containerList}>{data.options.map((text, index) => listItem({ text, index }))}</View>
+            <View style={styles.containerList}>{data.options.map((text) => listItem({ text }))}</View>
         </View>
     );
 }

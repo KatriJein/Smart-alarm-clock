@@ -31,7 +31,6 @@
     "react-redux": "^9.1.0",
     "react-native-calendars": "^1.1304.1",
     "react-native-expo-viewport-units": "^0.0.8"
-    "react-native-web": "~0.19.6",
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

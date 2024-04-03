@@ -3,11 +3,11 @@ import { vw } from 'react-native-expo-viewport-units';
 
 
 export default function OptionsList(props) {
-    const { data } = props;
+    const { data, selectedOption, onSelect } = props;
 
     function listItem({ text }) {
-        return (<TouchableOpacity key={text} >
-            <View style={[styles.listItem]}>
+        return (<TouchableOpacity onPress={() => onSelect(text)} key={text} >
+            <View style={[styles.listItem, text === selectedOption ? styles.listItemChecked : null]}>
                 <Text style={[styles.description, styles.text]}>{text}</Text>
             </View>
         </TouchableOpacity>);

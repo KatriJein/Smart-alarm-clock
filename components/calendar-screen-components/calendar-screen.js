@@ -4,7 +4,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { STATUSBAR_HEIGHT } from '../../const';
 import Gradient from '../Gradient';
 
-export default function CalendarScreen() {
+export default function CalendarScreen({route}) {
+ 
+  const { date, change } = route.params;
+
   return (
     <Gradient>
       <View style={styles.container}>
@@ -17,7 +20,7 @@ export default function CalendarScreen() {
           </View>
         </View>
         <View style={styles.calendar}>
-          <Calendar />
+          <Calendar date={date} change={change} />
         </View>
       </View>
     </Gradient>

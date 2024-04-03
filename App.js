@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CalendarScreen from './components/calendar-screen-components/calendar-screen';
 import AlarmsListScreen from './components/list-screen-components/list-screen';
 import SettingsScreen from './components/settings-screen-components/settings-screen';
 import StatisticsScreen from './components/statistics-screen-components/statistics-screen';
@@ -10,11 +9,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEffect, useState, useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { LinearGradient } from 'expo-linear-gradient';
 import CalendarStack from './components/calendar-screen-components/calendar-navigations';
-import DayDetails from './components/calendar-screen-components/day-details-components/day-details';
-
-
+import { store } from './store/store.js'
+import { Provider } from 'react-redux'
 
 SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
@@ -52,41 +49,41 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <NavigationContainer onReady={onLayoutRootView}>
-      <Tab.Navigator screenOptions={{
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: '#FB7DAC',
-        tabBarInactiveTintColor: '#711B3B',
-        tabBarStyle: {
-          backgroundColor: '#ffceec',
-          height: 60,
-          borderTopWidth: 0,
-          alignItems: 'center'
-        }
-      }}>
-        <Tab.Screen name='Alarms' component={AlarmsListScreen} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
-          headerShown: false
-        }} />
-        <Tab.Screen name='Calendar' component={CalendarStack} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="calendar-clear-outline" size={41} color={color} />,
-          headerShown: false
-        }} />
-        <Tab.Screen name='Statistics' component={StatisticsScreen} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="stats-chart-outline" size={39} color={color} />,
-          headerShown: false
-        }} />
-        <Tab.Screen name='Settings' component={SettingsScreen} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={40} color={color} />,
-          headerShown: false
-        }} />
-      </Tab.Navigator>
-      <StatusBar style='light' backgroundColor="transparent" />
-    </NavigationContainer>
-    </SafeAreaView>
-
-
+    <Provider store={store}>
+      <SafeAreaView style={styles.container}>
+        <NavigationContainer onReady={onLayoutRootView}>
+          <Tab.Navigator screenOptions={{
+            tabBarShowLabel: false,
+            tabBarActiveTintColor: '#FB7DAC',
+            tabBarInactiveTintColor: '#711B3B',
+            tabBarStyle: {
+              backgroundColor: '#ffceec',
+              height: 60,
+              borderTopWidth: 0,
+              alignItems: 'center'
+            }
+          }}>
+            <Tab.Screen name='Alarms' component={AlarmsListScreen} options={{
+              tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
+              headerShown: false
+            }} />
+            <Tab.Screen name='Calendar' component={CalendarStack} initialParams={{ date: '2024-03-24', change: false }} options={{
+              tabBarIcon: ({ color }) => <Ionicons name="calendar-clear-outline" size={41} color={color} />,
+              headerShown: false
+            }} />
+            <Tab.Screen name='Statistics' component={StatisticsScreen} options={{
+              tabBarIcon: ({ color }) => <Ionicons name="stats-chart-outline" size={39} color={color} />,
+              headerShown: false
+            }} />
+            <Tab.Screen name='Settings' component={SettingsScreen} options={{
+              tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={40} color={color} />,
+              headerShown: false
+            }} />
+          </Tab.Navigator>
+          <StatusBar style='light' backgroundColor="transparent" />
+        </NavigationContainer>
+      </SafeAreaView>
+    </Provider>
   );
 }
 

@@ -4,11 +4,12 @@ import DayDetails from './day-details-components/day-details';
 
 const Stack = createNativeStackNavigator();
 
-export default function CalendarStack() {
+export default function CalendarStack({ route }) {
+  const { date, change } = route.params;
   return (
     <Stack.Navigator>
-      <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Day details" component={DayDetails} options={{ headerShown: false }}/>
+      <Stack.Screen name="CalendarScreen" initialParams={{date, change}} component={CalendarScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Day details" component={DayDetails} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

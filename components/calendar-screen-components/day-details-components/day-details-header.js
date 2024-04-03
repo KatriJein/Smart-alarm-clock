@@ -6,16 +6,17 @@ import { useNavigation } from '@react-navigation/native';
 
 
 export default function DayDetailsHeader(props) {
-    const { date } = props;
+    const { date, onClick, change } = props;
     const navigation = useNavigation();
 
     function onPressBack() {
-        navigation.navigate("CalendarScreen");
+        onClick();
+        navigation.navigate("CalendarScreen", { change, date: date.dateString });
     };
 
     return (
         <View style={styles.header}>
-            <ButtonBack onBackPress={onPressBack}/>
+            <ButtonBack onBackPress={onPressBack} />
             <Text style={[styles.text, styles.text1]}>{date.day} {NAME_OF_MONTHS[date.month]}</Text>
             <Text style={[styles.text, styles.text2]}>{date.year}</Text>
         </View>

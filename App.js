@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaView, StyleSheet, Text, Vibration, View } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CalendarScreen from './components/calendar-screen-components/calendar-screen';
 import AlarmsListScreen from './components/list-screen-components/list-screen';
@@ -16,9 +16,19 @@ import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import CalendarStack from './components/calendar-screen-components/calendar-navigations';
 import DayDetails from './components/calendar-screen-components/day-details-components/day-details';
+import * as Notifications from "expo-notifications"
+import * as TaskManager from "expo-task-manager"
+import { Audio } from 'expo-av';
+import { startSound, cancelSound } from './components/AlarmSound';
 
 
-
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
@@ -34,7 +44,6 @@ const AlarmsStack = () => {
 }
 
 export default function App() {
-
   const [appIsReady, setAppIsReady] = useState(false);
   useEffect(() => {
     async function prepare() {
@@ -54,6 +63,14 @@ export default function App() {
     }
 
     prepare();
+    Notifications.addNotificationReceivedListener(async notification => {
+
+      await startSound();
+    });
+    Notifications.addNotificationResponseReceivedListener(async notification => {
+      Notifications.dismissNotificationAsync(notification.notification.request.identifier);
+      await cancelSound();
+    });
   }, []);
 
   const onLayoutRootView = useCallback(async () => {

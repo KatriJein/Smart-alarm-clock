@@ -20,6 +20,9 @@ import * as Notifications from "expo-notifications"
 import * as TaskManager from "expo-task-manager"
 import { Audio } from 'expo-av';
 import { startSound, cancelSound } from './components/AlarmSound';
+import RingPage from './components/alarm-ringing-components/ring-page/ring-page';
+import CardsPuzzle from './components/alarm-ringing-components/puzzle-cards/cards-puzzle';
+import { updateNotification, getNotificationId } from './components/CurrentNotification';
 
 
 Notifications.setNotificationHandler({
@@ -33,6 +36,7 @@ Notifications.setNotificationHandler({
 SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
 const AlarmsNavigationStack = createNativeStackNavigator();
+const RingNavigationStack = createNativeStackNavigator();
 
 const AlarmsStack = () => {
   return(
@@ -43,8 +47,18 @@ const AlarmsStack = () => {
   )
 }
 
+const RingStack = () => {
+  return(
+    <RingNavigationStack.Navigator>
+      <RingNavigationStack.Screen name='RingPage' component={RingPage} options={{headerShown: false}}/>
+      <RingNavigationStack.Screen name='CardsPuzzle' component={CardsPuzzle} options={{headerShown: false}}/>
+    </RingNavigationStack.Navigator>
+    )
+}
+
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
+  const [isRinging, setIsRinging] = useState(false);
   useEffect(() => {
     async function prepare() {
       try {
@@ -64,12 +78,27 @@ export default function App() {
 
     prepare();
     Notifications.addNotificationReceivedListener(async notification => {
+      let action = notification.request.content.data.action;
+      if (action === "ring" && getNotificationId() === "") {
+        setIsRinging(true);
+        updateNotification(notification.request.identifier);
+        await startSound();
+      }
+      if (action === "stop") {
+        await Notifications.dismissNotificationAsync(getNotificationId());
+        updateNotification("");
+        setIsRinging(false);
+        await cancelSound();
+      }
 
-      await startSound();
     });
-    Notifications.addNotificationResponseReceivedListener(async notification => {
-      Notifications.dismissNotificationAsync(notification.notification.request.identifier);
-      await cancelSound();
+    Notifications.addNotificationResponseReceivedListener(async response => {
+      let action = response.notification.request.content.data.action;
+      if (action === "ring" && getNotificationId() === "") {
+        setIsRinging(true);
+        updateNotification(response.notification.request.identifier);
+        await startSound();
+      }
     });
   }, []);
 
@@ -97,6 +126,8 @@ export default function App() {
           alignItems: 'center'
         }
       }}>
+        {!isRinging
+        ? <>
         <Tab.Screen name='Alarms' component={AlarmsStack} options={{
           tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
           headerShown: false
@@ -113,6 +144,13 @@ export default function App() {
           tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={40} color={color} />,
           headerShown: false
         }} />
+        </>
+        :
+        <Tab.Screen name='Ring' component={RingStack} options={{
+          tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={40} color={color} />,
+          headerShown: false
+        }} />
+        }
       </Tab.Navigator>
       <StatusBar style='light' backgroundColor="transparent" />
     </NavigationContainer>

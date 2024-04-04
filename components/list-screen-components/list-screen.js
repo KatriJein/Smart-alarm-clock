@@ -22,9 +22,9 @@ export default function AlarmsListScreen({navigation}) {
         <AlarmsBar/>
         <Text style={listScreenStyles.pageTitle}>Будильники</Text>
         <ScrollView style={listScreenStyles.scrollView}>
-            <AlarmBlock description={"На первую пару"} alarmTime={"6:30"} alarmDays={"Ср, Чт"}/>
-            <AlarmBlock description={"Что"} alarmTime={"08:08"} alarmDays={"Ср, Чт"}/>
-            <AlarmBlock description={"Где"} alarmTime={"14:30"} alarmDays={"Всегда"}/>
+            <AlarmBlock description={"На первую пару"} alarmTime={"16:26"} alarmDays={"Ср, Чт"}/>
+            <AlarmBlock description={"Что"} alarmTime={"16:27"} alarmDays={"Ср, Чт"}/>
+            <AlarmBlock description={"Где"} alarmTime={"16:35"} alarmDays={"Всегда"}/>
             <AlarmBlock description={"Когда"} alarmTime={"18:30"} alarmDays={"Вчера"}/>
             <AlarmBlock description={"Ночь"} alarmTime={"06:30"} alarmDays={"..."}/>
             <AlarmBlock description={"Утро"} alarmTime={"23:30"} alarmDays={"Ср, Чт"}/>

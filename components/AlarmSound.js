@@ -2,7 +2,8 @@ import { Audio } from "expo-av";
 import rain from "../assets/sounds/rain.mp3"
 import { Vibration } from "react-native";
 
-const sound = new Audio.Sound()
+const sound = new Audio.Sound();
+let songMelody = null;
 let isVibration = false;
 let vibrationPattern = [];
 
@@ -24,21 +25,18 @@ const chooseSong = (fileName) => {
 }
 
 export const updateSound = async (fileName, doVibrate, pattern) => {
-    if (sound._loaded) {
-        await cancelSound();
-    }
+    await cancelSound();
     isVibration = doVibrate;
     vibrationPattern = pattern;
     const song = chooseSong(fileName);
-    await sound.loadAsync(song);
-    await sound.setIsLoopingAsync(true);
+    songMelody = song;
 }
 
 export const startSound = async () => {
     if (isVibration) {
         Vibration.vibrate(vibrationPattern, true);
     }
-    if (sound._loaded) {
+    await sound.loadAsync(songMelody);
+    await sound.setIsLoopingAsync(true)
     await sound.playAsync();
-    }
 }

@@ -18,11 +18,13 @@ import CalendarStack from './components/calendar-screen-components/calendar-navi
 import DayDetails from './components/calendar-screen-components/day-details-components/day-details';
 import * as Notifications from "expo-notifications"
 import * as TaskManager from "expo-task-manager"
-import { Audio } from 'expo-av';
+import { Audio, InterruptionModeAndroid } from 'expo-av';
 import { startSound, cancelSound } from './components/AlarmSound';
 import RingPage from './components/alarm-ringing-components/ring-page/ring-page';
 import CardsPuzzle from './components/alarm-ringing-components/puzzle-cards/cards-puzzle';
 import { updateNotification, getNotificationId } from './components/CurrentNotification';
+import { ActionRing, ActionStop } from './components/Constants';
+import { RingStack } from './components/alarm-ringing-components/navigations/RingStack';
 
 
 Notifications.setNotificationHandler({
@@ -36,7 +38,6 @@ Notifications.setNotificationHandler({
 SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
 const AlarmsNavigationStack = createNativeStackNavigator();
-const RingNavigationStack = createNativeStackNavigator();
 
 const AlarmsStack = () => {
   return(
@@ -47,16 +48,14 @@ const AlarmsStack = () => {
   )
 }
 
-const RingStack = () => {
-  return(
-    <RingNavigationStack.Navigator>
-      <RingNavigationStack.Screen name='RingPage' component={RingPage} options={{headerShown: false}}/>
-      <RingNavigationStack.Screen name='CardsPuzzle' component={CardsPuzzle} options={{headerShown: false}}/>
-    </RingNavigationStack.Navigator>
-    )
-}
-
 export default function App() {
+
+  const startAlarm = async (notification) => {
+    setIsRinging(true);
+    updateNotification(notification.request.identifier);
+    await startSound();
+  }
+
   const [appIsReady, setAppIsReady] = useState(false);
   const [isRinging, setIsRinging] = useState(false);
   useEffect(() => {
@@ -69,6 +68,11 @@ export default function App() {
           'inter-regular': require('./assets/fonts/Inter-Regular.ttf'),
           'kyiv-type': require('./assets/fonts/KyivTypeSans-Regular.ttf'),
         });
+        await Audio.setAudioModeAsync({
+          staysActiveInBackground: true,
+          shouldDuckAndroid: true,
+          interruptionModeAndroid: InterruptionModeAndroid.DuckOthers
+      })
       } catch (e) {
         console.warn(e);
       } finally {
@@ -77,14 +81,12 @@ export default function App() {
     }
 
     prepare();
-    Notifications.addNotificationReceivedListener(async notification => {
+    const foregroundSubscription = Notifications.addNotificationReceivedListener(async notification => {
       let action = notification.request.content.data.action;
-      if (action === "ring" && getNotificationId() === "") {
-        setIsRinging(true);
-        updateNotification(notification.request.identifier);
-        await startSound();
+      if (action === ActionRing && getNotificationId() === "") {
+        await startAlarm(notification);
       }
-      if (action === "stop") {
+      if (action === ActionStop) {
         await Notifications.dismissNotificationAsync(getNotificationId());
         updateNotification("");
         setIsRinging(false);
@@ -92,14 +94,17 @@ export default function App() {
       }
 
     });
-    Notifications.addNotificationResponseReceivedListener(async response => {
+    const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(async response => {
       let action = response.notification.request.content.data.action;
-      if (action === "ring" && getNotificationId() === "") {
-        setIsRinging(true);
-        updateNotification(response.notification.request.identifier);
-        await startSound();
+      if (action === ActionRing && getNotificationId() === "") {
+        await startAlarm(response.notification);
       }
     });
+
+    return () => {
+      foregroundSubscription.remove();
+      backgroundSubscription.remove();
+    }
   }, []);
 
   const onLayoutRootView = useCallback(async () => {

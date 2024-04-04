@@ -4,19 +4,12 @@ import React, { useEffect } from 'react'
 import { commonStyles } from '../../../common-styles'
 import Gradient from '../../Gradient'
 import * as Notifications from "expo-notifications"
+import { stopAlarm } from '../../common-functions/CommonFunctions'
 
 export default function RingPage({navigation}) {
 
     const stopRinging = async () => {
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: "Будильник остановлен!",
-                data: {
-                    action: "stop"
-                }
-            },
-            trigger: null
-        })
+        await stopAlarm();
     }
 
   return (

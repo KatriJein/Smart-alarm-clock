@@ -1,4 +1,4 @@
-import { Audio } from "expo-av";
+import { Audio, InterruptionModeAndroid } from "expo-av";
 import rain from "../assets/sounds/rain.mp3"
 import { Vibration } from "react-native";
 

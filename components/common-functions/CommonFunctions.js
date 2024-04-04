@@ -1,4 +1,5 @@
-
+import * as Notifications from "expo-notifications"
+import { ActionRing, ActionStop } from "../Constants";
 
 const calculateDaysDelta = (isLateForToday, currentDay, alarmDays) => {
     for (let day of alarmDays) {
@@ -26,4 +27,34 @@ export const CalculateSecondsToRing = (time, alarmDays) => {
     const nextTime = new Date(temp.setDate(temp.getDate() + daysDelta));
     nextTime.setHours(alarmHour, alarmMinute, 0, 0);
     return Math.ceil((nextTime - currentTime) / 1000);
+}
+
+export const scheduleAlarm = async (title, description, seconds) => {
+    const res = await Notifications.scheduleNotificationAsync({
+        content: {
+            autoDismiss: false,
+            sticky: true,
+            title,
+            body: description,
+            data: {
+                action: ActionRing
+            }
+        },
+        trigger: {
+            seconds: 2
+        }
+    })
+    return res;
+}
+
+export const stopAlarm = async () => {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: "Будильник остановлен!",
+            data: {
+                action: ActionStop
+            }
+        },
+        trigger: null
+    })
 }

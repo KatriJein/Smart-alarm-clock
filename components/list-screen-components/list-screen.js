@@ -11,6 +11,7 @@ import AlarmPage from '../alarm-settings-components/alarm-page';
 import { LinearGradient } from "expo-linear-gradient"
 
 
+
 export default function AlarmsListScreen({navigation}) {
   return (
     <LinearGradient
@@ -24,7 +25,7 @@ export default function AlarmsListScreen({navigation}) {
         <ScrollView style={listScreenStyles.scrollView}>
             <AlarmBlock description={"На первую пару"} alarmTime={"16:26"} alarmDays={"Ср, Чт"}/>
             <AlarmBlock description={"Что"} alarmTime={"16:27"} alarmDays={"Ср, Чт"}/>
-            <AlarmBlock description={"Где"} alarmTime={"16:35"} alarmDays={"Всегда"}/>
+            <AlarmBlock description={"Где"} alarmTime={"20:08"} alarmDays={"Всегда"}/>
             <AlarmBlock description={"Когда"} alarmTime={"18:30"} alarmDays={"Вчера"}/>
             <AlarmBlock description={"Ночь"} alarmTime={"06:30"} alarmDays={"..."}/>
             <AlarmBlock description={"Утро"} alarmTime={"23:30"} alarmDays={"Ср, Чт"}/>

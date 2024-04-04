@@ -11,7 +11,7 @@ import * as Notifications from "expo-notifications"
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import { updateSound } from '../AlarmSound';
-import { CalculateSecondsToRing } from '../common-functions/CommonFunctions';
+import { CalculateSecondsToRing, scheduleAlarm } from '../common-functions/CommonFunctions';
 
 
 
@@ -21,20 +21,7 @@ export default function AlarmBlock({description, alarmTime, alarmDays}) {
         if (hasBeenEnabled) {
             let seconds = CalculateSecondsToRing(alarmTime, [4]);
             await updateSound("rain.mp3", true, [3000, 4000, 3000, 4000]);
-            const res = await Notifications.scheduleNotificationAsync({
-                content:{
-                    autoDismiss: false,
-                    sticky: true,
-                    title: "Тебе пора на первую пару!",
-                    body: "Просыпайся!",
-                    data: {
-                        action: "ring"
-                    }
-                },
-                trigger: {
-                    seconds
-                }
-            });
+            const res = await scheduleAlarm(description, description, seconds);
             };
     }
     const navigation = useNavigation();

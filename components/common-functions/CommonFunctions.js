@@ -41,7 +41,7 @@ export const scheduleAlarm = async (title, description, seconds) => {
             }
         },
         trigger: {
-            seconds: 2
+            seconds
         }
     })
     return res;

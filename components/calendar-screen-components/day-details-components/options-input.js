@@ -1,18 +1,16 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { vw } from 'react-native-expo-viewport-units';
-import { useState } from 'react';
 
-
-export default function OptionsInput() {
-    const [hours, setHours] = useState('');
+export default function OptionsInput(props) {
+    const { selectedOption, onSelect } = props;
     return (
         <View style={styles.container}>
             <Text style={[styles.text, styles.title]}>Часов сна</Text>
             <TextInput
                 placeholder='8'
                 style={[styles.text, styles.input]}
-                keyboardType='numeric' value={hours}
-                onChangeText={setHours}>
+                keyboardType='numeric' value={selectedOption}
+                onChangeText={onSelect}>
             </TextInput>
         </View>
     );

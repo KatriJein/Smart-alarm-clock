@@ -1,9 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LocaleConfig } from 'react-native-calendars';
 import { CalendarList } from 'react-native-calendars';
-import { vw} from 'react-native-expo-viewport-units';
+import { vw } from 'react-native-expo-viewport-units';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
+import { useEffect, useMemo, useState } from 'react';
 
 
 LocaleConfig.locales['ru'] = {
@@ -28,19 +30,44 @@ LocaleConfig.locales['ru'] = {
 };
 
 LocaleConfig.defaultLocale = 'ru';
+function getMarkedDays(days) {
+    const marked = {};
+    Object.keys(days).forEach(item => {
+        marked[item] = { marked: true }
+    })
+    return marked;
+};
 
-export default function Calendar() {
+
+export default function Calendar(props) {
+    const { date, change } = props;
     const navigation = useNavigation();
+    const markedDays = useSelector(state => state.calendar.dailyStats);
+    const [markedDates, setMarkedDates] = useState({});
+
+    useEffect(() => {
+        setMarkedDates(getMarkedDays(markedDays));
+    }, []);
+
+    useEffect(() => {
+        if (change) {
+            setMarkedDates(prev => ({
+                ...prev,
+                [date]: { marked: true }
+            }));
+        }
+
+    }, [date, change]);
 
     function onPressDay(date) {
-        navigation.navigate("Day details", { date })
+        navigation.navigate("Day details", { date });
     }
 
     function dayView({ date, state, marking }) {
         return <TouchableOpacity onPress={() => onPressDay(date)} activeOpacity={0.6}>
             <View style={stylesDay.container}>
                 <Text style={stylesDay.text}>{date.day}</Text>
-                <View style={!marking ? stylesDay.marked : ''} />
+                <View style={marking ? stylesDay.marked : ''} />
             </View>
         </TouchableOpacity>
     }
@@ -49,6 +76,7 @@ export default function Calendar() {
         <CalendarList
             style={styles.container}
             dayComponent={dayView}
+            markedDates={markedDates}
             theme={{
                 calendarBackground: 'transparent',
                 'stylesheet.calendar.header': {

@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, Vibration, View } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CalendarScreen from './components/calendar-screen-components/calendar-screen';
 import AlarmsListScreen from './components/list-screen-components/list-screen';
 import SettingsScreen from './components/settings-screen-components/settings-screen';
 import StatisticsScreen from './components/statistics-screen-components/statistics-screen';
@@ -13,8 +12,9 @@ import AlarmPage from './components/alarm-settings-components/alarm-page';
 import { useCallback, useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { LinearGradient } from 'expo-linear-gradient';
 import CalendarStack from './components/calendar-screen-components/calendar-navigations';
+import { store } from './store/store.js'
+import { Provider } from 'react-redux'
 import DayDetails from './components/calendar-screen-components/day-details-components/day-details';
 import * as Notifications from "expo-notifications"
 import * as TaskManager from "expo-task-manager"
@@ -118,6 +118,7 @@ export default function App() {
   }
 
   return (
+    <Provider store={store}>
     <SafeAreaView style={styles.container}>
       <NavigationContainer onReady={onLayoutRootView}>
       <Tab.Navigator screenOptions={{
@@ -160,8 +161,7 @@ export default function App() {
       <StatusBar style='light' backgroundColor="transparent" />
     </NavigationContainer>
     </SafeAreaView>
-
-
+    </Provider>
   );
 }
 

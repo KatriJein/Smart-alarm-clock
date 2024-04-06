@@ -19,9 +19,9 @@ export default function AlarmBlock(props) {
     const { alarm } = props;
     const switchAlarmMode = async (hasBeenEnabled) => {
         if (hasBeenEnabled) {
-            let seconds = CalculateSecondsToRing("14:30", [4]);
-            await updateSound("rain.mp3", true, [3000, 4000, 3000, 4000]);
-            const res = await scheduleAlarm("xd", "xd", seconds);
+            let seconds = CalculateSecondsToRing(alarm.time, alarm.days);
+            await updateSound("rain.mp3", alarm.useVibration, [3000, 4000, 3000, 4000]);
+            const res = await scheduleAlarm(alarm.name, alarm.description, seconds);
             };
     }
     const navigation = useNavigation();
@@ -36,7 +36,7 @@ export default function AlarmBlock(props) {
                 </View>
                 <View style={alarmBlockStyles.switchButton}>
                     <SwitchButton onPress={switchAlarmMode} initialColor={"rgba(201, 201, 201, 1)"} enabledColor={"rgba(224, 132, 171, 1)"}
-                        initialSign={disabledOption} enabledSign={enabledOption} width={89} height={44} circleSize={36} />
+                        initialSign={disabledOption} enabledSign={enabledOption} width={89} height={44} circleSize={36} isEnabled={false}/>
                 </View>
             </View>
         </Pressable>

@@ -5,12 +5,12 @@ import initialSign from "../../../assets/littleDisabledOption.png"
 import enabledSign from "../../../assets/littleEnabledOption.png"
 import { switchOptionStyles } from '../styles/switch-option-styles'
 
-export default function SwitchOption({optionName, onPress}) {
+export default function SwitchOption({optionName, onPress, isEnabled}) {
   return (
     <View style={switchOptionStyles.container}>
       <Text style={switchOptionStyles.optionName}>{optionName}:</Text>
       <SwitchButton style={styles.switch} initialSign={initialSign} enabledSign={enabledSign} width={65} height={32} circleSize={24}
-      initialColor='rgba(180, 180, 180, 1)' enabledColor='rgba(237, 156, 190, 1)' onPress={onPress}/>
+      initialColor='rgba(180, 180, 180, 1)' enabledColor='rgba(237, 156, 190, 1)' onPress={onPress} isEnabled={isEnabled}/>
     </View>
   )
 }

@@ -7,7 +7,7 @@ const calculateDaysDelta = (isLateForToday, currentDay, alarmDays) => {
         if (day > currentDay) return day - currentDay;
     }
     if (currentDay == alarmDays[0]) return 7;
-    return currentDay + alarmDays[0] - 1;
+    return 6 - currentDay  + alarmDays[0] + 1;
 }
 
 const isLateForToday = (currentHour, currentMinute, alarmHour, alarmMinute) => {

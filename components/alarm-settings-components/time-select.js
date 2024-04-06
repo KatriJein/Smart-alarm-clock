@@ -12,7 +12,7 @@ export default function TimeSelect(props) {
     const [previousMinute, setPreviousMinute] = useState();
     const [currentMinute, setCurrentMinute] = useState();
     const [nextMinute, setNextMinute] = useState();
-    const sensitivity = useRef(0.01);
+    const sensitivity = useRef(20);
 
 
     const parseTime = (time) => {
@@ -65,7 +65,7 @@ export default function TimeSelect(props) {
             hour = Number(getNextHour(currentHour));
             setCurrentHour(prev => hour);
           }
-          onChange(`${parseTime(currentHour)}:${parseTime(currentMinute)}`);
+          onChange(`${parseTime(hour)}:${parseTime(currentMinute)}`);
         //   setTime(`${currentHour}:${currentMinute}`);
         },
       });
@@ -74,16 +74,16 @@ export default function TimeSelect(props) {
         onStartShouldSetPanResponder: () => true,
         onPanResponderMove: (evt, gestureState) => {
           const { dy } = gestureState;
-          let hour;
+          let minute;
           if (dy > sensitivity.current) {
-            hour = Number(getPreviousMinute(currentMinute));
-            setCurrentMinute(prev => hour);
+            minute = Number(getPreviousMinute(currentMinute));
+            setCurrentMinute(prev => minute);
           } else if (dy < -sensitivity.current) {
-            hour = Number(getNextMinute(currentMinute));
-            setCurrentMinute(prev => hour);
+            minute = Number(getNextMinute(currentMinute));
+            setCurrentMinute(prev => minute);
           } 
         //   setTime(`${currentHour}:${currentMinute}`);
-          onChange(`${parseTime(currentHour)}:${parseTime(currentMinute)}`);
+          onChange(`${parseTime(currentHour)}:${parseTime(minute)}`);
         },
       });
 

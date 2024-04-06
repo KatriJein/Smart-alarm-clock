@@ -3,7 +3,8 @@ import { View, Text, PanResponder } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { timeSelectStyles } from './styles/time-select-styles'
 
-export default function TimeSelect({timeString, setTime}) {
+export default function TimeSelect(props) {
+    const {timeString, onChange} = props;
 
     const [previousHour, setPreviousHour] = useState();
     const [currentHour, setCurrentHour] = useState();
@@ -56,12 +57,16 @@ export default function TimeSelect({timeString, setTime}) {
         onStartShouldSetPanResponder: () => true,
         onPanResponderMove: (evt, gestureState) => {
           const { dy } = gestureState;
+          let hour;
           if (dy > sensitivity.current) {
-            setCurrentHour(prev => Number(getPreviousHour(currentHour)));
+            hour = Number(getPreviousHour(currentHour));
+            setCurrentHour(prev => hour);
           } else if (dy < -sensitivity.current) {
-            setCurrentHour(prev => Number(getNextHour(currentHour)));
+            hour = Number(getNextHour(currentHour));
+            setCurrentHour(prev => hour);
           }
-          setTime(`${currentHour}:${currentMinute}`);
+          onChange(`${parseTime(currentHour)}:${parseTime(currentMinute)}`);
+        //   setTime(`${currentHour}:${currentMinute}`);
         },
       });
 
@@ -69,12 +74,16 @@ export default function TimeSelect({timeString, setTime}) {
         onStartShouldSetPanResponder: () => true,
         onPanResponderMove: (evt, gestureState) => {
           const { dy } = gestureState;
+          let hour;
           if (dy > sensitivity.current) {
-            setCurrentMinute(prev => Number(getPreviousMinute(currentMinute)));
+            hour = Number(getPreviousMinute(currentMinute));
+            setCurrentMinute(prev => hour);
           } else if (dy < -sensitivity.current) {
-            setCurrentMinute(prev => Number(getNextMinute(currentMinute)));
+            hour = Number(getNextMinute(currentMinute));
+            setCurrentMinute(prev => hour);
           } 
-          setTime(`${currentHour}:${currentMinute}`);
+        //   setTime(`${currentHour}:${currentMinute}`);
+          onChange(`${parseTime(currentHour)}:${parseTime(currentMinute)}`);
         },
       });
 

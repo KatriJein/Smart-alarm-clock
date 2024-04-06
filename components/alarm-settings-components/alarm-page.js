@@ -1,59 +1,86 @@
 
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import React, { createContext, useState } from 'react'
-import { commonStyles } from '../../common-styles'
-import { useRoute } from '@react-navigation/native'
-import AlarmBar from './alarm-bar'
-import AlarmTitle from './alarm-title'
-import TimeSelect from './time-select'
-import AlarmSettings from './alarm-settings'
-import {LinearGradient} from "expo-linear-gradient"
-import { optionsContext } from './contexts/OptionsContext'
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { createContext, useState } from 'react';
+import { commonStyles } from '../../common-styles';
+import AlarmTitle from './alarm-title';
+import TimeSelect from './time-select';
+import AlarmSettings from './alarm-settings';
+import ButtonBack from '../button-back';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { addAlarm } from '../../store/alarmReducer';
+import Gradient from '../Gradient';
+import dayjs from 'dayjs';
 
-export default function AlarmPage() {
+const defaultState = {
+  id: String(Date.now()),
+  name: 'Будильник',
+  time: dayjs().format('HH:mm'),
+  sound: '',
+  volume: 50,
+  interval: 5,
+  puzzle: 'Пароль',
+  description: 'Вставай на 1 пару',
+  useVibration: true,
+  neighbourOption: true,
+  days: [],
+  notificationId: 5
+};
 
-  const route = useRoute();
-  const { alarmTime } = route.params;
-  const [alarmName, setAlarmName] = useState("Название");
-  const [time, setTime] = useState(alarmTime);
-  const [soundOption, setSoundOption] = useState("");
-  const [volume, setVolume] = useState(50);
-  const [intervalOption, setIntervalOption] = useState("");
-  const [daysOption, setDaysOption] = useState("");
-  const [puzzleOption, setPuzzleOption] = useState("");
-  const [alarmDescription, setAlarmDescription] = useState("");
-  const [useVibration, setUseVibration] = useState(false);
-  const [useNeighbourNotWakeUpOption, setUseNeighbourNotWakeUpOption] = useState(false);
+export default function AlarmPage({ route }) {
+  const { alarm } = route.params;
+  const [currentAlarm, setcurrentAlarm] = useState(alarm || defaultState);
+  const navigation = useNavigation();
+  const dispatch = useDispatch()
 
-  const SettingsContext = optionsContext;
+  function changeOption(option, value) {
+    setcurrentAlarm(prev => ({
+      ...prev,
+      [option]: value
+    }));
+  };
+
+  function onPressBackButton() {
+    dispatch(addAlarm(currentAlarm));
+    navigation.navigate('AlarmsList');
+  }
+
+
+
+  // const route = useRoute();
+  // const { alarmTime } = route.params;
+  // const [alarmName, setAlarmName] = useState("Название");
+  // const [time, setTime] = useState('15:30');
+  // const [soundOption, setSoundOption] = useState("");
+  // const [volume, setVolume] = useState(50);
+  // const [intervalOption, setIntervalOption] = useState("");
+  // const [daysOption, setDaysOption] = useState("");
+  // const [puzzleOption, setPuzzleOption] = useState("");
+  // const [alarmDescription, setAlarmDescription] = useState("");
+  // const [useVibration, setUseVibration] = useState(false);
+  // const [useNeighbourNotWakeUpOption, setUseNeighbourNotWakeUpOption] = useState(false);
+
+  // const SettingsContext = optionsContext;
 
   return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      colors={['rgba(250, 208, 196, 1)', 'rgba(251, 194, 235, 1)']}
-      start={{ x: 1, y: 0 }}
-      end={{ x: 0, y: 1 }}>
+    <Gradient>
       <View style={[commonStyles.container, additionalStyles.container]}>
-        <AlarmBar/>
-        <AlarmTitle title={alarmName} setTitle={setAlarmName}/>
-        <TimeSelect timeString={time} setTime={setTime}/>
-        <ScrollView contentContainerStyle={{alignItems: "center"}} style={additionalStyles.scrollStyle}>
-          <SettingsContext.Provider value={{sound: soundOption, interval: intervalOption, day: daysOption, puzzle: puzzleOption,
-          alarmDescription: alarmDescription, useVibration: useVibration, neighbourOption: useNeighbourNotWakeUpOption, volume: volume,
-          setSound: setSoundOption, setInterval: setIntervalOption, setDays: setDaysOption, setPuzzle: setPuzzleOption, setVolume: setVolume,
-          setAlarmDescription: setAlarmDescription, setVibration: setUseVibration, setNeighbourOption: setUseNeighbourNotWakeUpOption}}>
-            <AlarmSettings/>
-          </SettingsContext.Provider>
+        <ButtonBack onBackPress={() => onPressBackButton()} />
+        <AlarmTitle title={currentAlarm.name} changeOption={(value) => changeOption('name', value)} />
+        <TimeSelect timeString={currentAlarm.time} onChange={(value) => changeOption('time', value)}/>
+        <ScrollView contentContainerStyle={{ alignItems: "center" }} style={additionalStyles.scrollStyle}>
+          <AlarmSettings currentAlarm={currentAlarm} changeOption={changeOption} />
         </ScrollView>
       </View>
-    </LinearGradient>
+    </Gradient>
   )
 }
 
 const additionalStyles = StyleSheet.create({
   container: {
     justifyContent: "flex-start",
-    alignItems: "center"
+    alignItems: "center",
+    paddingTop: 35
   },
   scrollStyle: {
     width: "100%",

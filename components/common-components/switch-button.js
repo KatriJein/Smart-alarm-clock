@@ -3,7 +3,8 @@ import { View, Text, Pressable, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
 import { styles as switchButtonStyles } from './styles/switch-button-styles';
 
-export default function SwitchButton({onPress, initialColor, enabledColor, initialSign, enabledSign, width, height, circleSize}) {
+export default function SwitchButton(props) {
+    const {onPress, initialColor, enabledColor, initialSign, enabledSign, width, height, circleSize} = props;
     const [isEnabled, setIsEnabled] = useState(false);
     const [backgroundColor, setBackgroundColor] = useState(initialColor)
     const [circleText, setCircleText] = useState(initialSign);

@@ -69,7 +69,7 @@ export default function AlarmSettings(props) {
       </View>
       <HorizontalLine />
       <View style={alarmSettingsStyles.optionContainer}>
-        <SwitchOption optionName="Вибрация" onPress={(isEnabled) => changeOption('useVibration', isEnabled)} />
+        <SwitchOption optionName="Вибрация" onPress={(isEnabled) => changeOption('useVibration', isEnabled)} isEnabled={currentAlarm.useVibration}/>
       </View>
       <HorizontalLine />
       <View style={alarmSettingsStyles.optionContainer}>
@@ -85,7 +85,7 @@ export default function AlarmSettings(props) {
       </View>
       <HorizontalLine />
       <View style={alarmSettingsStyles.optionContainer}>
-        <SwitchOption optionName="Не будить соседа" onPress={(isEnabled) => changeOption('neighbourOption', isEnabled)} />
+        <SwitchOption optionName="Не будить соседа" onPress={(isEnabled) => changeOption('neighbourOption', isEnabled)} isEnabled={currentAlarm.neighbourOption}/>
       </View>
     </ScrollView>
   )

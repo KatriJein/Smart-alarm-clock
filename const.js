@@ -18,22 +18,47 @@ const NAME_OF_MONTHS = {
     12: 'декабря',
 };
 
+const NAME_OF_DAY_OF_WEEK = {
+    0: 'Вс',
+    1: 'Пн',
+    2: 'Вт',
+    3: 'Ср',
+    4: 'Чт',
+    5: 'Пт',
+    6: 'Сб',
+};
+
+function humanizeListOfDays(arr) {
+    let string = '';
+    arr.forEach(item => {
+        string = string + NAME_OF_DAY_OF_WEEK[item] + ' ';
+    });
+    return string.trim();
+};
+
 const OPTIONS_LIST = [{
+    id: 'quality',
     title: 'Качество сна',
     options: ['крепкий', 'прерывистый', 'плохой']
 }, {
+    id: 'mood',
     title: 'Настроение при пробуждении',
     options: ['бодрое', 'вялое', 'тревожное']
 }, {
+    id: 'activity',
     title: 'Занятие перед сном',
     options: ['работа/ учеба', 'просмотр видео', 'чтение', 'медитация', 'теплая ванна']
 }, {
+    id: 'dayMood',
     title: 'Настроение во время дня',
     options: ['стресс', 'радость', 'усталость']
 }, {
+    id: 'factors',
     title: 'Факторы влияющие на сон',
     options: ['алкоголь', 'поздний прием пищи', 'кофе', 'таблетка снотворного', 'болезнь']
 }];
+
+const PUZZLES = ['Математический пример', 'Пароль', 'Карточки', 'Текст'];
 
 const SETTINGS = [{ title: 'Почта:', info: 'example@gmail.com' },
 { title: 'Номер телефона:', info: '+7 922 999-99-99' },
@@ -41,4 +66,4 @@ const SETTINGS = [{ title: 'Почта:', info: 'example@gmail.com' },
 { title: 'Разрешить уведомления:', info: 'да' }];
 
 
-export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS };
+export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, humanizeListOfDays, NAME_OF_DAY_OF_WEEK, PUZZLES };

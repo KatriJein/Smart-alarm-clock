@@ -1,15 +1,25 @@
 import { ScrollView, StyleSheet } from 'react-native';
-import { vw} from 'react-native-expo-viewport-units';
+import { vw } from 'react-native-expo-viewport-units';
 import OptionsList from './options-list';
 import OptionsInput from './options-input';
 import { OPTIONS_LIST } from '../../../const';
+import { useState } from 'react';
 
 
-export default function DayDetailsOptions() {
+export default function DayDetailsOptions(props) {
+    const { selectedOptions, handleOptionSelect } = props;
     return (
         <ScrollView style={styles.container}>
-            <OptionsInput />
-            {OPTIONS_LIST.map((item, index) => <OptionsList data={item} key={index} />)}
+            <OptionsInput
+                selectedOption={selectedOptions['hours']}
+                onSelect={(option) => handleOptionSelect('hours', option)} />
+
+            {OPTIONS_LIST.map((item) => <OptionsList
+                selectedOption={selectedOptions[item.id]}
+                onSelect={(option) => handleOptionSelect(item.id, option)}
+                data={item}
+                key={item.id} />)}
+
         </ScrollView>
     );
 }

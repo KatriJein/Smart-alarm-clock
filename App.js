@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, Vibration, View } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CalendarScreen from './components/calendar-screen-components/calendar-screen';
 import AlarmsListScreen from './components/list-screen-components/list-screen';
 import SettingsScreen from './components/settings-screen-components/settings-screen';
 import StatisticsScreen from './components/statistics-screen-components/statistics-screen';
@@ -13,7 +12,6 @@ import AlarmPage from './components/alarm-settings-components/alarm-page';
 import { useCallback, useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { LinearGradient } from 'expo-linear-gradient';
 import CalendarStack from './components/calendar-screen-components/calendar-navigations';
 import DayDetails from './components/calendar-screen-components/day-details-components/day-details';
 import * as Notifications from "expo-notifications"
@@ -25,6 +23,9 @@ import CardsPuzzle from './components/alarm-ringing-components/puzzle-cards/card
 import { updateNotification, getNotificationId } from './components/CurrentNotification';
 import { ActionRing, ActionStop } from './components/Constants';
 import { RingStack } from './components/alarm-ringing-components/navigations/RingStack';
+import { store } from './store/store.js';
+import { Provider } from 'react-redux';
+import AlarmsStack from './components/list-screen-components/alarms-navigation.js';
 
 
 Notifications.setNotificationHandler({
@@ -35,18 +36,19 @@ Notifications.setNotificationHandler({
   }),
 });
 
+
 SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
-const AlarmsNavigationStack = createNativeStackNavigator();
+// const AlarmsNavigationStack = createNativeStackNavigator();
 
-const AlarmsStack = () => {
-  return(
-  <AlarmsNavigationStack.Navigator>
-    <AlarmsNavigationStack.Screen name='AlarmList' component={AlarmsListScreen} options={{headerShown: false}}/>
-    <AlarmsNavigationStack.Screen name='AlarmSettings' component={AlarmPage} options={{headerShown: false}}/>
-  </AlarmsNavigationStack.Navigator>
-  )
-}
+// const AlarmsStack = () => {
+//   return(
+//   <AlarmsNavigationStack.Navigator>
+//     <AlarmsNavigationStack.Screen name='AlarmList' component={AlarmsListScreen} options={{headerShown: false}}/>
+//     <AlarmsNavigationStack.Screen name='AlarmSettings' component={AlarmPage} options={{headerShown: false}}/>
+//   </AlarmsNavigationStack.Navigator>
+//   )
+// }
 
 export default function App() {
 
@@ -118,50 +120,50 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <NavigationContainer onReady={onLayoutRootView}>
-      <Tab.Navigator screenOptions={{
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: '#FB7DAC',
-        tabBarInactiveTintColor: '#711B3B',
-        tabBarStyle: {
-          backgroundColor: '#ffceec',
-          height: 60,
-          borderTopWidth: 0,
-          alignItems: 'center'
-        }
-      }}>
-        {!isRinging
-        ? <>
-        <Tab.Screen name='Alarms' component={AlarmsStack} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
-          headerShown: false
-        }} />
-        <Tab.Screen name='Calendar' component={CalendarStack} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="calendar-clear-outline" size={41} color={color} />,
-          headerShown: false
-        }} />
-        <Tab.Screen name='Statistics' component={StatisticsScreen} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="stats-chart-outline" size={39} color={color} />,
-          headerShown: false
-        }} />
-        <Tab.Screen name='Settings' component={SettingsScreen} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={40} color={color} />,
-          headerShown: false
-        }} />
-        </>
-        :
-        <Tab.Screen name='Ring' component={RingStack} options={{
-          tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={40} color={color} />,
-          headerShown: false
-        }} />
-        }
-      </Tab.Navigator>
-      <StatusBar style='light' backgroundColor="transparent" />
-    </NavigationContainer>
-    </SafeAreaView>
-
-
+    <Provider store={store}>
+      <SafeAreaView style={styles.container}>
+        <NavigationContainer onReady={onLayoutRootView}>
+        <Tab.Navigator screenOptions={{
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: '#FB7DAC',
+          tabBarInactiveTintColor: '#711B3B',
+          tabBarStyle: {
+            backgroundColor: '#ffceec',
+            height: 60,
+            borderTopWidth: 0,
+            alignItems: 'center'
+          }
+        }}>
+          {!isRinging
+          ? <>
+          <Tab.Screen name='Alarms' component={AlarmsStack} options={{
+            tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
+            headerShown: false
+          }} />
+          <Tab.Screen name='Calendar' component={CalendarStack} options={{
+            tabBarIcon: ({ color }) => <Ionicons name="calendar-clear-outline" size={41} color={color} />,
+            headerShown: false
+          }} />
+          <Tab.Screen name='Statistics' component={StatisticsScreen} options={{
+            tabBarIcon: ({ color }) => <Ionicons name="stats-chart-outline" size={39} color={color} />,
+            headerShown: false
+          }} />
+          <Tab.Screen name='Settings' component={SettingsScreen} options={{
+            tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={40} color={color} />,
+            headerShown: false
+          }} />
+          </>
+          :
+          <Tab.Screen name='Ring' component={RingStack} options={{
+            tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={40} color={color} />,
+            headerShown: false
+          }} />
+          }
+        </Tab.Navigator>
+        <StatusBar style='light' backgroundColor="transparent" />
+      </NavigationContainer>
+      </SafeAreaView>
+    </Provider>
   );
 }
 

@@ -8,10 +8,14 @@ import AlarmSettings from './alarm-settings';
 import ButtonBack from '../button-back';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { addAlarm } from '../../store/alarmReducer';
+import { addAlarm, updateNotificationId } from '../../store/alarmReducer';
 import Gradient from '../Gradient';
 import dayjs from 'dayjs';
 import { createId } from '../../const';
+import * as Notifications from "expo-notifications"
+import { CalculateSecondsToRing } from '../common-functions/CommonFunctions';
+import { updateSound } from '../AlarmSound';
+import { scheduleAlarm } from '../common-functions/CommonFunctions';
 
 export default function AlarmPage({ route }) {
   const defaultState = {
@@ -22,11 +26,12 @@ export default function AlarmPage({ route }) {
     volume: 50,
     interval: 5,
     puzzle: 'Пароль',
+    isEnabled: false,
     description: 'Вставай на 1 пару',
     useVibration: true,
     neighbourOption: true,
     days: [],
-    notificationId: 5
+    notificationId: ""
   };
   
   const { alarm } = route.params;
@@ -41,8 +46,17 @@ export default function AlarmPage({ route }) {
     }));
   };
 
-  function onPressBackButton() {
+  async function onPressBackButton() {
     dispatch(addAlarm(currentAlarm));
+    if (!currentAlarm.notificationId !== "") {
+      Notifications.cancelScheduledNotificationAsync(currentAlarm.notificationId);
+    }
+    if (currentAlarm.isEnabled) {
+      let seconds = CalculateSecondsToRing(currentAlarm.time, currentAlarm.days);
+      await updateSound("rain.mp3", currentAlarm.useVibration, [3000, 4000, 3000, 4000]);
+      const res = await scheduleAlarm(currentAlarm.name, currentAlarm.description, seconds);
+      dispatch(updateNotificationId({alarmId: currentAlarm.id, notificationId: res}));
+    }
     navigation.navigate('AlarmsList');
   }
 
@@ -66,7 +80,7 @@ export default function AlarmPage({ route }) {
   return (
     <Gradient>
       <View style={[commonStyles.container, additionalStyles.container]}>
-        <ButtonBack onBackPress={() => onPressBackButton()} />
+        <ButtonBack onBackPress={async () => onPressBackButton()} />
         <AlarmTitle title={currentAlarm.name} changeOption={(value) => changeOption('name', value)} />
         <TimeSelect timeString={currentAlarm.time} onChange={(value) => changeOption('time', value)}/>
         <ScrollView contentContainerStyle={{ alignItems: "center" }} style={additionalStyles.scrollStyle}>

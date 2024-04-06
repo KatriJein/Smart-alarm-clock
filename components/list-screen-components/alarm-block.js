@@ -1,19 +1,31 @@
 
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Vibration } from 'react-native'
+import React, { useRef } from 'react'
+import { View, Text, StyleSheet, Pressable, Vibration } from 'react-native';
 import React, { useRef } from 'react';
 import SwitchButton from '../common-components/switch-button';
 import { styles as alarmBlockStyles } from './styles/alarm-block-styles';
 import enabledOption from "../../assets/enabledOption.png";
 import disabledOption from "../../assets/disabledOption.png";
 import { useNavigation } from '@react-navigation/native';
+import { Audio } from "expo-av"
+import * as Notifications from "expo-notifications"
+import * as BackgroundFetch from 'expo-background-fetch';
+import * as TaskManager from 'expo-task-manager';
+import { updateSound } from '../AlarmSound';
+import { CalculateSecondsToRing, scheduleAlarm } from '../common-functions/CommonFunctions';
 import { humanizeListOfDays } from '../../const';
+
 
 export default function AlarmBlock(props) {
     const { alarm } = props;
-
-    const switchAlarmMode = (hasBeenEnabled) => {
-    };
-
+    const switchAlarmMode = async (hasBeenEnabled) => {
+        if (hasBeenEnabled) {
+            let seconds = CalculateSecondsToRing("14:30", [4]);
+            await updateSound("rain.mp3", true, [3000, 4000, 3000, 4000]);
+            const res = await scheduleAlarm("xd", "xd", seconds);
+            };
+    }
     const navigation = useNavigation();
 
     return (

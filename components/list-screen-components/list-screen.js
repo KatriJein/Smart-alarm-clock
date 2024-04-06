@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import Gradient from '../Gradient';
 
 
+
 export default function AlarmsListScreen({navigation}) {
   const alarmsList = useSelector(state => state.alarms.alarms);
   return (

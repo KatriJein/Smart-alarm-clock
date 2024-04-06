@@ -13,22 +13,23 @@ import { useCallback, useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import CalendarStack from './components/calendar-screen-components/calendar-navigations';
-import { store } from './store/store.js'
-import { Provider } from 'react-redux'
+import { store } from './store/store.js';
+import { Provider } from 'react-redux';
+import AlarmsStack from './components/list-screen-components/alarms-navigation.js';
 
 
 SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
-const AlarmsNavigationStack = createNativeStackNavigator();
+// const AlarmsNavigationStack = createNativeStackNavigator();
 
-const AlarmsStack = () => {
-  return(
-  <AlarmsNavigationStack.Navigator>
-    <AlarmsNavigationStack.Screen name='AlarmList' component={AlarmsListScreen} options={{headerShown: false}}/>
-    <AlarmsNavigationStack.Screen name='AlarmSettings' component={AlarmPage} options={{headerShown: false}}/>
-  </AlarmsNavigationStack.Navigator>
-  )
-}
+// const AlarmsStack = () => {
+//   return(
+//   <AlarmsNavigationStack.Navigator>
+//     <AlarmsNavigationStack.Screen name='AlarmList' component={AlarmsListScreen} options={{headerShown: false}}/>
+//     <AlarmsNavigationStack.Screen name='AlarmSettings' component={AlarmPage} options={{headerShown: false}}/>
+//   </AlarmsNavigationStack.Navigator>
+//   )
+// }
 
 export default function App() {
 
@@ -78,7 +79,7 @@ export default function App() {
               alignItems: 'center'
             }
           }}>
-            <Tab.Screen name='Alarms' component={AlarmsListScreen} options={{
+            <Tab.Screen name='Alarms' component={AlarmsStack} options={{
               tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
               headerShown: false
             }} />

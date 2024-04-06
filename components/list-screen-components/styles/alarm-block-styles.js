@@ -8,7 +8,9 @@ export const styles = StyleSheet.create({
         backgroundColor: "rgba(255, 255, 255, 0.4)",
         borderRadius: 25,
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        paddingRight: 15,
+        paddingBottom: 10
     },
     info: {
         width: "50%"
@@ -17,7 +19,7 @@ export const styles = StyleSheet.create({
         width: "50%",
         display: "flex",
         alignItems: "flex-end",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     description: {
         color: "rgba(110, 110, 110, 1)",
@@ -38,6 +40,6 @@ export const styles = StyleSheet.create({
         marginTop: 2,
         fontSize: 18,
         fontFamily: "lato-regular",
-        marginBottom: 10
+        // marginBottom: 10
     }
 })

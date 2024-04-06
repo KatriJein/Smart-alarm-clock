@@ -1,5 +1,5 @@
 
-import { View, Text, StyleSheet, Button, Pressable, Image } from 'react-native'
+import { View, Text, StyleSheet, Button, Pressable, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { styles as alarmsBarStyles } from './styles/alarms-bar-styles'
 import plusAdd from "../../assets/alarmAdd.png"
@@ -11,9 +11,9 @@ export default function AlarmsBar() {
 
   return (
     <View style={alarmsBarStyles.alarmsBar}>
-      <Pressable style={alarmsBarStyles.pressable} onPress={() => navigation.navigate("AlarmSettings", {alarmTime: "00:00"})}>
+      <TouchableOpacity style={alarmsBarStyles.pressable} onPress={() => navigation.navigate("Alarm details", {alarm: null})}>
         <Image source={plusAdd}></Image>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   )
 }

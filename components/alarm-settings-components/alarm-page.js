@@ -11,23 +11,24 @@ import { useDispatch } from 'react-redux';
 import { addAlarm } from '../../store/alarmReducer';
 import Gradient from '../Gradient';
 import dayjs from 'dayjs';
-
-const defaultState = {
-  id: String(Date.now()),
-  name: 'Будильник',
-  time: dayjs().format('HH:mm'),
-  sound: '',
-  volume: 50,
-  interval: 5,
-  puzzle: 'Пароль',
-  description: 'Вставай на 1 пару',
-  useVibration: true,
-  neighbourOption: true,
-  days: [],
-  notificationId: 5
-};
+import { createId } from '../../const';
 
 export default function AlarmPage({ route }) {
+  const defaultState = {
+    id: createId(),
+    name: 'Будильник',
+    time: dayjs().format('HH:mm'),
+    sound: '',
+    volume: 50,
+    interval: 5,
+    puzzle: 'Пароль',
+    description: 'Вставай на 1 пару',
+    useVibration: true,
+    neighbourOption: true,
+    days: [],
+    notificationId: 5
+  };
+  
   const { alarm } = route.params;
   const [currentAlarm, setcurrentAlarm] = useState(alarm || defaultState);
   const navigation = useNavigation();

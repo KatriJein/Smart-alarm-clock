@@ -1,7 +1,5 @@
 
 import { View, Text, StyleSheet, Pressable, Vibration } from 'react-native'
-import React, { useRef } from 'react'
-import { View, Text, StyleSheet, Pressable, Vibration } from 'react-native';
 import React, { useRef } from 'react';
 import SwitchButton from '../common-components/switch-button';
 import { styles as alarmBlockStyles } from './styles/alarm-block-styles';

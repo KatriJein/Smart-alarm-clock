@@ -65,5 +65,8 @@ const SETTINGS = [{ title: 'Почта:', info: 'example@gmail.com' },
 { title: 'Тема:', info: 'Кварц' },
 { title: 'Разрешить уведомления:', info: 'да' }];
 
+function createId() {
+    return `id${Date.now() + '' + Math.random()}`
+}
 
-export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, humanizeListOfDays, NAME_OF_DAY_OF_WEEK, PUZZLES };
+export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, humanizeListOfDays, createId, NAME_OF_DAY_OF_WEEK, PUZZLES };

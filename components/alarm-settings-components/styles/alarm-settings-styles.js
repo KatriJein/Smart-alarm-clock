@@ -14,7 +14,8 @@ export const alarmSettingsStyles = StyleSheet.create({
         justifyContent: "center"
     },
     optionContainer: {
+        width: '95%',
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 10,
     }
 })

@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     alarmSwitchButton: {
         borderRadius: 35,
-        marginRight: 15,
+        // marginRight: 15,
         display: "flex",
         flexDirection: "row"
     },

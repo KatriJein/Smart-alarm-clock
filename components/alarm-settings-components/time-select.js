@@ -12,7 +12,7 @@ export default function TimeSelect(props) {
     const [previousMinute, setPreviousMinute] = useState();
     const [currentMinute, setCurrentMinute] = useState();
     const [nextMinute, setNextMinute] = useState();
-    const sensitivity = useRef(20);
+    const sensitivity = useRef(15);
 
 
     const parseTime = (time) => {
@@ -65,6 +65,9 @@ export default function TimeSelect(props) {
             hour = Number(getNextHour(currentHour));
             setCurrentHour(prev => hour);
           }
+          else {
+            hour = currentHour;
+          }
           onChange(`${parseTime(hour)}:${parseTime(currentMinute)}`);
         //   setTime(`${currentHour}:${currentMinute}`);
         },
@@ -82,6 +85,9 @@ export default function TimeSelect(props) {
             minute = Number(getNextMinute(currentMinute));
             setCurrentMinute(prev => minute);
           } 
+          else {
+            minute = currentMinute;
+          }
         //   setTime(`${currentHour}:${currentMinute}`);
           onChange(`${parseTime(currentHour)}:${parseTime(minute)}`);
         },

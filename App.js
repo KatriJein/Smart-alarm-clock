@@ -13,6 +13,8 @@ import { useCallback, useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import CalendarStack from './components/calendar-screen-components/calendar-navigations';
+import { store } from './store/store.js'
+import { Provider } from 'react-redux'
 import DayDetails from './components/calendar-screen-components/day-details-components/day-details';
 import * as Notifications from "expo-notifications"
 import * as TaskManager from "expo-task-manager"
@@ -23,8 +25,6 @@ import CardsPuzzle from './components/alarm-ringing-components/puzzle-cards/card
 import { updateNotification, getNotificationId } from './components/CurrentNotification';
 import { ActionRing, ActionStop } from './components/Constants';
 import { RingStack } from './components/alarm-ringing-components/navigations/RingStack';
-import { store } from './store/store.js';
-import { Provider } from 'react-redux';
 import AlarmsStack from './components/list-screen-components/alarms-navigation.js';
 
 
@@ -35,7 +35,6 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
-
 
 SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
@@ -140,7 +139,7 @@ export default function App() {
             tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
             headerShown: false
           }} />
-          <Tab.Screen name='Calendar' component={CalendarStack} options={{
+          <Tab.Screen name='Calendar' component={CalendarStack} initialParams={{ date: '2024-03-24', change: false }} options={{
             tabBarIcon: ({ color }) => <Ionicons name="calendar-clear-outline" size={41} color={color} />,
             headerShown: false
           }} />

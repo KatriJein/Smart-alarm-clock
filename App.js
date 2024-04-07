@@ -19,11 +19,11 @@ import DayDetails from './components/calendar-screen-components/day-details-comp
 import * as Notifications from "expo-notifications"
 import * as TaskManager from "expo-task-manager"
 import { Audio, InterruptionModeAndroid } from 'expo-av';
-import { startSound, cancelSound } from './components/AlarmSound';
+import { startSound, cancelSound, continueSound } from './components/AlarmSound';
 import RingPage from './components/alarm-ringing-components/ring-page/ring-page';
 import CardsPuzzle from './components/alarm-ringing-components/puzzle-cards/cards-puzzle';
 import { updateNotification, getNotificationId } from './components/CurrentNotification';
-import { ActionRing, ActionStop } from './components/Constants';
+import { ActionContinueSound, ActionRing, ActionStop } from './components/Constants';
 import { RingStack } from './components/alarm-ringing-components/navigations/RingStack';
 import AlarmsStack from './components/list-screen-components/alarms-navigation.js';
 
@@ -93,12 +93,18 @@ export default function App() {
         setIsRinging(false);
         await cancelSound();
       }
+      if (action === ActionContinueSound) {
+        await continueSound();
+      }
 
     });
     const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(async response => {
       let action = response.notification.request.content.data.action;
       if (action === ActionRing && getNotificationId() === "") {
         await startAlarm(response.notification);
+      }
+      if (action === ActionContinueSound) {
+        await continueSound();
       }
     });
 

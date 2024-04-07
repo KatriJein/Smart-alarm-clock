@@ -1,5 +1,5 @@
 import * as Notifications from "expo-notifications"
-import { ActionRing, ActionStop } from "../Constants";
+import { ActionContinueSound, ActionRing, ActionStop } from "../Constants";
 
 const calculateDaysDelta = (isLateForToday, currentDay, alarmDays) => {
     for (let day of alarmDays) {
@@ -41,7 +41,7 @@ export const scheduleAlarm = async (title, description, seconds) => {
             }
         },
         trigger: {
-            seconds
+            seconds: 2
         }
     })
     return res;
@@ -58,3 +58,31 @@ export const stopAlarm = async () => {
         trigger: null
     })
 }
+
+export const postponeSound = async () => {
+    const res = await Notifications.scheduleNotificationAsync({
+        content: {
+            title: "Прошло 10 секунд, я продолжаю петь :)",
+            data: {
+                action: ActionContinueSound
+            }
+        },
+        trigger: {
+            seconds: 10
+        }
+    });
+    return res;
+}
+
+export const shuffle = (array) => {
+    let currentIndex = array.length;
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+      // Pick a remaining element...
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  }

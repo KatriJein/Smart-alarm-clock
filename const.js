@@ -58,7 +58,10 @@ const OPTIONS_LIST = [{
     options: ['алкоголь', 'поздний прием пищи', 'кофе', 'таблетка снотворного', 'болезнь']
 }];
 
-const PUZZLES = ['Математический пример', 'Пароль', 'Карточки', 'Текст'];
+const PUZZLES = ['Математический пример', 'Пароль', 'Карточки', 'Текст', 'Нет'];
+const CORRELATE_PAGES = {[PUZZLES[0]]: 'MathPuzzle', [PUZZLES[1]]: 'PasswordPuzzle',
+                         [PUZZLES[2]]: 'CardsPuzzle', [PUZZLES[3]]: 'WordsPuzzle',
+                        [PUZZLES[4]]: ""}
 
 const SETTINGS = [{ title: 'Почта:', info: 'example@gmail.com' },
 { title: 'Номер телефона:', info: '+7 922 999-99-99' },
@@ -69,4 +72,7 @@ function createId() {
     return `id${Date.now() + '' + Math.random()}`
 }
 
-export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, humanizeListOfDays, createId, NAME_OF_DAY_OF_WEEK, PUZZLES };
+const CARDS_TEMPLATES = ['planet', 'leaf', 'paw', 'bug', 'american-football', 'beer', 'sparkles', 'game-controller'];
+
+export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, humanizeListOfDays, createId, NAME_OF_DAY_OF_WEEK, PUZZLES, CORRELATE_PAGES,
+CARDS_TEMPLATES };

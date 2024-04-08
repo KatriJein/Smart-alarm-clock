@@ -47,6 +47,10 @@ export default function AlarmPage({ route }) {
   };
 
   async function onPressBackButton() {
+    if (currentAlarm.days.length === 0) {
+      let nextDay = (new Date().getDay() + 1) % 7;
+      currentAlarm.days = [nextDay];
+    }
     dispatch(addAlarm(currentAlarm));
     if (!currentAlarm.notificationId !== "") {
       Notifications.cancelScheduledNotificationAsync(currentAlarm.notificationId);

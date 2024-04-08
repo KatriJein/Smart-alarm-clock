@@ -1,14 +1,16 @@
 
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { puzzleCardStyles } from './puzzle-card-styles'
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function PuzzleCard({pictureName, id, setPaired, chosen, setChosen}) {
 
     const [isOpened, setIsOpened] = useState(false);
+    const [canPress, setCanPress] = useState(false);
     const [isAlwaysOpened, setIsAlwaysOpened] = useState(false);
     const onCardPress = (isOpened) => {
+        if (canPress) {
         setIsOpened(isOpened);
         if (chosen === null) {
             setChosen({id: id, pictureName: pictureName, openedSetter: setIsOpened, alwaysOpenedSetter: setIsAlwaysOpened});
@@ -30,6 +32,15 @@ export default function PuzzleCard({pictureName, id, setPaired, chosen, setChose
             }
         }
     }
+    }
+
+    useEffect(() => {
+        setIsOpened(true);
+        setTimeout(() => {
+            setIsOpened(false);
+            setCanPress(true);
+        }, 1000)
+    }, [])
 
   return (
     <TouchableOpacity onPress={() => onCardPress(true)} disabled={isAlwaysOpened ? true : false}>

@@ -24,8 +24,7 @@ export default function AlarmBlock(props) {
         if (hasBeenEnabled) {
             await Notifications.cancelScheduledNotificationAsync(alarm.notificationId);
             let seconds = CalculateSecondsToRing(alarm.time, alarm.days);
-            await updateSound("rain.mp3", alarm.useVibration, [3000, 4000, 3000, 4000]);
-            const res = await scheduleAlarm(alarm.name, alarm.description, seconds);
+            const res = await scheduleAlarm(alarm.name, alarm.description, seconds, "rain.mp3", alarm.useVibration, [3000, 4000, 3000, 4000]);
             dispatch(updateNotificationId({alarmId: alarm.id, notificationId: res}));
             }
         else {

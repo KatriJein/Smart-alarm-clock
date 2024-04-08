@@ -19,7 +19,7 @@ import DayDetails from './components/calendar-screen-components/day-details-comp
 import * as Notifications from "expo-notifications"
 import * as TaskManager from "expo-task-manager"
 import { Audio, InterruptionModeAndroid } from 'expo-av';
-import { startSound, cancelSound, continueSound } from './components/AlarmSound';
+import { startSound, cancelSound, continueSound, updateSound } from './components/AlarmSound';
 import RingPage from './components/alarm-ringing-components/ring-page/ring-page';
 import CardsPuzzle from './components/alarm-ringing-components/puzzle-cards/cards-puzzle';
 import { updateNotification, getNotificationId } from './components/CurrentNotification';
@@ -52,6 +52,10 @@ const Tab = createBottomTabNavigator();
 export default function App() {
 
   const startAlarm = async (notification) => {
+    let fileName = notification.request.content.data.songName;
+    let isVibration = notification.request.content.data.isVibration;
+    let vibrationPattern = notification.request.content.data.vibrationPattern;
+    await updateSound(fileName, isVibration, vibrationPattern);
     setIsRinging(true);
     updateNotification(notification.request.identifier);
     await startSound();

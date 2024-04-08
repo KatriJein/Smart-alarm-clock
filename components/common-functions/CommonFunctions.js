@@ -29,7 +29,7 @@ export const CalculateSecondsToRing = (time, alarmDays) => {
     return Math.ceil((nextTime - currentTime) / 1000);
 }
 
-export const scheduleAlarm = async (title, description, seconds) => {
+export const scheduleAlarm = async (title, description, seconds, songName, isVibration, vibrationPattern) => {
     const res = await Notifications.scheduleNotificationAsync({
         content: {
             autoDismiss: false,
@@ -37,11 +37,14 @@ export const scheduleAlarm = async (title, description, seconds) => {
             title,
             body: description,
             data: {
-                action: ActionRing
+                action: ActionRing,
+                songName,
+                isVibration,
+                vibrationPattern
             }
         },
         trigger: {
-            seconds: 2
+            seconds: 2,
         }
     })
     return res;

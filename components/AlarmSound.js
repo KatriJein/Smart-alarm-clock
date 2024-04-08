@@ -1,5 +1,6 @@
 import { Audio, InterruptionModeAndroid } from "expo-av";
 import rain from "../assets/sounds/rain.mp3"
+import birds from "../assets/sounds/birds.mp3"
 import { Vibration } from "react-native";
 import { postponeSound } from "./common-functions/CommonFunctions";
 import * as Notifications from "expo-notifications"
@@ -36,6 +37,9 @@ const chooseSong = (fileName) => {
     switch (fileName) {
         case "rain.mp3":
             return rain;
+            break;
+        case "birds.mp3":
+            return birds;
             break;
     }
 

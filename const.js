@@ -73,6 +73,9 @@ function createId() {
 }
 
 const CARDS_TEMPLATES = ['planet', 'leaf', 'paw', 'bug', 'american-football', 'beer', 'sparkles', 'game-controller'];
+const INPUT_WORDS = ['Кукуруза', 'Карамель', 'Эксперимент', 'Непреходящий', 'Конъюктивный', 'Дизъюнктивный', 'Обстоятельство',
+                    'Переосвидетельствоваться', 'Делопроизводительница', 'Высокопревосходительство',
+                    'Физкульт-привет', 'Соответственно'];
 
 export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, humanizeListOfDays, createId, NAME_OF_DAY_OF_WEEK, PUZZLES, CORRELATE_PAGES,
-CARDS_TEMPLATES };
+CARDS_TEMPLATES, INPUT_WORDS };

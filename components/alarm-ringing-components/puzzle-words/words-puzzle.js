@@ -9,8 +9,9 @@ import { INPUT_WORDS } from '../../../const'
 import { shuffle } from '../../common-functions/CommonFunctions'
 import { useNavigation } from "@react-navigation/native"
 
-export default function WordsPuzzle({amount=5}) {
+export default function WordsPuzzle({route}) {
 
+  const { amount } = route.params;
   const navigation = useNavigation();
   const [words, setWords] = useState([]);
   const [correct, setIsCorrect] = useState(0);

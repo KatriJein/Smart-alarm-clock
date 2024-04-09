@@ -3,6 +3,7 @@ import RingPage from "../ring-page/ring-page";
 import CardsPuzzle from "../puzzle-cards/cards-puzzle";
 import WordsPuzzle from "../puzzle-words/words-puzzle";
 import MathPuzzle from "../puzzle-math/math-puzzle";
+import PasswordPuzzle from "../puzzle-password/password-puzzle";
 
 const RingNavigationStack = createNativeStackNavigator();
 
@@ -13,6 +14,7 @@ export const RingStack = () => {
         <RingNavigationStack.Screen name='CardsPuzzle' component={CardsPuzzle} options={{headerShown: false}}/>
         <RingNavigationStack.Screen name="WordsPuzzle" component={WordsPuzzle} options={{headerShown: false}}/>
         <RingNavigationStack.Screen name="MathPuzzle" component={MathPuzzle} options={{headerShown: false}}/>
+        <RingNavigationStack.Screen name="PasswordPuzzle" component={PasswordPuzzle} options={{headerShown: false}}/>
       </RingNavigationStack.Navigator>
       )
   }

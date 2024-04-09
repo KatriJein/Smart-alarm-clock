@@ -9,8 +9,9 @@ import AnswerInput from '../puzzle-words/word-input/word-input'
 import { useNavigation } from "@react-navigation/native"
 import { createMathProblem } from './common/MathFunctions'
 
-export default function MathPuzzle({amount=5}) {
+export default function MathPuzzle({route}) {
 
+    const { amount } = route.params;
     const navigation = useNavigation();
     const [problemAmount, setProblemAmount] = useState(amount);
     const [solved, setSolved] = useState(0);

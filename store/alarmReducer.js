@@ -15,6 +15,7 @@ const initialState = {
       description: 'Вставай на 1 пару',
       useVibration: true,
       neighbourOption: true,
+      password: "pass0",
       days: [0, 2],
       notificationId: ""
     },
@@ -30,6 +31,7 @@ const initialState = {
       description: 'Вставай на 1 пару',
       useVibration: true,
       neighbourOption: true,
+      password: "pass1",
       days: [0, 2],
       notificationId: ""
     }

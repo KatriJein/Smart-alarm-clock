@@ -30,6 +30,7 @@ export default function AlarmPage({ route }) {
     description: 'Вставай на 1 пару',
     useVibration: true,
     neighbourOption: true,
+    password: "password",
     days: [],
     notificationId: ""
   };

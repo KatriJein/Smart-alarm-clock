@@ -8,7 +8,8 @@ import { CARDS_TEMPLATES } from '../../../const'
 import { shuffle } from '../../common-functions/CommonFunctions'
 import { useNavigation } from '@react-navigation/native';
 
-export default function CardsPuzzle({amount=16}) {
+export default function CardsPuzzle({route}) {
+  const { amount } = route.params;
   const navigation = useNavigation();
   const [cards, setCards] = useState([]);
   const [paired, setPaired] = useState(0);

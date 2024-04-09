@@ -15,7 +15,7 @@ export const wordInputStyles = StyleSheet.create({
         color: 'rgba(255, 0, 0, 1)'
     },
     inputView: {
-        width: 330,
+        width: '95%',
         height: 55,
         backgroundColor: 'rgba(255, 255, 255, 1)',
         borderRadius: 999,
@@ -26,7 +26,7 @@ export const wordInputStyles = StyleSheet.create({
         borderWidth: 1
     },
     input: {
-        width: 265,
+        width: '75%',
         height: 24,
         marginLeft: 10,
         fontSize: 20,

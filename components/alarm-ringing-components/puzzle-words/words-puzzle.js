@@ -15,6 +15,10 @@ export default function WordsPuzzle({amount=5}) {
   const [words, setWords] = useState([]);
   const [correct, setIsCorrect] = useState(0);
 
+  const onCorrectAnswer = () => {
+    setIsCorrect(prev => prev + 1);
+  }
+
   useEffect(() => {
     const words = [...INPUT_WORDS];
     shuffle(words);
@@ -35,7 +39,7 @@ export default function WordsPuzzle({amount=5}) {
         <View style={commonStyles.container}>
             <Text style={wordsPuzzlePageStyles.taskDescription}>Правильно введи все слова!</Text>
             <ScrollView contentContainerStyle={wordsPuzzlePageStyles.scrollContainer}>
-                {words.length > 0 && words.map(word => <AnswerInput key={word.id} word={word.word} setIsCorrect={setIsCorrect}/>)}
+                {words.length > 0 && words.map(word => <AnswerInput key={word.id} word={word.word} callback={onCorrectAnswer}/>)}
             </ScrollView>
         </View>
     </Gradient>

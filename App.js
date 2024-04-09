@@ -55,7 +55,8 @@ export default function App() {
     let fileName = notification.request.content.data.songName;
     let isVibration = notification.request.content.data.isVibration;
     let vibrationPattern = notification.request.content.data.vibrationPattern;
-    await updateSound(fileName, isVibration, vibrationPattern);
+    let volume = notification.request.content.data.volume / 100;
+    await updateSound(fileName, isVibration, vibrationPattern, volume);
     setIsRinging(true);
     updateNotification(notification.request.identifier);
     await startSound();

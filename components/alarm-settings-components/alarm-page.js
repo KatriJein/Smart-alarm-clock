@@ -58,7 +58,7 @@ export default function AlarmPage({ route }) {
     }
     if (currentAlarm.isEnabled) {
       let seconds = CalculateSecondsToRing(currentAlarm.time, currentAlarm.days);
-      const res = await scheduleAlarm(currentAlarm.name, currentAlarm.description, seconds, "birds.mp3", alarm.useVibration, [3000, 4000, 3000, 4000]);
+      const res = await scheduleAlarm(currentAlarm.name, currentAlarm.description, seconds, "birds.mp3", alarm.useVibration, [3000, 4000, 3000, 4000], alarm.volume);
       dispatch(updateNotificationId({alarmId: currentAlarm.id, notificationId: res}));
     }
     navigation.navigate('AlarmsList');

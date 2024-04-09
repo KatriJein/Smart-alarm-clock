@@ -9,6 +9,7 @@ const sound = new Audio.Sound();
 let songMelody = null;
 let isVibration = false;
 let vibrationPattern = [];
+let soundVolume = 50;
 let continueSoundNotificationId = "";
 
 export const cancelSound = async () => {
@@ -45,8 +46,9 @@ const chooseSong = (fileName) => {
 
 }
 
-export const updateSound = async (fileName, doVibrate, pattern) => {
+export const updateSound = async (fileName, doVibrate, pattern, volume) => {
     await cancelSound();
+    soundVolume = volume;
     isVibration = doVibrate;
     vibrationPattern = pattern;
     const song = chooseSong(fileName);
@@ -58,6 +60,7 @@ export const startSound = async () => {
         Vibration.vibrate(vibrationPattern, true);
     }
     await sound.loadAsync(songMelody);
+    await sound.setVolumeAsync(soundVolume);
     await sound.setIsLoopingAsync(true)
     await sound.playAsync();
 }

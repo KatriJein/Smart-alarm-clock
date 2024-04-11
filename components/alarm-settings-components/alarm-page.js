@@ -25,12 +25,13 @@ export default function AlarmPage({ route }) {
     sound: '',
     volume: 50,
     interval: 5,
-    puzzle: 'Пароль',
+    puzzle: 'Нет',
     isEnabled: false,
     description: 'Вставай на 1 пару',
     useVibration: true,
     neighbourOption: true,
     password: "password",
+    puzzleAmount: 0,
     days: [],
     notificationId: ""
   };

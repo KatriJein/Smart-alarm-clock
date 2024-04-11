@@ -27,7 +27,7 @@ export default function RingPage({navigation, route}) {
           if (correspondingAlarm.neighbourOption && !beenToPuzzle) {
             await interruptSound();
           }
-          navigation.navigate(puzzlePage, {password: correspondingAlarm.password, amount: 8});
+          navigation.navigate(puzzlePage, {password: correspondingAlarm.password, amount: correspondingAlarm.puzzleAmount});
           setBeenToPuzzle(true);
         }
     }

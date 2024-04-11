@@ -64,6 +64,11 @@ const CORRELATE_PAGES = {[PUZZLES[0]]: 'MathPuzzle', [PUZZLES[1]]: 'PasswordPuzz
                         [PUZZLES[4]]: ""}
 
 const SELECTABLE_FROM_PASSWORD_PUZZLES = ['Математический пример', 'Карточки', 'Текст'];
+const DEFAULT_AMOUNTS = {[SELECTABLE_FROM_PASSWORD_PUZZLES[0]]: 5, [SELECTABLE_FROM_PASSWORD_PUZZLES[1]]: 16,
+                        [SELECTABLE_FROM_PASSWORD_PUZZLES[2]]: 5}
+const CORRELATE_PUZZLE_AMOUNT_OPTION = {[PUZZLES[0]]: [3, 5, 7, 10], [PUZZLES[1]]: [0],
+                                [PUZZLES[2]]: [8, 12, 16], [PUZZLES[3]]: [3, 5, 7, 10],
+                                [PUZZLES[4]]: []}
 
 const SETTINGS = [{ title: 'Почта:', info: 'example@gmail.com' },
 { title: 'Номер телефона:', info: '+7 922 999-99-99' },
@@ -83,4 +88,5 @@ const MIN_PASSWORD_LENGTH = 8;
 const MAX_PASSWORD_LENGTH = 20;
 
 export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, humanizeListOfDays, createId, NAME_OF_DAY_OF_WEEK, PUZZLES, CORRELATE_PAGES,
-CARDS_TEMPLATES, INPUT_WORDS, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH, SELECTABLE_FROM_PASSWORD_PUZZLES };
+CARDS_TEMPLATES, INPUT_WORDS, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH, SELECTABLE_FROM_PASSWORD_PUZZLES, CORRELATE_PUZZLE_AMOUNT_OPTION,
+DEFAULT_AMOUNTS };

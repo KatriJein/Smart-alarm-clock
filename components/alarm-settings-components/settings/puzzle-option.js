@@ -38,7 +38,7 @@ function convertToArray(object) {
 };
 
 export default function PuzzleOption(props) {
-    const { optionTitle, current, onChange } = props;
+    const { optionTitle, current, onPuzzleChange, onAmountChange, onPasswordChange } = props;
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
@@ -56,7 +56,8 @@ export default function PuzzleOption(props) {
                 <Gradient>
                     <View style={styles.modal}>
                         <ButtonBack onBackPress={() => setModalVisible(false)} />
-                        <ListOfPuzzles puzzles={PUZZLES} onPress={onChange} title={optionTitle} selectedPuzzle={current} />
+                        <ListOfPuzzles puzzles={PUZZLES} onPuzzlePress={onPuzzleChange} onAmountPress={onAmountChange} onPasswordChange={onPasswordChange}
+                         title={optionTitle} selectedPuzzle={current} />
                     </View>
                 </Gradient>
             </Modal>

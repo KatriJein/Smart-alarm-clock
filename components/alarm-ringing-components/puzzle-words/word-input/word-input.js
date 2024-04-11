@@ -12,7 +12,7 @@ export default function AnswerInput({word, callback, showAnswer=true, shouldLock
     const textInputRef = useRef();
 
     const onTextInput = (text) => {
-        setText(text);
+        setText(text.trim());
     }
 
     const onAnswerSent = () => {

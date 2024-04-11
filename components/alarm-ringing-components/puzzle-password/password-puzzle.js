@@ -5,7 +5,7 @@ import { passwordPuzzlePageStyles } from './password-puzzle-styles'
 import Gradient from '../../Gradient'
 import {useNavigation } from "@react-navigation/native"
 import { commonStyles } from '../../../common-styles'
-import { MAX_PASSWORD_LENGTH, SELECTABLE_FROM_PASSWORD_PUZZLES, CORRELATE_PAGES } from '../../../const'
+import { MAX_PASSWORD_LENGTH, SELECTABLE_FROM_PASSWORD_PUZZLES, CORRELATE_PAGES, DEFAULT_AMOUNTS } from '../../../const'
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function PasswordPuzzle({route}) {
@@ -21,7 +21,8 @@ export default function PasswordPuzzle({route}) {
     const selectPuzzle = () => {
         const puzzle = SELECTABLE_FROM_PASSWORD_PUZZLES[Math.round(Math.random() * (SELECTABLE_FROM_PASSWORD_PUZZLES.length - 1))];
         const page = CORRELATE_PAGES[puzzle];
-        navigation.navigate(page, {amount: amount});
+        let defaultAmount = DEFAULT_AMOUNTS[puzzle];
+        navigation.navigate(page, {amount: defaultAmount});
     }
 
     useEffect(() => {

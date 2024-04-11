@@ -1,13 +1,20 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { commonStyles } from '../../common-styles';
-import { LinearGradient } from 'expo-linear-gradient';
 import { statisticsScreenStyles } from './styles/statistics-screen-styles';
 import { useEffect, useRef, useState } from 'react';
 import RoundSelector from '../common-components/round-selector';
 import { dataObject, fillDataObject, updateLabels, updateSleepChartData, updateSleepQualityChartData, updateTextData } from './data/statistics-data-helper';
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
+import Gradient from '../Gradient';
+import { useSelector } from 'react-redux';
+import { createDataForMonthChart, createDataForYearChart, createDataForWeekChart } from './data/convertData';
 
+const defaultStateChart = {
+  0: Array(7).fill(0),
+  1: Array(31).fill(0),
+  2: Array(12).fill(0)
+};
 
 export default function StatisticsScreen() {
 
@@ -16,7 +23,21 @@ export default function StatisticsScreen() {
   const [chartLabels, setChartLabels] = useState([]);
   const [sleepChartValues, setSleepChartValues] = useState([1]);
   const [sleepQualityChartValues, setSleepQualityChartValues] = useState([1]);
+
   const [currentPeriod, setCurrentPeriod] = useState(0);
+
+  const [chartValues, setChartValues] = useState(defaultStateChart);
+
+  const days = useSelector(state => state.calendar.dailyStats);
+  console.log(chartValues[2]);
+
+  useEffect(() => {
+    setChartValues({
+      0: createDataForWeekChart(days),
+      1: createDataForMonthChart(days),
+      2: createDataForYearChart(days)
+    });
+  }, [days]);
 
   const screenWidth = Dimensions.get("window").width;
 
@@ -48,8 +69,8 @@ export default function StatisticsScreen() {
     labels: chartLabels,
     datasets: [
       {
-        data: sleepChartValues,
-        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        data: chartValues[currentPeriod],
+        color: (opacity = 1) => `rgba(213, 88, 141, ${opacity})`, // optional
         strokeWidth: 2 // optional
       }
     ],
@@ -61,7 +82,7 @@ export default function StatisticsScreen() {
     datasets: [
       {
         data: sleepQualityChartValues,
-        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        color: (opacity = 1) => `rgba(213, 88, 141, ${opacity})`, // optional
         strokeWidth: 2 // optional
       }
     ],
@@ -77,7 +98,7 @@ export default function StatisticsScreen() {
   const updateStats = (currentOptionIndex) => {
     setTextData(fillDataObject(currentOptionIndex));
     setChartLabels(updateLabels(currentOptionIndex));
-    setSleepChartValues(updateSleepChartData(currentOptionIndex));
+    // setSleepChartValues(updateSleepChartData(currentOptionIndex));
     setSleepQualityChartValues(updateSleepQualityChartData(currentOptionIndex));
   }
 
@@ -86,30 +107,40 @@ export default function StatisticsScreen() {
   }, [])
 
   return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      colors={['rgba(250, 208, 196, 1)', 'rgba(251, 194, 235, 1)']}
-      start={{ x: 1, y: 0 }}
-      end={{ x: 0, y: 1 }}>
+    <Gradient>
       <View style={commonStyles.container}>
-        <ScrollView contentContainerStyle={statisticsScreenStyles.scrollContainerContent} style={statisticsScreenStyles.scrollContainer}>
+        <View style={statisticsScreenStyles.header}>
           <Text style={statisticsScreenStyles.title}>Статистика</Text>
-          <View style={statisticsScreenStyles.periodSelect}>
-            <RoundSelector options={periods.current} optionIndex={currentPeriod} onOptionPress={onPeriodPress}/>
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
+          <View style={statisticsScreenStyles.scrollContainer}>
+            <View style={statisticsScreenStyles.periodSelect}>
+              <RoundSelector options={periods.current} optionIndex={currentPeriod} onOptionPress={onPeriodPress} />
+            </View>
+            <View style={statisticsScreenStyles.sleepChart}>
+              <LineChart data={sleepChartData} height={200} width={screenWidth} chartConfig={sleepHoursChartConfig} />
+            </View>
+            <View style={statisticsScreenStyles.containerText}>
+              <Text style={statisticsScreenStyles.general}>Среднее кол-во часов сна: {textData.averageSleepHour}</Text>
+            </View>
+            <View style={statisticsScreenStyles.containerText}>
+              <Text style={statisticsScreenStyles.general}>Среднее время отхода ко сну: {textData.averageFallAsleepTime}</Text>
+            </View>
+            <View style={statisticsScreenStyles.containerText}>
+              <Text style={statisticsScreenStyles.general}>Среднее время пробуждения: {textData.averageWakeUpTime}</Text>
+            </View>
+            <View style={statisticsScreenStyles.sleepQualityChart}>
+              <LineChart data={sleepQualityChartData} height={200} width={screenWidth} chartConfig={sleepQualityChartConfig} />
+            </View>
+            <View style={statisticsScreenStyles.containerText}>
+              <Text style={statisticsScreenStyles.general}>Лучший сон в: {textData.bestSleepingDay}</Text>
+            </View>
+            <View style={statisticsScreenStyles.containerText}>
+              <Text style={statisticsScreenStyles.general}>Вы лучше спите, когда перед сном занимались: {textData.healthiestActivity}</Text>
+            </View>
           </View>
-          <View style={statisticsScreenStyles.sleepChart}>
-            <LineChart data={sleepChartData} height={200} width={screenWidth} chartConfig={sleepHoursChartConfig}/>
-          </View>
-          <Text style={[statisticsScreenStyles.general, statisticsScreenStyles.statDescription]}>Среднее кол-во часов сна: {textData.averageSleepHour}</Text>
-          <Text style={[statisticsScreenStyles.general, statisticsScreenStyles.statDescription]}>Среднее время отхода ко сну: {textData.averageFallAsleepTime}</Text>
-          <Text style={[statisticsScreenStyles.general, statisticsScreenStyles.statDescription]}>Среднее время пробуждения: {textData.averageWakeUpTime}</Text>
-          <View style={statisticsScreenStyles.sleepQualityChart}>
-            <LineChart data={sleepQualityChartData} height={200} width={screenWidth} chartConfig={sleepQualityChartConfig}/>
-          </View>
-          <Text style={[statisticsScreenStyles.general, statisticsScreenStyles.statDescription]}>Лучший сон в: {textData.bestSleepingDay}</Text>
-          <Text style={[statisticsScreenStyles.general, statisticsScreenStyles.statDescription]}>Вы лучше спите, когда перед сном занимались: {textData.healthiestActivity}</Text>
         </ScrollView>
       </View>
-    </LinearGradient>
+    </Gradient>
   );
 }

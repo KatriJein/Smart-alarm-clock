@@ -69,4 +69,14 @@ function createId() {
     return `id${Date.now() + '' + Math.random()}`
 }
 
-export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, humanizeListOfDays, createId, NAME_OF_DAY_OF_WEEK, PUZZLES };
+function printHours(hour) {
+    if (hour === 1) {
+        return `${hour} час`;
+    } else if (hour < 5) {
+        return `${hour} часа`;
+    } else {
+        return `${hour} часов`;
+    }
+}
+
+export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, humanizeListOfDays, createId, printHours, NAME_OF_DAY_OF_WEEK, PUZZLES };

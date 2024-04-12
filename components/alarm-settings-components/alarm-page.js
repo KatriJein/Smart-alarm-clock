@@ -1,6 +1,6 @@
 
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import React, { createContext, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, BackHandler } from 'react-native';
+import React, { createContext, useEffect, useState } from 'react';
 import { commonStyles } from '../../common-styles';
 import AlarmTitle from './alarm-title';
 import TimeSelect from './time-select';
@@ -40,6 +40,22 @@ export default function AlarmPage({ route }) {
   const [currentAlarm, setcurrentAlarm] = useState(alarm || defaultState);
   const navigation = useNavigation();
   const dispatch = useDispatch()
+
+
+  useEffect(() => {
+    const backAction = async () => {
+      await onPressBackButton();
+      return true; // Returning true prevents default back button behavior (i.e., exiting the app)
+    };
+  
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+  
+    return () => backHandler.remove(); // Remove the event listener on component unmount
+  
+  }, [currentAlarm]);
 
   function changeOption(option, value) {
     setcurrentAlarm(prev => ({

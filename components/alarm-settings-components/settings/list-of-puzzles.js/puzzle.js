@@ -1,7 +1,7 @@
 
 import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { NAME_OF_DAY_OF_WEEK } from '../../../../const';
+import { DEFAULT_AMOUNTS, NAME_OF_DAY_OF_WEEK } from '../../../../const';
 import { vw } from 'react-native-expo-viewport-units';
 import { CORRELATE_PUZZLE_AMOUNT_OPTION } from '../../../../const';
 import ButtonBack from '../../../button-back';
@@ -51,7 +51,7 @@ export default function Puzzle(props) {
         <Modal
         animationType='slide'
         visible={amountChoiceModalVisible}
-        onRequestClose={() => { setAmountChoiceModalVisible(false) }}>
+        onRequestClose={() => { setAmountChoiceModalVisible(false); onAmountPress(chosenAmount > 0 ? chosenAmount : DEFAULT_AMOUNTS[value]); }}>
             <Gradient>
                 <View style={styles.modal}>
                     {hasChosenAmount ? <ButtonBack onBackPress={() => setAmountChoiceModalVisible(false)} /> : <></>}
@@ -66,7 +66,7 @@ export default function Puzzle(props) {
         <Modal
         animationType='slide'
         visible={passwordInputModalVisible}
-        onRequestClose={() => { setPasswordInputModalVisible(false) }}>
+        onRequestClose={() => { setPasswordInputModalVisible(false); onPasswordChange("defaultPass1") }}>
             <Gradient>
                 <View style={styles.modal}>
                     {hasInputPassword ? <ButtonBack onBackPress={() => setPasswordInputModalVisible(false)} /> : <></>}

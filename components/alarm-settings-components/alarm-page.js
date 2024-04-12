@@ -44,7 +44,6 @@ export default function AlarmPage({ route }) {
   const [currentAlarm, setcurrentAlarm] = useState(alarm || defaultState);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  console.log(currentAlarm);
 
 
   useEffect(() => {

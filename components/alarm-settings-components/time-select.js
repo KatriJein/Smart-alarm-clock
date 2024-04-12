@@ -43,7 +43,7 @@ export default function TimeSelect(props) {
         const [hour, minute] = timeString.split(":").map(part => Number(part));
         setCurrentHour(hour);
         setCurrentMinute(minute);
-    }, []);
+    }, [timeString]);
 
     useEffect(() => {
         setNextHour(getNextHour(currentHour));

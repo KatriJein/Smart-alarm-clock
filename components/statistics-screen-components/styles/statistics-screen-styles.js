@@ -1,39 +1,49 @@
 import { StyleSheet } from "react-native";
 import { Platform } from "react-native";
 import { StatusBar } from "react-native";
+import { vw } from "react-native-expo-viewport-units";
 
 export const statisticsScreenStyles = StyleSheet.create({
     scrollContainer: {
-        width: "95%"
+        width: "100%",
+        padding: 10,
     },
-    scrollContainerContent: {
-        alignItems: "center"
-    },
+    // scrollContainerContent: {
+    //     // alignItems: "center",
+
+    // },
     title: {
-        fontSize: 32,
-        fontFamily: 'kyiv-type',
-        marginTop: 105,
+        fontSize: 38,
+        fontFamily: 'montserrat-alt-medium',
     },
     general: {
         fontSize: 20,
-        fontFamily: 'kyiv-type'
+        fontFamily: 'montserrat-alt-medium',
     },
     periodSelect: {
         alignSelf: "flex-start",
-        marginTop: 24,
-        marginLeft: 28
     },
     sleepChart: {
-        marginTop: 27,
-        marginBottom: 44,
+        alignSelf: "center",
+        marginVertical: vw(5),
+        left: -8
     },
     sleepQualityChart: {
-        marginTop: 32,
-        marginBottom: 32
+        alignSelf: "center",
+        marginVertical: vw(5),
+        left: -15
     },
-    statDescription: {
-        alignSelf: "flex-start",
-        marginLeft: 19,
-        marginBottom: 9
+    containerText: {
+        flexDirection: 'row', 
+        flex: 1, 
+        alignItems: 'center', 
+        width: '99%',
+        marginVertical: vw(1),
+    },
+    header: {
+        width: '100%',
+        height: '15%',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

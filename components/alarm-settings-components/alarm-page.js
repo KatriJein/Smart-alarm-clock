@@ -9,6 +9,7 @@ import ButtonBack from '../button-back';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { addAlarm, updateNotificationId } from '../../store/alarmReducer';
+import { addWakeUpTime, addFallAsleepTime } from '../../store/statisticsReducer';
 import Gradient from '../Gradient';
 import dayjs from 'dayjs';
 import { createId } from '../../const';
@@ -32,14 +33,18 @@ export default function AlarmPage({ route }) {
     neighbourOption: true,
     password: "password",
     puzzleAmount: 0,
+    smartAlarm: false,
+    timeToSleep: dayjs().format('HH:mm'),
+    timeToWakeUp: dayjs().format('HH:mm'),
     days: [],
     notificationId: ""
   };
-  
+
   const { alarm } = route.params;
   const [currentAlarm, setcurrentAlarm] = useState(alarm || defaultState);
   const navigation = useNavigation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  console.log(currentAlarm);
 
 
   useEffect(() => {
@@ -78,6 +83,10 @@ export default function AlarmPage({ route }) {
       const res = await scheduleAlarm(currentAlarm.name, currentAlarm.description, seconds, "birds.mp3", alarm.useVibration, [3000, 4000, 3000, 4000], alarm.volume);
       dispatch(updateNotificationId({alarmId: currentAlarm.id, notificationId: res}));
     }
+    if (currentAlarm.smartAlarm) {
+      dispatch(addWakeUpTime(currentAlarm.timeToWakeUp));
+      dispatch(addFallAsleepTime(currentAlarm.timeToSleep));
+    }
     navigation.navigate('AlarmsList');
   }
 
@@ -103,7 +112,7 @@ export default function AlarmPage({ route }) {
       <View style={[commonStyles.container, additionalStyles.container]}>
         <ButtonBack onBackPress={async () => onPressBackButton()} />
         <AlarmTitle title={currentAlarm.name} changeOption={(value) => changeOption('name', value)} />
-        <TimeSelect timeString={currentAlarm.time} onChange={(value) => changeOption('time', value)}/>
+        <TimeSelect timeString={currentAlarm.time} onChange={(value) => changeOption('time', value)} />
         <ScrollView contentContainerStyle={{ alignItems: "center" }} style={additionalStyles.scrollStyle}>
           <AlarmSettings currentAlarm={currentAlarm} changeOption={changeOption} />
         </ScrollView>

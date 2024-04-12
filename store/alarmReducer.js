@@ -17,6 +17,9 @@ const initialState = {
       neighbourOption: true,
       password: "pass0",
       puzzleAmount: 0,
+      smartAlarm: false,
+      timeToSleep: '',
+      timeToWakeUp: '',
       days: [0, 2],
       notificationId: ""
     },
@@ -34,6 +37,9 @@ const initialState = {
       neighbourOption: true,
       password: "pass1",
       puzzleAmount: 0,
+      smartAlarm: false,
+      timeToSleep: '',
+      timeToWakeUp: '',
       days: [0, 2],
       notificationId: ""
     }

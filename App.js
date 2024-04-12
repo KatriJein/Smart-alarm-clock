@@ -26,6 +26,8 @@ import { updateNotification, getNotificationId } from './components/CurrentNotif
 import { ActionContinueSound, ActionRing, ActionStop } from './components/Constants';
 import { RingStack } from './components/alarm-ringing-components/navigations/RingStack';
 import AlarmsStack from './components/list-screen-components/alarms-navigation.js';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor } from './store/store.js';
 
 
 Notifications.setNotificationHandler({
@@ -78,7 +80,7 @@ export default function App() {
           staysActiveInBackground: true,
           shouldDuckAndroid: true,
           interruptionModeAndroid: InterruptionModeAndroid.DuckOthers
-      })
+        })
       } catch (e) {
         console.warn(e);
       } finally {
@@ -131,48 +133,50 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <NavigationContainer onReady={onLayoutRootView}>
-        <Tab.Navigator screenOptions={{
-          tabBarShowLabel: false,
-          tabBarActiveTintColor: '#FB7DAC',
-          tabBarInactiveTintColor: '#711B3B',
-          tabBarStyle: {
-            backgroundColor: '#ffceec',
-            height: 60,
-            borderTopWidth: 0,
-            alignItems: 'center'
-          }
-        }}>
-          {!isRinging
-          ? <>
-          <Tab.Screen name='Alarms' component={AlarmsStack} options={{
-            tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
-            headerShown: false
-          }} />
-          <Tab.Screen name='Calendar' component={CalendarStack} initialParams={{ date: '2024-03-24', change: false }} options={{
-            tabBarIcon: ({ color }) => <Ionicons name="calendar-clear-outline" size={41} color={color} />,
-            headerShown: false
-          }} />
-          <Tab.Screen name='Statistics' component={StatisticsScreen} options={{
-            tabBarIcon: ({ color }) => <Ionicons name="stats-chart-outline" size={39} color={color} />,
-            headerShown: false
-          }} />
-          <Tab.Screen name='Settings' component={SettingsScreen} options={{
-            tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={40} color={color} />,
-            headerShown: false
-          }} />
-          </>
-          :
-          <Tab.Screen name='Ring' component={RingStack} options={{
-            tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={40} color={color} />,
-            headerShown: false
-          }} />
-          }
-        </Tab.Navigator>
-        <StatusBar style='light' backgroundColor="transparent" />
-      </NavigationContainer>
-      </SafeAreaView>
+      <PersistGate persistor={persistor}>
+        <SafeAreaView style={styles.container}>
+          <NavigationContainer onReady={onLayoutRootView}>
+            <Tab.Navigator screenOptions={{
+              tabBarShowLabel: false,
+              tabBarActiveTintColor: '#FB7DAC',
+              tabBarInactiveTintColor: '#711B3B',
+              tabBarStyle: {
+                backgroundColor: '#ffceec',
+                height: 60,
+                borderTopWidth: 0,
+                alignItems: 'center'
+              }
+            }}>
+              {!isRinging
+                ? <>
+                  <Tab.Screen name='Alarms' component={AlarmsStack} options={{
+                    tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
+                    headerShown: false
+                  }} />
+                  <Tab.Screen name='Calendar' component={CalendarStack} initialParams={{ date: '2024-03-24', change: false }} options={{
+                    tabBarIcon: ({ color }) => <Ionicons name="calendar-clear-outline" size={41} color={color} />,
+                    headerShown: false
+                  }} />
+                  <Tab.Screen name='Statistics' component={StatisticsScreen} options={{
+                    tabBarIcon: ({ color }) => <Ionicons name="stats-chart-outline" size={39} color={color} />,
+                    headerShown: false
+                  }} />
+                  <Tab.Screen name='Settings' component={SettingsScreen} options={{
+                    tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={40} color={color} />,
+                    headerShown: false
+                  }} />
+                </>
+                :
+                <Tab.Screen name='Ring' component={RingStack} options={{
+                  tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={40} color={color} />,
+                  headerShown: false
+                }} />
+              }
+            </Tab.Navigator>
+            <StatusBar style='light' backgroundColor="transparent" />
+          </NavigationContainer>
+        </SafeAreaView>
+      </PersistGate>
     </Provider>
   );
 }

@@ -3,10 +3,26 @@ import Calendar from './calendar';
 import { Ionicons } from '@expo/vector-icons';
 import { STATUSBAR_HEIGHT } from '../../const';
 import Gradient from '../Gradient';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import dayjs from 'dayjs';
+import { printHours } from '../../const';
 
-export default function CalendarScreen({route}) {
- 
+export default function CalendarScreen({ route }) {
+
   const { date, change } = route.params;
+  const days = useSelector(state => state.calendar.dailyStats);
+  const [hour, setHour] = useState('не указано');
+
+  useEffect(() => {
+    const today = days[dayjs().format('YYYY-MM-DD')]?.hours;
+    if (!!today) {
+      console.log(today);
+      setHour(printHours(+today));
+    } else {
+      setHour('не указано');
+    }
+  }, [days]);
 
   return (
     <Gradient>
@@ -15,7 +31,7 @@ export default function CalendarScreen({route}) {
           <Text style={stylesHeader.title}>Трекер</Text>
           <View style={stylesHeader.sleep}>
             <Ionicons name="chevron-back-outline" size={30} color="black" />
-            <Text style={stylesHeader.sleepText}>8 часов</Text>
+            <Text style={stylesHeader.sleepText}>{hour}</Text>
             <Ionicons name="chevron-forward-outline" size={30} color="black" />
           </View>
         </View>

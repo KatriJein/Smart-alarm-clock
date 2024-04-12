@@ -20,6 +20,7 @@ export default function AlarmBlock(props) {
     const switchAlarmMode = async (hasBeenEnabled) => {
         if (hasBeenEnabled) {
             let seconds = CalculateSecondsToRing(alarm.time, alarm.days);
+            console.log(seconds);
             await updateSound("rain.mp3", alarm.useVibration, [3000, 4000, 3000, 4000]);
             const res = await scheduleAlarm(alarm.name, alarm.description, seconds);
             };

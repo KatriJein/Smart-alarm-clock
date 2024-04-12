@@ -38,7 +38,6 @@ function getMarkedDays(days) {
     return marked;
 };
 
-
 export default function Calendar(props) {
     const { date, change } = props;
     const navigation = useNavigation();
@@ -121,7 +120,7 @@ const stylesDay = StyleSheet.create({
     marked: {
         height: '22%',
         width: '92%',
-        backgroundColor: '#49569B',
+        backgroundColor: '#B5BCE0',
         borderBottomLeftRadius: 9,
         borderBottomRightRadius: 9,
         position: 'absolute',

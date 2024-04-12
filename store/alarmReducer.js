@@ -13,6 +13,9 @@ const initialState = {
       description: 'Вставай на 1 пару',
       useVibration: true,
       neighbourOption: true,
+      smartAlarm: false,
+      timeToSleep: '',
+      timeToWakeUp: '',
       days: [0, 2],
       notificationId: 5
     },
@@ -27,6 +30,9 @@ const initialState = {
       description: 'Вставай на 1 пару',
       useVibration: true,
       neighbourOption: true,
+      smartAlarm: false,
+      timeToSleep: '',
+      timeToWakeUp: '',
       days: [0, 2],
       notificationId: 5
     }

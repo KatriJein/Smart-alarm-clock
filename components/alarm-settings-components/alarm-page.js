@@ -9,6 +9,7 @@ import ButtonBack from '../button-back';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { addAlarm } from '../../store/alarmReducer';
+import { addWakeUpTime, addFallAsleepTime } from '../../store/statisticsReducer';
 import Gradient from '../Gradient';
 import dayjs from 'dayjs';
 import { createId } from '../../const';
@@ -25,14 +26,18 @@ export default function AlarmPage({ route }) {
     description: 'Вставай на 1 пару',
     useVibration: true,
     neighbourOption: true,
+    smartAlarm: false,
+    timeToSleep: dayjs().format('HH:mm'),
+    timeToWakeUp: dayjs().format('HH:mm'),
     days: [],
     notificationId: 5
   };
-  
+
   const { alarm } = route.params;
   const [currentAlarm, setcurrentAlarm] = useState(alarm || defaultState);
   const navigation = useNavigation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  console.log(currentAlarm);
 
   function changeOption(option, value) {
     setcurrentAlarm(prev => ({
@@ -43,6 +48,11 @@ export default function AlarmPage({ route }) {
 
   function onPressBackButton() {
     dispatch(addAlarm(currentAlarm));
+    //Потом перенести
+    if (currentAlarm.smartAlarm) {
+      dispatch(addWakeUpTime(currentAlarm.timeToWakeUp));
+      dispatch(addFallAsleepTime(currentAlarm.timeToSleep));
+    }
     navigation.navigate('AlarmsList');
   }
 
@@ -68,7 +78,7 @@ export default function AlarmPage({ route }) {
       <View style={[commonStyles.container, additionalStyles.container]}>
         <ButtonBack onBackPress={() => onPressBackButton()} />
         <AlarmTitle title={currentAlarm.name} changeOption={(value) => changeOption('name', value)} />
-        <TimeSelect timeString={currentAlarm.time} onChange={(value) => changeOption('time', value)}/>
+        <TimeSelect timeString={currentAlarm.time} onChange={(value) => changeOption('time', value)} />
         <ScrollView contentContainerStyle={{ alignItems: "center" }} style={additionalStyles.scrollStyle}>
           <AlarmSettings currentAlarm={currentAlarm} changeOption={changeOption} />
         </ScrollView>

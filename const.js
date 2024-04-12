@@ -1,5 +1,9 @@
 import { Platform, NativeModules } from 'react-native';
 const { StatusBarManager } = NativeModules;
+import dayjs from 'dayjs';
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat);
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
 
@@ -77,6 +81,58 @@ function printHours(hour) {
     } else {
         return `${hour} часов`;
     }
+};
+
+function calcAverage(arr) {
+    if (arr.length > 0) {
+        const sum = arr.reduce(function(x, y) {
+            return x + y;
+        }, 0);
+        return sum / arr.length;
+    } else {
+        return 0;
+    }
+};
+
+function convertTimeToMin(time) {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+};
+
+function getAverageTime(totalMinutes, numEntries) {
+    if (numEntries === 0) {
+        return 'не указано';
+    }
+    const averageMinutes = totalMinutes / numEntries;
+    const averageHours = Math.floor(averageMinutes / 60);
+    const averageMinutesRemainder = Math.round(averageMinutes % 60);
+    return `${String(averageHours).padStart(2, '0')}:${String(averageMinutesRemainder).padStart(2, '0')}`;
+};
+
+function parseTimeToDate(time) {
+    const [hours, minutes] = time.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    return date;
 }
 
-export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, humanizeListOfDays, createId, printHours, NAME_OF_DAY_OF_WEEK, PUZZLES };
+function calculateBestWakeUpTimes(startTime, endTime) {
+    const start = dayjs(startTime, 'HH:mm');
+    const end = dayjs(endTime, 'HH:mm');
+
+    if (end.isBefore(start)) {
+        end.add(1, 'day');
+    }
+
+    const diffMinutes = end.diff(start, 'minute') - 15;
+
+    const fullPhases = Math.floor(diffMinutes / 90);
+
+    const firstWakeUpTime = start.add(15 + fullPhases * 90, 'minute').format('HH:mm');
+    const secondWakeUpTime = start.add(15 + (fullPhases + 1) * 90, 'minute').format('HH:mm');
+
+    return [firstWakeUpTime, secondWakeUpTime];
+}
+
+export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, calculateBestWakeUpTimes, parseTimeToDate, calcAverage, getAverageTime, convertTimeToMin, humanizeListOfDays, createId, printHours, NAME_OF_DAY_OF_WEEK, PUZZLES };

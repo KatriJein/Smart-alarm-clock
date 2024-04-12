@@ -13,6 +13,7 @@ import ReplayOption from './settings/replay-option'
 import IntervalOption from './settings/interval-option'
 import ListOfPuzzles from './settings/list-of-puzzles.js/list-of-puzzles';
 import PuzzleOption from './settings/puzzle-option';
+import SmartAlarmOption from './settings/smart-alarm-option'
 
 
 
@@ -66,6 +67,10 @@ export default function AlarmSettings(props) {
       <HorizontalLine />
       <View style={alarmSettingsStyles.optionContainer}>
         <InputOption optionTitle="Подпись" value={currentAlarm['description']} onChange={(value) => changeOption('description', value)} />
+      </View>
+      <HorizontalLine />
+      <View style={alarmSettingsStyles.optionContainer}>
+        <SmartAlarmOption optionTitle="Умный будильник" value={{smartAlarm: currentAlarm['smartAlarm'], timeToSleep: currentAlarm['timeToSleep'], timeToWakeUp: currentAlarm['timeToWakeUp']}} onChange={changeOption} />
       </View>
       <HorizontalLine />
       <View style={alarmSettingsStyles.optionContainer}>

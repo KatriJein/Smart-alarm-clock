@@ -6,6 +6,7 @@ import Gradient from '../../Gradient';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { addDate } from '../../../store/calendarReducer';
+import { addAverageHours } from '../../../store/statisticsReducer';
 
 const defaultState = {
     hours: null,
@@ -34,6 +35,9 @@ export default function DayDetails({ route }) {
     function handleBackButton() {
         if (selectedOptions != defaultState) {
             dispatch(addDate({date: date.dateString, options: {...selectedOptions}}));
+        }
+        if (!!selectedOptions.hours) {
+            dispatch(addAverageHours(selectedOptions.hours));
         }
     };
 

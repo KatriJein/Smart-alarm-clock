@@ -8,6 +8,7 @@ import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import Gradient from '../Gradient';
 import { useSelector } from 'react-redux';
+import {calcAverage, getAverageTime} from '../../const';
 import { createDataForMonthChart, createDataForYearChart, createDataForWeekChart } from './data/convertData';
 
 const defaultStateChart = {
@@ -29,7 +30,9 @@ export default function StatisticsScreen() {
   const [chartValues, setChartValues] = useState(defaultStateChart);
 
   const days = useSelector(state => state.calendar.dailyStats);
-  console.log(chartValues[2]);
+  const statistics = useSelector(state => state.statistics);
+  const jls = calcAverage(statistics.averageSleepHour);
+  console.log(jls);
 
   useEffect(() => {
     setChartValues({
@@ -121,13 +124,13 @@ export default function StatisticsScreen() {
               <LineChart data={sleepChartData} height={200} width={screenWidth} chartConfig={sleepHoursChartConfig} />
             </View>
             <View style={statisticsScreenStyles.containerText}>
-              <Text style={statisticsScreenStyles.general}>Среднее кол-во часов сна: {textData.averageSleepHour}</Text>
+              <Text style={statisticsScreenStyles.general}>Среднее кол-во часов сна: {calcAverage(statistics.averageSleepHour)}</Text>
             </View>
             <View style={statisticsScreenStyles.containerText}>
-              <Text style={statisticsScreenStyles.general}>Среднее время отхода ко сну: {textData.averageFallAsleepTime}</Text>
+              <Text style={statisticsScreenStyles.general}>Среднее время отхода ко сну: {getAverageTime(statistics.sumFallAsleepTime, statistics.countFallAsleepTime)}</Text>
             </View>
             <View style={statisticsScreenStyles.containerText}>
-              <Text style={statisticsScreenStyles.general}>Среднее время пробуждения: {textData.averageWakeUpTime}</Text>
+              <Text style={statisticsScreenStyles.general}>Среднее время пробуждения: {getAverageTime(statistics.sumWakeUpTime, statistics.countWakeUpTime)}</Text>
             </View>
             <View style={statisticsScreenStyles.sleepQualityChart}>
               <LineChart data={sleepQualityChartData} height={200} width={screenWidth} chartConfig={sleepQualityChartConfig} />

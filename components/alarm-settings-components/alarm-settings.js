@@ -86,7 +86,8 @@ export default function AlarmSettings(props) {
       </View>
       <HorizontalLine />
       <View style={alarmSettingsStyles.optionContainer}>
-        <PuzzleOption optionTitle="Головоломка" current={currentAlarm.puzzle} onChange={(value) => changeOption('puzzle', value)} />
+        <PuzzleOption optionTitle="Головоломка" current={currentAlarm.puzzle} onPuzzleChange={(value) => changeOption('puzzle', value)} 
+        onAmountChange={(value) => changeOption('puzzleAmount', value)} onPasswordChange={(value) => changeOption('password', value)}/>
       </View>
       <HorizontalLine />
       <View style={alarmSettingsStyles.optionContainer}>

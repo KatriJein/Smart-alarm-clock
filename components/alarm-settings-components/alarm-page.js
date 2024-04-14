@@ -17,13 +17,14 @@ import * as Notifications from "expo-notifications"
 import { CalculateSecondsToRing } from '../common-functions/CommonFunctions';
 import { updateSound } from '../AlarmSound';
 import { scheduleAlarm } from '../common-functions/CommonFunctions';
+import { CORRELATE_SOUND_NAMES } from '../../const';
 
 export default function AlarmPage({ route }) {
   const defaultState = {
     id: createId(),
     name: 'Будильник',
     time: dayjs().format('HH:mm'),
-    sound: '',
+    sound: 'Дождь',
     volume: 50,
     interval: 5,
     puzzle: 'Нет',
@@ -79,7 +80,7 @@ export default function AlarmPage({ route }) {
     }
     if (currentAlarm.isEnabled) {
       let seconds = CalculateSecondsToRing(currentAlarm.time, currentAlarm.days);
-      const res = await scheduleAlarm(currentAlarm.name, currentAlarm.description, seconds, "birds.mp3", alarm.useVibration, [3000, 4000, 3000, 4000], alarm.volume);
+      const res = await scheduleAlarm(currentAlarm.name, currentAlarm.description, seconds, CORRELATE_SOUND_NAMES[currentAlarm.sound], currentAlarm.useVibration, currentAlarm.volume);
       dispatch(updateNotificationId({alarmId: currentAlarm.id, notificationId: res}));
     }
     if (currentAlarm.smartAlarm) {

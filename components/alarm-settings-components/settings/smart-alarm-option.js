@@ -63,7 +63,7 @@ export default function SmartAlarmOption({ optionTitle, value, onChange }) {
             <Modal
                 animationType='slide'
                 visible={modalVisible}
-                onRequestClose={() => { setModalVisible(false) }}
+                onRequestClose={() => { setModalVisible(false); onPressBackButton(); }}
             >
                 <Gradient>
                     <View style={styles.modal}>

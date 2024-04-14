@@ -67,7 +67,7 @@ export default function ReplayOption(props) {
             <Modal
                 animationType='slide'
                 visible={modalVisible}
-                onRequestClose={() => { setModalVisible(false) }}
+                onRequestClose={() => { setModalVisible(false); onPressBackButton(); }}
             >
                 <Gradient>
                     <View style={styles.modal}>

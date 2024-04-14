@@ -15,6 +15,7 @@ import { CalculateSecondsToRing, scheduleAlarm } from '../common-functions/Commo
 import { humanizeListOfDays } from '../../const';
 import { switchAlarm, updateNotificationId } from '../../store/alarmReducer';
 import { useDispatch } from "react-redux"
+import { CORRELATE_SOUND_NAMES } from '../../const';
 
 
 export default function AlarmBlock(props) {
@@ -24,7 +25,7 @@ export default function AlarmBlock(props) {
         if (hasBeenEnabled) {
             await Notifications.cancelScheduledNotificationAsync(alarm.notificationId);
             let seconds = CalculateSecondsToRing(alarm.time, alarm.days);
-            const res = await scheduleAlarm(alarm.name, alarm.description, seconds, "rain.mp3", alarm.useVibration, [3000, 4000, 3000, 4000], alarm.volume);
+            const res = await scheduleAlarm(alarm.name, alarm.description, seconds, CORRELATE_SOUND_NAMES[alarm.sound], alarm.useVibration, alarm.volume);
             dispatch(updateNotificationId({alarmId: alarm.id, notificationId: res}));
             }
         else {

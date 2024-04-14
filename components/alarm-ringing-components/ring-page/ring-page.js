@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { commonStyles } from '../../../common-styles'
 import Gradient from '../../Gradient'
 import * as Notifications from "expo-notifications"
-import { stopAlarm } from '../../common-functions/CommonFunctions'
+import { buildDate, remindOfTracker, stopAlarm } from '../../common-functions/CommonFunctions'
 import { ringPageStyles } from './ring-page-styles'
 import { useDispatch, useSelector } from "react-redux"
 import { getNotificationId } from '../../CurrentNotification'
@@ -21,7 +21,9 @@ export default function RingPage({navigation, route}) {
     const stopRinging = async () => {
         if (puzzlePage === "" || params) {
           setPageText("Останавливаю...");
+          let date = buildDate();
           await stopAlarm();
+          await remindOfTracker(date);
         }
         else {
           if (correspondingAlarm.neighbourOption && !beenToPuzzle) {

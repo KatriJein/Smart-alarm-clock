@@ -1,5 +1,6 @@
 import * as Notifications from "expo-notifications"
-import { ActionContinueSound, ActionRing, ActionStop } from "../Constants";
+import { ActionContinueSound, ActionNone, ActionRing, ActionStop } from "../Constants";
+import dayjs from "dayjs";
 
 const calculateDaysDelta = (isLateForToday, currentDay, alarmDays) => {
     for (let day of alarmDays) {
@@ -63,6 +64,18 @@ export const stopAlarm = async () => {
     })
 }
 
+export const remindOfTracker = async (date) => {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: `${date}: Укажите данные о сне!`,
+            data: {
+                action: ActionNone
+            }
+        },
+        trigger: null
+    })
+}
+
 export const postponeSound = async () => {
     const res = await Notifications.scheduleNotificationAsync({
         content: {
@@ -89,4 +102,9 @@ export const shuffle = (array) => {
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
+  }
+
+  export const buildDate = () => {
+    let date = dayjs().format('YYYY-MM-DD');
+    return date;
   }

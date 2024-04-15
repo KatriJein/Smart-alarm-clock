@@ -31,7 +31,7 @@ export default function AlarmBlock(props) {
         <Pressable style={alarmBlockStyles.pressArea} onPress={() => navigation.navigate('Alarm details', { alarm })}>
             <View style={alarmBlockStyles.alarmBlock}>
                 <View style={alarmBlockStyles.info}>
-                    <Text style={alarmBlockStyles.description}>{alarm.name}</Text>
+                    {alarm.name ? <Text style={alarmBlockStyles.description}>{alarm.name}</Text> : ''}
                     <Text style={alarmBlockStyles.alarmTime}>{alarm.time}</Text>
                     {alarm.days.length > 0 ? <Text style={alarmBlockStyles.alarmDays}>{humanizeListOfDays(alarm.days)}</Text> : null}
                 </View>

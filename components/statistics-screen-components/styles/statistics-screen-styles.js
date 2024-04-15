@@ -5,7 +5,7 @@ import { vw } from "react-native-expo-viewport-units";
 
 export const statisticsScreenStyles = StyleSheet.create({
     scrollContainer: {
-        width: "100%",
+        width: vw(100),
         padding: 10,
     },
     // scrollContainerContent: {
@@ -37,7 +37,7 @@ export const statisticsScreenStyles = StyleSheet.create({
         flexDirection: 'row', 
         flex: 1, 
         alignItems: 'center', 
-        width: '99%',
+        width: '98%',
         marginVertical: vw(1),
     },
     header: {
@@ -45,5 +45,11 @@ export const statisticsScreenStyles = StyleSheet.create({
         height: '15%',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    changed: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        width: '100%',
+        padding: 10,
+        borderRadius: 20
     }
 })

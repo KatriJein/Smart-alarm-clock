@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { convertTimeToMin } from '../const';
 
 const initialState = {
-    averageSleepHour: [],
     sumWakeUpTime: 0,
     countWakeUpTime: 0,
     sumFallAsleepTime: 0,
@@ -15,9 +14,6 @@ export const statisticsSlice = createSlice({
     name: 'statistics',
     initialState,
     reducers: {
-        addAverageHours: (state, action) => {
-            state.averageSleepHour = [...state.averageSleepHour, +action.payload];
-        },
         addWakeUpTime: (state, action) => {
             state.sumWakeUpTime = state.sumWakeUpTime + convertTimeToMin(action.payload);
             state.countWakeUpTime = state.countWakeUpTime + 1;

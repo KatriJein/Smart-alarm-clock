@@ -5,11 +5,13 @@ import Puzzle from './puzzle';
 import { vw } from 'react-native-expo-viewport-units';
 
 export default function ListOfPuzzles(props) {
-    const {puzzles, onPress, title, selectedPuzzle} = props;
+    const {puzzles, onPuzzlePress, onAmountPress, onPasswordChange, title, selectedPuzzle} = props;
     return (
         <View style={styles.container}>
             <Text style={[styles.text, styles.title]}>{title}</Text>
-            <View style={styles.containerList}>{puzzles.map((item) => (<Puzzle key={item} onPress={() => onPress(item)} isSelected={selectedPuzzle === item} value={item}/>))}</View>
+            <View style={styles.containerList}>{puzzles.map((item) => (<Puzzle key={item} onPuzzlePress={() => onPuzzlePress(item)}
+            onAmountPress={(value) => onAmountPress(value)} onPasswordChange={(value) => onPasswordChange(value)}
+            isSelected={selectedPuzzle === item} value={item}/>))}</View>
         </View>
     )
 }

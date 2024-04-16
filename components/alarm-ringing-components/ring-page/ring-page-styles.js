@@ -71,8 +71,13 @@ export const ringPageStyles = StyleSheet.create({
         fontFamily: 'lato-medium',
         marginTop: 40
     },
-    title: {
+    description: {
         fontSize: 30,
+        fontFamily: 'lato-medium',
+        marginTop: 30
+    },
+    title: {
+        fontSize: 48,
         fontFamily: 'lato-medium',
         marginTop: 30
     }

@@ -19,11 +19,11 @@ import DayDetails from './components/calendar-screen-components/day-details-comp
 import * as Notifications from "expo-notifications"
 import * as TaskManager from "expo-task-manager"
 import { Audio, InterruptionModeAndroid } from 'expo-av';
-import { startSound, cancelSound } from './components/AlarmSound';
+import { startSound, cancelSound, continueSound, updateSound } from './components/AlarmSound';
 import RingPage from './components/alarm-ringing-components/ring-page/ring-page';
 import CardsPuzzle from './components/alarm-ringing-components/puzzle-cards/cards-puzzle';
 import { updateNotification, getNotificationId } from './components/CurrentNotification';
-import { ActionRing, ActionStop } from './components/Constants';
+import { ActionContinueSound, ActionRing, ActionStop } from './components/Constants';
 import { RingStack } from './components/alarm-ringing-components/navigations/RingStack';
 import AlarmsStack from './components/list-screen-components/alarms-navigation.js';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -54,6 +54,11 @@ const Tab = createBottomTabNavigator();
 export default function App() {
 
   const startAlarm = async (notification) => {
+    let fileName = notification.request.content.data.songName;
+    let isVibration = notification.request.content.data.isVibration;
+    let vibrationPattern = notification.request.content.data.vibrationPattern;
+    let volume = notification.request.content.data.volume / 100;
+    await updateSound(fileName, isVibration, vibrationPattern, volume);
     setIsRinging(true);
     updateNotification(notification.request.identifier);
     await startSound();
@@ -95,12 +100,18 @@ export default function App() {
         setIsRinging(false);
         await cancelSound();
       }
+      if (action === ActionContinueSound) {
+        await continueSound();
+      }
 
     });
     const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(async response => {
       let action = response.notification.request.content.data.action;
       if (action === ActionRing && getNotificationId() === "") {
         await startAlarm(response.notification);
+      }
+      if (action === ActionContinueSound) {
+        await continueSound();
       }
     });
 

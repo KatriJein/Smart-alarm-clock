@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 
 const initialState = {
   alarms: {
@@ -9,15 +10,18 @@ const initialState = {
       sound: 'nine',
       volume: 15,
       interval: 5,
-      puzzle: 'math',
+      puzzle: 'Нет',
+      isEnabled: false,
       description: 'Вставай на 1 пару',
       useVibration: true,
       neighbourOption: true,
+      password: "pass0",
+      puzzleAmount: 0,
       smartAlarm: false,
       timeToSleep: '',
       timeToWakeUp: '',
       days: [0, 2],
-      notificationId: 5
+      notificationId: ""
     },
     test2: {
       id: 'test2',
@@ -26,15 +30,18 @@ const initialState = {
       sound: 'none',
       volume: 15,
       interval: 5,
-      puzzle: 'math',
+      puzzle: 'Нет',
+      isEnabled: false,
       description: 'Вставай на 1 пару',
       useVibration: true,
       neighbourOption: true,
+      password: "pass1",
+      puzzleAmount: 0,
       smartAlarm: false,
       timeToSleep: '',
       timeToWakeUp: '',
       days: [0, 2],
-      notificationId: 5
+      notificationId: ""
     }
   }
 };
@@ -60,13 +67,20 @@ export const alarmsSlice = createSlice({
       };
       // state.value += action.payload
     },
+    updateNotificationId: (state, action) => {
+      const { alarmId, notificationId } = action.payload;
+      state.alarms[alarmId].notificationId = notificationId;
+    },
     // deleteAlarm: (state, action) => {
-
+    switchAlarm: (state, action) => {
+      const { alarmId, hasBeenEnabled } = action.payload;
+      state.alarms[alarmId].isEnabled = hasBeenEnabled;
+    }
     // }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addAlarm } = alarmsSlice.actions
+export const { addAlarm, updateNotificationId, switchAlarm } = alarmsSlice.actions
 
 export default alarmsSlice.reducer

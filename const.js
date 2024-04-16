@@ -62,7 +62,17 @@ const OPTIONS_LIST = [{
     options: ['алкоголь', 'поздний прием пищи', 'кофе', 'таблетка снотворного', 'болезнь']
 }];
 
-const PUZZLES = ['Математический пример', 'Пароль', 'Карточки', 'Текст'];
+const PUZZLES = ['Математический пример', 'Пароль', 'Карточки', 'Текст', 'Нет'];
+const CORRELATE_PAGES = {[PUZZLES[0]]: 'MathPuzzle', [PUZZLES[1]]: 'PasswordPuzzle',
+                         [PUZZLES[2]]: 'CardsPuzzle', [PUZZLES[3]]: 'WordsPuzzle',
+                        [PUZZLES[4]]: ""}
+
+const SELECTABLE_FROM_PASSWORD_PUZZLES = ['Математический пример', 'Карточки', 'Текст'];
+const DEFAULT_AMOUNTS = {[SELECTABLE_FROM_PASSWORD_PUZZLES[0]]: 5, [SELECTABLE_FROM_PASSWORD_PUZZLES[1]]: 16,
+                        [SELECTABLE_FROM_PASSWORD_PUZZLES[2]]: 5}
+const CORRELATE_PUZZLE_AMOUNT_OPTION = {[PUZZLES[0]]: [3, 5, 7, 10], [PUZZLES[1]]: [0],
+                                [PUZZLES[2]]: [8, 12, 16], [PUZZLES[3]]: [3, 5, 7, 10],
+                                [PUZZLES[4]]: []}
 
 const SETTINGS = [{ title: 'Почта:', info: 'example@gmail.com' },
 { title: 'Номер телефона:', info: '+7 922 999-99-99' },
@@ -72,6 +82,14 @@ const SETTINGS = [{ title: 'Почта:', info: 'example@gmail.com' },
 function createId() {
     return `id${Date.now() + '' + Math.random()}`
 }
+
+const CARDS_TEMPLATES = ['planet', 'leaf', 'paw', 'bug', 'american-football', 'beer', 'sparkles', 'game-controller'];
+const INPUT_WORDS = ['Кукуруза', 'Карамель', 'Эксперимент', 'Непреходящий', 'Конъюктивный', 'Дизъюнктивный', 'Обстоятельство',
+                    'Переосвидетельствоваться', 'Делопроизводительница', 'Высокопревосходительство',
+                    'Физкульт-привет', 'Соответственно'];
+
+const MIN_PASSWORD_LENGTH = 8;
+const MAX_PASSWORD_LENGTH = 20;
 
 function printHours(hour) {
     if (hour === 1) {
@@ -139,4 +157,6 @@ function calculateBestWakeUpTimes(startTime, endTime) {
     return [firstWakeUpTime, secondWakeUpTime];
 }
 
-export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, calculateBestWakeUpTimes, parseTimeToDate, calcAverage, getAverageTime, convertTimeToMin, humanizeListOfDays, createId, printHours, NAME_OF_DAY_OF_WEEK, PUZZLES };
+export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, calculateBestWakeUpTimes, parseTimeToDate,
+ calcAverage, getAverageTime, convertTimeToMin, humanizeListOfDays, createId, printHours, NAME_OF_DAY_OF_WEEK, PUZZLES, CORRELATE_PAGES,
+CARDS_TEMPLATES, INPUT_WORDS, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH, SELECTABLE_FROM_PASSWORD_PUZZLES, CORRELATE_PUZZLE_AMOUNT_OPTION, DEFAULT_AMOUNTS };

@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         paddingRight: 15,
-        paddingBottom: 10
+        paddingVertical: 10,
     },
     info: {
         width: "50%"
@@ -25,7 +25,6 @@ export const styles = StyleSheet.create({
         color: "rgba(110, 110, 110, 1)",
         fontFamily: "lato-regular",
         marginLeft: 15,
-        marginTop: 10,
         fontSize: 16
     },
     alarmTime: {

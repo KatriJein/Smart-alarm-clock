@@ -1,4 +1,3 @@
-
 import { View, Text, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { commonStyles } from '../../../common-styles'
@@ -9,7 +8,9 @@ import { ringPageStyles } from './ring-page-styles'
 import { useDispatch, useSelector } from "react-redux"
 import { getNotificationId } from '../../CurrentNotification'
 import { CORRELATE_PAGES } from '../../../const'
-import { interruptSound } from '../../AlarmSound'
+import { interruptSound } from '../../AlarmSound';
+import stop from '../../../assets/svg/stop2.png';
+import zzz from '../../../assets/svg/zzz2.png';
 
 export default function RingPage({navigation, route}) {
     const params = route.params;
@@ -43,14 +44,28 @@ export default function RingPage({navigation, route}) {
     }, [])
 
   return (
-    <Gradient>
-        <View style={[commonStyles.container, ringPageStyles.myContainer]}>
-        <Text style={ringPageStyles.wakeTime}>{correspondingAlarm?.time}</Text>
-        <Text style={ringPageStyles.description}>{correspondingAlarm?.description}</Text>
-        <Pressable onPress={async () => stopRinging()}>
-            <Text style={ringPageStyles.wakeUp}>{pageText}</Text>
-        </Pressable>
+    <View style={ringPageStyles.container}>
+      <View style={ringPageStyles.mainContainer}>
+        <View style={ringPageStyles.alarm}>
+          <View style={ringPageStyles.ellipse}>
+            <View style={ringPageStyles.timeContainer}>
+              <Text style={[ringPageStyles.text, ringPageStyles.time]}>12:05</Text>
+              <Text style={[ringPageStyles.text, ringPageStyles.name]}>Название</Text>
+            </View>
+          </View>
+          <View style={ringPageStyles.desc}>
+            <Text style={[ringPageStyles.text, ringPageStyles.description]}>Описание будильника</Text>
+          </View>
         </View>
-    </Gradient>
+        <View style={ringPageStyles.buttons}>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Image source={zzz} style={ringPageStyles.button} />
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7} onPress={async () => stopRinging()}>
+            <Image source={stop} style={ringPageStyles.button} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
   )
 }

@@ -102,11 +102,15 @@ function printHours(hour) {
 };
 
 function calcAverage(arr) {
+    let count = 0;
     if (arr.length > 0) {
         const sum = arr.reduce(function(x, y) {
-            return x + y;
+            if (y) {
+                count++;
+            }
+            return x + Number(y);
         }, 0);
-        return sum / arr.length;
+        return (sum / count).toFixed(2);
     } else {
         return 0;
     }

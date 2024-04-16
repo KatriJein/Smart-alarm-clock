@@ -36,9 +36,6 @@ export default function DayDetails({ route }) {
         if (selectedOptions != defaultState) {
             dispatch(addDate({date: date.dateString, options: {...selectedOptions}}));
         }
-        if (!!selectedOptions.hours) {
-            dispatch(addAverageHours(selectedOptions.hours));
-        }
     };
 
     return (

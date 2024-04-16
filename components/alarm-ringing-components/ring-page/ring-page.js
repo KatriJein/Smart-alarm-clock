@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { commonStyles } from '../../../common-styles'
 import Gradient from '../../Gradient'
@@ -49,12 +49,12 @@ export default function RingPage({navigation, route}) {
         <View style={ringPageStyles.alarm}>
           <View style={ringPageStyles.ellipse}>
             <View style={ringPageStyles.timeContainer}>
-              <Text style={[ringPageStyles.text, ringPageStyles.time]}>12:05</Text>
-              <Text style={[ringPageStyles.text, ringPageStyles.name]}>Название</Text>
+              <Text style={[ringPageStyles.text, ringPageStyles.time]}>{correspondingAlarm?.time}</Text>
+              <Text style={[ringPageStyles.text, ringPageStyles.name]}>{correspondingAlarm?.name}</Text>
             </View>
           </View>
           <View style={ringPageStyles.desc}>
-            <Text style={[ringPageStyles.text, ringPageStyles.description]}>Описание будильника</Text>
+            <Text style={[ringPageStyles.text, ringPageStyles.description]}>{correspondingAlarm?.description}</Text>
           </View>
         </View>
         <View style={ringPageStyles.buttons}>

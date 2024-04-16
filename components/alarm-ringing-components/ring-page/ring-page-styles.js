@@ -33,11 +33,10 @@ export const ringPageStyles = StyleSheet.create({
         justifyContent: 'center'
     },
     time: {
-        fontFamily: 'lato-medium',
         fontSize: 74,
     },
     text: {
-        fontFamily: 'lato-medium',
+        fontFamily: 'lato-bold',
         color: '#FFF'
     },
     name: {
@@ -53,32 +52,12 @@ export const ringPageStyles = StyleSheet.create({
         alignItems: 'center'
     },
     button: {
-        width: vw(25),
-        height: vw(25)
+        width: vw(22),
+        height: vw(22)
     },
     buttons: {
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
-    wakeUp: {
-        fontSize: 36,
-        fontFamily: 'lato-medium',
-        marginTop: 70
-    },
-    wakeTime: {
-        fontSize: 48,
-        fontFamily: 'lato-medium',
-        marginTop: 40
-    },
-    description: {
-        fontSize: 30,
-        fontFamily: 'lato-medium',
-        marginTop: 30
-    },
-    title: {
-        fontSize: 48,
-        fontFamily: 'lato-medium',
-        marginTop: 30
-    }
 })

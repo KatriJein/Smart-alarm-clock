@@ -75,6 +75,7 @@ export default function App() {
           'lato-regular': require('./assets/fonts/Lato-Regular.ttf'),
           'inter-regular': require('./assets/fonts/Inter-Regular.ttf'),
           'kyiv-type': require('./assets/fonts/KyivTypeSans-Regular.ttf'),
+          'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
         });
         await Audio.setAudioModeAsync({
           staysActiveInBackground: true,
@@ -149,7 +150,7 @@ export default function App() {
             }}>
               {!isRinging
                 ? <>
-                  <Tab.Screen name='Alarms' component={AlarmsStack} options={{
+                  <Tab.Screen name='Alarms' component={RingPage} options={{
                     tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
                     headerShown: false
                   }} />

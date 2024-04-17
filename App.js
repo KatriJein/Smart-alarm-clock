@@ -150,7 +150,7 @@ export default function App() {
             }}>
               {!isRinging
                 ? <>
-                  <Tab.Screen name='Alarms' component={RingPage} options={{
+                  <Tab.Screen name='Alarms' component={AlarmsStack} options={{
                     tabBarIcon: ({ color }) => <Ionicons name="alarm-outline" size={45} color={color} />,
                     headerShown: false
                   }} />

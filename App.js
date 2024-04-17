@@ -141,7 +141,7 @@ export default function App() {
               tabBarInactiveTintColor: '#711B3B',
               tabBarStyle: {
                 backgroundColor: '#ffceec',
-                height: 60,
+                height: !isRinging ? 60 : 0,
                 borderTopWidth: 0,
                 alignItems: 'center'
               }

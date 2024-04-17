@@ -4,16 +4,18 @@ import React, { useEffect, useState } from 'react'
 import { commonStyles } from '../../../common-styles'
 import Gradient from '../../Gradient'
 import * as Notifications from "expo-notifications"
-import { buildDate, remindOfTracker, stopAlarm } from '../../common-functions/CommonFunctions'
+import { buildDate, buildNewAlarmTime, remindOfTracker, scheduleAlarm, stopAlarm } from '../../common-functions/CommonFunctions'
 import { ringPageStyles } from './ring-page-styles'
 import { useDispatch, useSelector } from "react-redux"
 import { getNotificationId } from '../../CurrentNotification'
 import { CORRELATE_PAGES } from '../../../const'
 import { interruptSound } from '../../AlarmSound'
+import { addAlarm } from '../../../store/alarmReducer'
 
 export default function RingPage({navigation, route}) {
     const params = route.params;
     const alarmsList = useSelector(state => state.alarms.alarms);
+    const dispatch = useDispatch();
     const [correspondingAlarm, setCorrespondingAlarm] = useState(null);
     const [pageText, setPageText] = useState("Отключить >>");
     const [puzzlePage, setPuzzlePage] = useState("");
@@ -32,6 +34,13 @@ export default function RingPage({navigation, route}) {
           navigation.navigate(puzzlePage, {password: correspondingAlarm.password, amount: correspondingAlarm.puzzleAmount});
           setBeenToPuzzle(true);
         }
+    }
+
+    const postponeAlarm = async () => {
+      let newTime = buildNewAlarmTime(correspondingAlarm.time, Number(correspondingAlarm.interval));
+      const newAlarm = {...correspondingAlarm, time: newTime};
+      dispatch(addAlarm(newAlarm));
+      await stopAlarm();
     }
 
     useEffect(() => {

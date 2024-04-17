@@ -14,7 +14,7 @@ import Gradient from '../Gradient';
 import dayjs from 'dayjs';
 import { createId } from '../../const';
 import * as Notifications from "expo-notifications"
-import { CalculateSecondsToRing } from '../common-functions/CommonFunctions';
+import { CalculateSecondsToRing, isLateForToday } from '../common-functions/CommonFunctions';
 import { updateSound } from '../AlarmSound';
 import { scheduleAlarm } from '../common-functions/CommonFunctions';
 import { CORRELATE_SOUND_NAMES } from '../../const';
@@ -71,7 +71,10 @@ export default function AlarmPage({ route }) {
 
   async function onPressBackButton() {
     if (currentAlarm.days.length === 0) {
-      let nextDay = (new Date().getDay() + 1) % 7;
+      let date = new Date();
+      let [alarmHour, alarmMinute] = currentAlarm.time.split(":").map(num => Number(num));
+      const isLate = isLateForToday(date.getHours(), date.getMinutes(), alarmHour, alarmMinute);
+      let nextDay = isLate ? (new Date().getDay() + 1) % 7 : date.getDay();
       currentAlarm.days = [nextDay];
     }
     dispatch(addAlarm(currentAlarm));

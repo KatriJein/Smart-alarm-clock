@@ -11,7 +11,7 @@ const calculateDaysDelta = (isLateForToday, currentDay, alarmDays) => {
     return 6 - currentDay  + alarmDays[0] + 1;
 }
 
-const isLateForToday = (currentHour, currentMinute, alarmHour, alarmMinute) => {
+export const isLateForToday = (currentHour, currentMinute, alarmHour, alarmMinute) => {
     let isHourEqual = currentHour === alarmHour;
     let isHourBigger = currentHour > alarmHour;
     if (isHourBigger || (isHourEqual && currentMinute >= alarmMinute)) return true;
@@ -46,7 +46,7 @@ export const scheduleAlarm = async (title, description, seconds, songName, isVib
             }
         },
         trigger: {
-            seconds: 2,
+            seconds: 2
         }
     })
     return res;
@@ -107,4 +107,12 @@ export const shuffle = (array) => {
   export const buildDate = () => {
     let date = dayjs().format('YYYY-MM-DD');
     return date;
+  }
+
+  export const buildNewAlarmTime = (alarmTime, minutes) => {
+    const [alarmHour, alarmMinute] = alarmTime.split(":").map(num => Number(num));
+    const newMinutes = (alarmMinute + minutes) % 60;
+    const hoursDelta = Math.floor((alarmMinute + minutes) / 60);
+    const newHours = (alarmHour + hoursDelta) % 24;
+    return `${newHours > 9 ? newHours : "0" + newHours}:${newMinutes > 9 ? newMinutes : "0" + newMinutes}`
   }

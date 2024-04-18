@@ -15,6 +15,7 @@ import { addAlarm } from '../../../store/alarmReducer'
 export default function RingPage({navigation, route}) {
     const params = route.params;
     const alarmsList = useSelector(state => state.alarms.alarms);
+    const stats = useSelector(state => state.calendar.dailyStats);
     const dispatch = useDispatch();
     const [correspondingAlarm, setCorrespondingAlarm] = useState(null);
     const [pageText, setPageText] = useState("Отключить >>");
@@ -25,7 +26,9 @@ export default function RingPage({navigation, route}) {
           setPageText("Останавливаю...");
           let date = buildDate();
           await stopAlarm();
-          await remindOfTracker(date);
+          if (stats[date] === undefined) {
+            await remindOfTracker(date);
+          }
         }
         else {
           if (correspondingAlarm.neighbourOption && !beenToPuzzle) {

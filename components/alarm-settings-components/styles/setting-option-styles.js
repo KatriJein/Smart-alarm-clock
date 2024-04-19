@@ -15,10 +15,11 @@ export const settingOptionStyles = StyleSheet.create({
         fontFamily: 'lato-regular'
     },
     optionChoice: {
-        width: '90%',
+        width: '87%',
         fontSize: 18,
         fontFamily: 'lato-regular',
         marginRight: 10,
+        textAlign: 'right',
     },
     choiceView: {
         width: '50%',

@@ -11,13 +11,13 @@ function createDataForWeekChart(dataObject) {
 
 function getMonday(date) {
     const day = date.getDay();
-    const diff = day !== 1 ? day - 2 : 6;
+    const diff = day !== 1 ? (day === 0 ? 6 : day - 1) : 0;
     return new Date(date.setDate(date.getDate() - diff));
 }
 
 function getSunday(date) {
     const day = date.getDay();
-    const diff = day !== 0 ? 8 - day : 0;
+    const diff = day !== 0 ? 7 - day : 0;
     return new Date(date.setDate(date.getDate() + diff));
 }
 

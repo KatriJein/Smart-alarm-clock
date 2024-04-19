@@ -50,37 +50,29 @@ export const alarmsSlice = createSlice({
   name: 'alarms',
   initialState,
   reducers: {
-    // increment: (state) => {
-    //   // Redux Toolkit allows us to write "mutating" logic in reducers. It
-    //   // doesn't actually mutate the state because it uses the Immer library,
-    //   // which detects changes to a "draft state" and produces a brand new
-    //   // immutable state based off those changes
-    //   state.value += 1
-    // },
-    // decrement: (state) => {
-    //   state.value -= 1
-    // },
     addAlarm: (state, action) => {
       state.alarms = {
         ...state.alarms,
         [action.payload.id]: action.payload
       };
-      // state.value += action.payload
     },
     updateNotificationId: (state, action) => {
       const { alarmId, notificationId } = action.payload;
       state.alarms[alarmId].notificationId = notificationId;
     },
-    // deleteAlarm: (state, action) => {
     switchAlarm: (state, action) => {
       const { alarmId, hasBeenEnabled } = action.payload;
       state.alarms[alarmId].isEnabled = hasBeenEnabled;
-    }
-    // }
+    },
+    deleteAlarm: (state, action) => {
+      const clone = {...state.alarms};
+      delete clone[action.payload.id]; 
+      state.alarms = clone;
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addAlarm, updateNotificationId, switchAlarm } = alarmsSlice.actions
+export const { addAlarm, updateNotificationId, switchAlarm, deleteAlarm } = alarmsSlice.actions
 
 export default alarmsSlice.reducer

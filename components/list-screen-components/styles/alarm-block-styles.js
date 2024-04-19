@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
         marginTop: 20,
     },
     alarmBlock: {
-        backgroundColor: "rgba(255, 255, 255, 0.4)",
+        backgroundColor: "#fcdfe4",
         borderRadius: 25,
         display: "flex",
         flexDirection: "row",

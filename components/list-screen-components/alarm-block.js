@@ -37,7 +37,8 @@ export default function AlarmBlock(props) {
     const { width: SCREEN_WIDTH } = Dimensions.get('window');
     const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.35;
 
-    function deleteAlarmHandler() {
+    async function deleteAlarmHandler() {
+        await Notifications.cancelScheduledNotificationAsync(alarm.notificationId);
         dispatch(deleteAlarm({ id: alarm.id }));
     }
 

@@ -72,7 +72,7 @@ export default function RingPage({navigation, route}) {
           </View>
         </View>
         <View style={ringPageStyles.buttons}>
-          <TouchableOpacity activeOpacity={0.7}>
+          <TouchableOpacity activeOpacity={0.7} onPress={async () => postponeAlarm()}>
             <Image source={zzz} style={ringPageStyles.button} />
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.7} onPress={async () => stopRinging()}>

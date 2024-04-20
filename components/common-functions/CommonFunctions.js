@@ -72,7 +72,9 @@ export const remindOfTracker = async (date) => {
                 action: ActionNone
             }
         },
-        trigger: 5
+        trigger: {
+            seconds: 5
+        }
     })
 }
 

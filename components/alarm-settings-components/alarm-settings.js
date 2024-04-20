@@ -52,7 +52,7 @@ export default function AlarmSettings(props) {
   return (
     <ScrollView contentContainerStyle={alarmSettingsStyles.scrollContainer} style={alarmSettingsStyles.container}>
       <View style={alarmSettingsStyles.optionContainer}>
-        <SettingChoiceOption optionTitle="Звук" />
+        <SettingChoiceOption optionTitle="Звук" currentOption={currentAlarm.sound} onChange={(value) => changeOption('sound', value)}/>
         <Slider
           style={{ width: 320, transform: [{ scaleY: 2, }], marginTop: 10 }}
           minimumTrackTintColor='rgba(217, 51, 113, 1)'

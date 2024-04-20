@@ -2,7 +2,6 @@ function createDataForWeekChart(dataObject) {
     const today = new Date();
     const startOfWeek = getMonday(today);
     const endOfWeek = getSunday(today);
-
     const dates = createArrayDates(startOfWeek, endOfWeek);
     const data = createArrayData(dataObject, dates);
 
@@ -25,7 +24,6 @@ function createDataForMonthChart(dataObject) {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 2);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-
     const dates = createArrayDates(startOfMonth, endOfMonth);
     const data = createArrayData(dataObject, dates);
 

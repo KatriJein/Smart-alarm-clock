@@ -91,6 +91,9 @@ const INPUT_WORDS = ['Кукуруза', 'Карамель', 'Экспериме
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_PASSWORD_LENGTH = 20;
 
+const SOUND_NAMES = ["Дождь", "Ручей", "Лягушки", "Птички"]
+const CORRELATE_SOUND_NAMES = {[SOUND_NAMES[0]]: "rain.mp3", [SOUND_NAMES[1]]: "river.mp3", [SOUND_NAMES[2]]: "frogs.mp3", [SOUND_NAMES[3]]: "birds.mp3"}
+
 function printHours(hour) {
     if (hour === 1) {
         return `${hour} час`;
@@ -159,4 +162,5 @@ function calculateBestWakeUpTimes(startTime, endTime) {
 
 export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, calculateBestWakeUpTimes, parseTimeToDate,
  calcAverage, getAverageTime, convertTimeToMin, humanizeListOfDays, createId, printHours, NAME_OF_DAY_OF_WEEK, PUZZLES, CORRELATE_PAGES,
-CARDS_TEMPLATES, INPUT_WORDS, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH, SELECTABLE_FROM_PASSWORD_PUZZLES, CORRELATE_PUZZLE_AMOUNT_OPTION, DEFAULT_AMOUNTS };
+CARDS_TEMPLATES, INPUT_WORDS, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH, SELECTABLE_FROM_PASSWORD_PUZZLES, CORRELATE_PUZZLE_AMOUNT_OPTION, DEFAULT_AMOUNTS,
+SOUND_NAMES, CORRELATE_SOUND_NAMES };

@@ -56,9 +56,8 @@ export default function App() {
   const startAlarm = async (notification) => {
     let fileName = notification.request.content.data.songName;
     let isVibration = notification.request.content.data.isVibration;
-    let vibrationPattern = notification.request.content.data.vibrationPattern;
     let volume = notification.request.content.data.volume / 100;
-    await updateSound(fileName, isVibration, vibrationPattern, volume);
+    await updateSound(fileName, isVibration, [3000, 4000, 3000, 4000], volume);
     setIsRinging(true);
     updateNotification(notification.request.identifier);
     await startSound();
@@ -143,7 +142,7 @@ export default function App() {
               tabBarInactiveTintColor: '#711B3B',
               tabBarStyle: {
                 backgroundColor: '#ffceec',
-                height: 60,
+                height: !isRinging ? 60 : 0,
                 borderTopWidth: 0,
                 alignItems: 'center'
               }

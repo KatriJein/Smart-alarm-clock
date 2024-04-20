@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { commonStyles } from '../../../common-styles'
 import Gradient from '../../Gradient'
 import * as Notifications from "expo-notifications"
-import { stopAlarm } from '../../common-functions/CommonFunctions'
+import { buildDate, buildNewAlarmTime, remindOfTracker, scheduleAlarm, stopAlarm } from '../../common-functions/CommonFunctions'
 import { ringPageStyles } from './ring-page-styles'
 import { useDispatch, useSelector } from "react-redux"
 import { getNotificationId } from '../../CurrentNotification'
 import { CORRELATE_PAGES } from '../../../const'
+import { addAlarm } from '../../../store/alarmReducer'
 import { interruptSound } from '../../AlarmSound';
 import stop from '../../../assets/svg/stop2.png';
 import zzz from '../../../assets/svg/zzz2.png';
@@ -15,6 +16,8 @@ import zzz from '../../../assets/svg/zzz2.png';
 export default function RingPage({navigation, route}) {
     const params = route.params;
     const alarmsList = useSelector(state => state.alarms.alarms);
+    const stats = useSelector(state => state.calendar.dailyStats);
+    const dispatch = useDispatch();
     const [correspondingAlarm, setCorrespondingAlarm] = useState(null);
     const [pageText, setPageText] = useState("Отключить >>");
     const [puzzlePage, setPuzzlePage] = useState("");
@@ -22,7 +25,11 @@ export default function RingPage({navigation, route}) {
     const stopRinging = async () => {
         if (puzzlePage === "" || params) {
           setPageText("Останавливаю...");
+          let date = buildDate();
           await stopAlarm();
+          if (stats[date] === undefined) {
+            await remindOfTracker(date);
+          }
         }
         else {
           if (correspondingAlarm.neighbourOption && !beenToPuzzle) {
@@ -31,6 +38,13 @@ export default function RingPage({navigation, route}) {
           navigation.navigate(puzzlePage, {password: correspondingAlarm.password, amount: correspondingAlarm.puzzleAmount});
           setBeenToPuzzle(true);
         }
+    }
+
+    const postponeAlarm = async () => {
+      let newTime = buildNewAlarmTime(correspondingAlarm.time, Number(correspondingAlarm.interval));
+      const newAlarm = {...correspondingAlarm, time: newTime};
+      dispatch(addAlarm(newAlarm));
+      await stopAlarm();
     }
 
     useEffect(() => {

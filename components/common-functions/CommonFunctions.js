@@ -1,5 +1,6 @@
 import * as Notifications from "expo-notifications"
-import { ActionContinueSound, ActionRing, ActionStop } from "../Constants";
+import { ActionContinueSound, ActionNone, ActionRing, ActionStop } from "../Constants";
+import dayjs from "dayjs";
 
 const calculateDaysDelta = (isLateForToday, currentDay, alarmDays) => {
     for (let day of alarmDays) {
@@ -10,7 +11,7 @@ const calculateDaysDelta = (isLateForToday, currentDay, alarmDays) => {
     return 6 - currentDay  + alarmDays[0] + 1;
 }
 
-const isLateForToday = (currentHour, currentMinute, alarmHour, alarmMinute) => {
+export const isLateForToday = (currentHour, currentMinute, alarmHour, alarmMinute) => {
     let isHourEqual = currentHour === alarmHour;
     let isHourBigger = currentHour > alarmHour;
     if (isHourBigger || (isHourEqual && currentMinute >= alarmMinute)) return true;
@@ -29,7 +30,7 @@ export const CalculateSecondsToRing = (time, alarmDays) => {
     return Math.ceil((nextTime - currentTime) / 1000);
 }
 
-export const scheduleAlarm = async (title, description, seconds, songName, isVibration, vibrationPattern, volume) => {
+export const scheduleAlarm = async (title, description, seconds, songName, isVibration, volume, vibrationPattern=[3000,4000,3000,4000]) => {
     const res = await Notifications.scheduleNotificationAsync({
         content: {
             autoDismiss: false,
@@ -45,7 +46,7 @@ export const scheduleAlarm = async (title, description, seconds, songName, isVib
             }
         },
         trigger: {
-            seconds: 2,
+            seconds: 2
         }
     })
     return res;
@@ -60,6 +61,18 @@ export const stopAlarm = async () => {
             }
         },
         trigger: null
+    })
+}
+
+export const remindOfTracker = async (date) => {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: `${date}: Укажите данные о сне!`,
+            data: {
+                action: ActionNone
+            }
+        },
+        trigger: 5
     })
 }
 
@@ -89,4 +102,17 @@ export const shuffle = (array) => {
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
+  }
+
+  export const buildDate = () => {
+    let date = dayjs().format('YYYY-MM-DD');
+    return date;
+  }
+
+  export const buildNewAlarmTime = (alarmTime, minutes) => {
+    const [alarmHour, alarmMinute] = alarmTime.split(":").map(num => Number(num));
+    const newMinutes = (alarmMinute + minutes) % 60;
+    const hoursDelta = Math.floor((alarmMinute + minutes) / 60);
+    const newHours = (alarmHour + hoursDelta) % 24;
+    return `${newHours > 9 ? newHours : "0" + newHours}:${newMinutes > 9 ? newMinutes : "0" + newMinutes}`
   }

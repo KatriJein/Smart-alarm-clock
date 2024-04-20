@@ -74,6 +74,7 @@ export default function App() {
           'lato-regular': require('./assets/fonts/Lato-Regular.ttf'),
           'inter-regular': require('./assets/fonts/Inter-Regular.ttf'),
           'kyiv-type': require('./assets/fonts/KyivTypeSans-Regular.ttf'),
+          'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
         });
         await Audio.setAudioModeAsync({
           staysActiveInBackground: true,

@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
         fontSize: Math.round(vw(4.9)),
     },
     choiceView: {
-        width: '40%',
+        width: '30%',
         height: '90%',
         display: "flex",
         flexDirection: "row",

@@ -8,7 +8,7 @@ import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import Gradient from '../Gradient';
 import { useSelector } from 'react-redux';
-import {calcAverage, getAverageTime} from '../../const';
+import { calcAverage, getAverageTime } from '../../const';
 import { createDataForMonthChart, createDataForYearChart, createDataForWeekChart } from './data/convertData';
 
 const defaultStateChart = {
@@ -31,8 +31,6 @@ export default function StatisticsScreen() {
 
   const days = useSelector(state => state.calendar.dailyStats);
   const statistics = useSelector(state => state.statistics);
-  const jls = calcAverage(statistics.averageSleepHour);
-  console.log(jls);
 
   useEffect(() => {
     setChartValues({
@@ -117,29 +115,31 @@ export default function StatisticsScreen() {
         </View>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
           <View style={statisticsScreenStyles.scrollContainer}>
-            <View style={statisticsScreenStyles.periodSelect}>
-              <RoundSelector options={periods.current} optionIndex={currentPeriod} onOptionPress={onPeriodPress} />
-            </View>
-            <View style={statisticsScreenStyles.sleepChart}>
-              <LineChart data={sleepChartData} height={200} width={screenWidth} chartConfig={sleepHoursChartConfig} />
-            </View>
-            <View style={statisticsScreenStyles.containerText}>
-              <Text style={statisticsScreenStyles.general}>Среднее кол-во часов сна: {calcAverage(statistics.averageSleepHour)}</Text>
+            <View style={statisticsScreenStyles.changed}>
+              <View style={statisticsScreenStyles.periodSelect}>
+                <RoundSelector options={periods.current} optionIndex={currentPeriod} onOptionPress={onPeriodPress} />
+              </View>
+              <View style={statisticsScreenStyles.sleepChart}>
+                <LineChart data={sleepChartData} height={200} width={screenWidth} chartConfig={sleepHoursChartConfig} />
+              </View>
+              <View style={statisticsScreenStyles.containerText}>
+                <Text style={statisticsScreenStyles.general}>Среднее кол-во часов сна: {calcAverage(chartValues[currentPeriod])}</Text>
+              </View>
+              <View style={statisticsScreenStyles.sleepQualityChart}>
+                <LineChart data={sleepQualityChartData} height={200} width={screenWidth} chartConfig={sleepQualityChartConfig} />
+              </View>
+              <View style={statisticsScreenStyles.containerText}>
+                <Text style={statisticsScreenStyles.general}>Лучший сон в: {textData.bestSleepingDay}</Text>
+              </View>
+              <View style={statisticsScreenStyles.containerText}>
+                <Text style={statisticsScreenStyles.general}>Вы лучше спите, когда перед сном занимались: {textData.healthiestActivity}</Text>
+              </View>
             </View>
             <View style={statisticsScreenStyles.containerText}>
               <Text style={statisticsScreenStyles.general}>Среднее время отхода ко сну: {getAverageTime(statistics.sumFallAsleepTime, statistics.countFallAsleepTime)}</Text>
             </View>
             <View style={statisticsScreenStyles.containerText}>
               <Text style={statisticsScreenStyles.general}>Среднее время пробуждения: {getAverageTime(statistics.sumWakeUpTime, statistics.countWakeUpTime)}</Text>
-            </View>
-            <View style={statisticsScreenStyles.sleepQualityChart}>
-              <LineChart data={sleepQualityChartData} height={200} width={screenWidth} chartConfig={sleepQualityChartConfig} />
-            </View>
-            <View style={statisticsScreenStyles.containerText}>
-              <Text style={statisticsScreenStyles.general}>Лучший сон в: {textData.bestSleepingDay}</Text>
-            </View>
-            <View style={statisticsScreenStyles.containerText}>
-              <Text style={statisticsScreenStyles.general}>Вы лучше спите, когда перед сном занимались: {textData.healthiestActivity}</Text>
             </View>
           </View>
         </ScrollView>

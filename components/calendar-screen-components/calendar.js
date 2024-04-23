@@ -5,7 +5,8 @@ import { vw } from 'react-native-expo-viewport-units';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { buildDate } from '../common-functions/CommonFunctions';
 
 
 LocaleConfig.locales['ru'] = {
@@ -43,6 +44,7 @@ export default function Calendar(props) {
     const navigation = useNavigation();
     const markedDays = useSelector(state => state.calendar.dailyStats);
     const [markedDates, setMarkedDates] = useState({});
+    const today = useRef(buildDate());
 
     useEffect(() => {
         setMarkedDates(getMarkedDays(markedDays));
@@ -63,8 +65,9 @@ export default function Calendar(props) {
     }
 
     function dayView({ date, state, marking }) {
-        return <TouchableOpacity onPress={() => onPressDay(date)} activeOpacity={0.6}>
-            <View style={stylesDay.container}>
+        const isFutureDay = date.dateString > today.current;
+        return <TouchableOpacity disabled={isFutureDay} onPress={() => onPressDay(date)} activeOpacity={0.6}>
+            <View style={[stylesDay.container, isFutureDay ? {opacity: 0.5} : {}]}>
                 <Text style={stylesDay.text}>{date.day}</Text>
                 <View style={marking ? stylesDay.marked : ''} />
             </View>
@@ -133,7 +136,7 @@ const stylesDay = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 10,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     text: {
         fontFamily: 'inter-regular',

@@ -33,6 +33,8 @@ export const styles = StyleSheet.create({
     optionChoice: {
         width: '88%',
         fontSize: 18,
+        textAlign: 'right',
+        paddingRight: 10,
         fontFamily: 'lato-regular',
     },
     choiceView: {

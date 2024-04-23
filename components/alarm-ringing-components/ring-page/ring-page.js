@@ -17,6 +17,7 @@ export default function RingPage({navigation, route}) {
     const params = route.params;
     const alarmsList = useSelector(state => state.alarms.alarms);
     const stats = useSelector(state => state.calendar.dailyStats);
+    const areNotificationsEnabled = useSelector(state => state.settings.notificationsEnabled);
     const dispatch = useDispatch();
     const [correspondingAlarm, setCorrespondingAlarm] = useState(null);
     const [pageText, setPageText] = useState("Отключить >>");
@@ -27,7 +28,7 @@ export default function RingPage({navigation, route}) {
           setPageText("Останавливаю...");
           let date = buildDate();
           await stopAlarm();
-          if (stats[date] === undefined) {
+          if (stats[date] === undefined && areNotificationsEnabled) {
             await remindOfTracker(date);
           }
         }

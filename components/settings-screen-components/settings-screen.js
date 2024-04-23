@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, TextInput, Modal } from 'react-native';
 import SettingsList from './settings-list';
 import { STATUSBAR_HEIGHT } from '../../const';
 import { vw } from 'react-native-expo-viewport-units';
@@ -8,10 +8,14 @@ import SwitchOption from '../alarm-settings-components/settings/switch-option';
 import HorizontalLine from '../common-components/horizontal-line';
 import EditingOption from './editing-option';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateAreNotificationsEnabled, updateUserAvatarUri, updateUserName, updateUserPhone } from '../../store/settingsReducer';
+import { updateAreNotificationsEnabled, updateTheme, updateUserAvatarUri, updateUserEmail, updateUserName, updateUserPhone } from '../../store/settingsReducer';
 import { useState } from 'react';
 import * as ImagePicker from "expo-image-picker"
 import * as FileSystem from "expo-file-system"
+import ThemesList from './theme/themes-list';
+import ButtonBack from '../button-back';
+import Phone from './phone/phone';
+import Email from './email/email';
 
 const userImg = require('../../assets/user-img.png');
 
@@ -30,6 +34,9 @@ export default function SettingsScreen() {
   const [userEmail, setUserEmail] = useState(email);
   const [userTheme, setUserTheme] = useState(theme);
   const [areNotificationsEnabled, setAreNotificationsEnabled] = useState(notificationsEnabled);
+
+  const [phoneModalVisible, setPhoneModalVisible] = useState(false);
+  const [emailModalVisible, setEmailModalVisible] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -68,6 +75,35 @@ export default function SettingsScreen() {
     dispatch(updateUserName(name));
   }
 
+  const updateUserTheme = (theme) => {
+    setUserTheme(theme);
+    dispatch(updateTheme(theme));
+  }
+
+  const updatePhone = (phone) => {
+    setUserPhone(phone);
+    dispatch(updateUserPhone(phone));
+  }
+
+  const updateEmail = (email) => {
+    setUserEmail(email);
+    dispatch(updateUserEmail(email));
+  }
+
+  const checkPhone = () => {
+    const cleaned = userPhone.replace(/\D/g, '');
+    if (cleaned.length !== 11) {
+      updatePhone("");
+    }
+  }
+
+  const checkEmail = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(userEmail)) {
+      updateEmail("");
+    }
+  }
+
   return (
     <Gradient>
       <View style={styles.container}>
@@ -82,16 +118,42 @@ export default function SettingsScreen() {
           <View style={styles.listsContainer}>
             <View style={styles.containerList}>
               <View style={styles.optionContainer}>
-                <EditingOption optionTitle="Телефон" currentOption={userPhone}/>
+                <EditingOption optionTitle="Телефон" currentOption={userPhone} onPress={() => setPhoneModalVisible(true)}>
+                  <Modal
+                  animationType='slide'
+                  visible={phoneModalVisible}
+                  onRequestClose={() => { setPhoneModalVisible(false); checkPhone() }}>
+                    <Gradient>
+                        <View style={styles.modal}>
+                          <ButtonBack onBackPress={() => { setPhoneModalVisible(false); checkPhone() }} />
+                          <Phone phone={userPhone} onChange={(phone) => updatePhone(phone)}/>
+                        </View>
+                    </Gradient>
+                  </Modal>
+                </EditingOption>
               </View>
               <HorizontalLine />
               <View style={styles.optionContainer}>
-              <EditingOption optionTitle="Почта" currentOption={userEmail}/>
+              <EditingOption optionTitle="Почта" currentOption={userEmail} onPress={() => setEmailModalVisible(true)}>
+              <Modal
+                animationType='slide'
+                visible={emailModalVisible}
+                onRequestClose={() => { setEmailModalVisible(false); checkEmail(); }}>
+                <Gradient>
+                    <View style={styles.modal}>
+                      <ButtonBack onBackPress={() => {setEmailModalVisible(false); checkEmail(); }} />
+                      <Email email={userEmail} onChange={(email) => updateEmail(email)}/>
+                    </View>
+                </Gradient>
+              </Modal>
+              </EditingOption>
               </View>
             </View>
             <View style={styles.containerList}>
               <View style={styles.optionContainer}>
-                <SettingChoiceOption optionTitle="Тема" currentOption={userTheme}/>
+                <SettingChoiceOption optionTitle="Тема" currentOption={userTheme}>
+                  <ThemesList currentOption={userTheme} onChange={updateUserTheme}/>
+                </SettingChoiceOption>
               </View>
               <HorizontalLine />
               <View style={styles.optionContainer}>
@@ -157,5 +219,10 @@ const styles = StyleSheet.create({
   },
   listsContainer: {
     alignItems: 'center'
-  }
+  },
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

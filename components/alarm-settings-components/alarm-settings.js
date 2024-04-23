@@ -14,6 +14,7 @@ import IntervalOption from './settings/interval-option'
 import ListOfPuzzles from './settings/list-of-puzzles.js/list-of-puzzles';
 import PuzzleOption from './settings/puzzle-option';
 import SmartAlarmOption from './settings/smart-alarm-option'
+import SongsList from './settings/songs-list/songs-list'
 
 
 
@@ -52,7 +53,9 @@ export default function AlarmSettings(props) {
   return (
     <ScrollView contentContainerStyle={alarmSettingsStyles.scrollContainer} style={alarmSettingsStyles.container}>
       <View style={alarmSettingsStyles.optionContainer}>
-        <SettingChoiceOption optionTitle="Звук" currentOption={currentAlarm.sound} onChange={(value) => changeOption('sound', value)}/>
+        <SettingChoiceOption optionTitle="Звук" currentOption={currentAlarm.sound}>
+          <SongsList currentOption={currentAlarm.sound} onChange={(value) => changeOption('sound', value)}/>
+        </SettingChoiceOption>
         <Slider
           style={{ width: 320, transform: [{ scaleY: 2, }], marginTop: 10 }}
           minimumTrackTintColor='rgba(217, 51, 113, 1)'

@@ -9,7 +9,7 @@ import Gradient from '../../Gradient';
 import ButtonBack from '../../button-back';
 import SongsList from './songs-list/songs-list';
 
-export default function SettingChoiceOption({optionTitle, currentOption, onChange}) {
+export default function SettingChoiceOption({children, optionTitle, currentOption}) {
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -28,7 +28,7 @@ export default function SettingChoiceOption({optionTitle, currentOption, onChang
                 <Gradient>
                     <View style={styles.modal}>
                         <ButtonBack onBackPress={() => setModalVisible(false)} />
-                        <SongsList onChange={onChange} currentOption={currentOption}/>
+                        {children}
                     </View>
                 </Gradient>
             </Modal>

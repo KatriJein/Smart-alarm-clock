@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     userName: "Пользователь",
     userAvatarUri: "",
-    phone: "",
-    email: "",
+    phone: "+7 (934) 254-01-24",
+    email: "Sonic.x.exe@yandex.ru",
     themeName: "Кварц",
     notificationsEnabled: false
 }

@@ -2,15 +2,16 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function EditingOption({optionTitle, currentOption}) {
+export default function EditingOption({children, optionTitle, currentOption, onPress}) {
 
   return (
     <View style={styles.container}>
       <Text style={styles.optionName}>{optionTitle}:</Text>
-      <TouchableOpacity style={styles.choiceView}>
+      <TouchableOpacity style={styles.choiceView} onPress={() => onPress()}>
         <Text style={styles.optionChoice}>{currentOption}</Text>
         <Ionicons name="pencil" style={styles.pencil} size={26} color="black" />
       </TouchableOpacity>
+      {children}
     </View>
   )
 }

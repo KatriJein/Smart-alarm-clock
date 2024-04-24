@@ -43,23 +43,23 @@ function humanizeListOfDays(arr) {
 const OPTIONS_LIST = [{
     id: 'quality',
     title: 'Качество сна',
-    options: ['крепкий', 'прерывистый', 'плохой']
-}, {
-    id: 'mood',
-    title: 'Настроение при пробуждении',
-    options: ['бодрое', 'вялое', 'тревожное']
+    options: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+    several: false
 }, {
     id: 'activity',
-    title: 'Занятие перед сном',
-    options: ['работа/ учеба', 'просмотр видео', 'чтение', 'медитация', 'теплая ванна']
+    title: 'Физическая активность',
+    options: ['прогулка', 'активная работа', 'зал', 'плавание', 'йога', 'велосипед', 'пробежка', 'танцы', 'другая активность', 'активности не было'],
+    several: true
 }, {
-    id: 'dayMood',
-    title: 'Настроение во время дня',
-    options: ['стресс', 'радость', 'усталость']
+    id: 'businessDuringDay',
+    title: 'Занятия в течение дня',
+    options: ['просмотр фильма/сериала', 'путешествие', 'чтение', 'встреча с близкими', 'работа', 'спорт', 'учеба', 'рисование', 'другое хобби'],
+    several: true
 }, {
-    id: 'factors',
-    title: 'Факторы влияющие на сон',
-    options: ['алкоголь', 'поздний прием пищи', 'кофе', 'таблетка снотворного', 'болезнь']
+    id: 'drinks',
+    title: 'Напитки в течение дня',
+    options: ['зелёный чай', 'чёрный чай', 'кофе', 'сок', 'энергетик', 'крепкий алкоголь', 'некрепкий алкоголь', 'вода', 'молочные напитки'],
+    several: true
 }];
 
 const PUZZLES = ['Математический пример', 'Пароль', 'Карточки', 'Текст', 'Нет'];
@@ -113,6 +113,9 @@ function calcAverage(arr) {
             }
             return x + Number(y);
         }, 0);
+        if (sum === 0) {
+            return 0;
+        }
         return (sum / count).toFixed(2);
     } else {
         return 0;
@@ -142,6 +145,16 @@ function parseTimeToDate(time) {
     return date;
 }
 
+function getThreeMaxFactors(object) {
+    const sorted = Object.entries(object).sort((a,b) => b[1] - a[1])
+    return sorted.slice(0, 3).map(item => item[0]);
+}
+
+function getThreeMinFactors(object) {
+    const sorted = Object.entries(object).sort((a,b) => a[1] - b[1])
+    return sorted.slice(0, 3).map(item => item[0]);
+}
+
 function calculateBestWakeUpTimes(startTime, endTime) {
     const start = dayjs(startTime, 'HH:mm');
     const end = dayjs(endTime, 'HH:mm');
@@ -160,7 +173,7 @@ function calculateBestWakeUpTimes(startTime, endTime) {
     return [firstWakeUpTime, secondWakeUpTime];
 }
 
-export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, calculateBestWakeUpTimes, parseTimeToDate,
+export { STATUSBAR_HEIGHT, NAME_OF_MONTHS, OPTIONS_LIST, SETTINGS, calculateBestWakeUpTimes, parseTimeToDate, getThreeMaxFactors, getThreeMinFactors,
  calcAverage, getAverageTime, convertTimeToMin, humanizeListOfDays, createId, printHours, NAME_OF_DAY_OF_WEEK, PUZZLES, CORRELATE_PAGES,
 CARDS_TEMPLATES, INPUT_WORDS, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH, SELECTABLE_FROM_PASSWORD_PUZZLES, CORRELATE_PUZZLE_AMOUNT_OPTION, DEFAULT_AMOUNTS,
 SOUND_NAMES, CORRELATE_SOUND_NAMES };

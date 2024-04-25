@@ -13,6 +13,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+import settingsReducer from './settingsReducer.js';
 
 const persistConfig = {
   key: 'root',
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   calendar: calendarReducer,
   alarms: alarmReducer,
   statistics: statisticsReducer,
+  settings: settingsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

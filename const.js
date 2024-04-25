@@ -94,6 +94,8 @@ const MAX_PASSWORD_LENGTH = 20;
 const SOUND_NAMES = ["Дождь", "Ручей", "Лягушки", "Птички"]
 const CORRELATE_SOUND_NAMES = {[SOUND_NAMES[0]]: "rain.mp3", [SOUND_NAMES[1]]: "river.mp3", [SOUND_NAMES[2]]: "frogs.mp3", [SOUND_NAMES[3]]: "birds.mp3"}
 
+export const THEMES = ["Кварц", "Ночная"]
+
 function printHours(hour) {
     if (hour === 1) {
         return `${hour} час`;

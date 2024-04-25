@@ -105,6 +105,7 @@ function printHours(hour) {
 };
 
 function calcAverage(arr) {
+    // console.log(arr);
     let count = 0;
     if (arr.length > 0) {
         const sum = arr.reduce(function(x, y) {

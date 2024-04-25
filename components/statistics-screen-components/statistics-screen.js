@@ -81,16 +81,16 @@ export default function StatisticsScreen() {
 
   const [currentPeriod, setCurrentPeriod] = useState(0);
 
-  const [sleepChartValues, setSleepChartValues] = useState({...defaultStateChart});
-  const [sleepQualityChartValues, setSleepQualityChartValues] = useState({...defaultStateChart});
-  const [statistics, setStatistics] = useState({...defaultStatistics});
+  const [sleepChartValues, setSleepChartValues] = useState({ ...defaultStateChart });
+  const [sleepQualityChartValues, setSleepQualityChartValues] = useState({ ...defaultStateChart });
+  const [statistics, setStatistics] = useState({ ...defaultStatistics });
 
 
   const days = useSelector(state => state.calendar.dailyStats);
   // const statistics = useSelector(state => state.statistics);
 
   useEffect(() => {
-    let tempSleepChartValues = {...defaultStateChart};
+    let tempSleepChartValues = { ...defaultStateChart };
     let tempStatistics = {
       0: {
         timeToSleep: 0,
@@ -129,7 +129,7 @@ export default function StatisticsScreen() {
         badFactors: {}
       }
     };
-    let tempQualityChartValues = {...defaultStateChart};
+    let tempQualityChartValues = { ...defaultStateChart };
     const today = new Date();
 
     function addAverageTime(option, value, index) {
@@ -141,11 +141,13 @@ export default function StatisticsScreen() {
 
     function addOptionArray(option, value, index) {
       if (!!value) {
-        if (typeof (value) === Array) {
-          tempStatistics[index][option].push(...value);
-        } else {
-          tempStatistics[index][option].push(value);
-        }
+        tempStatistics[index][option].push(value);
+      }
+    };
+
+    function addOptionNumber(option, value, index) {
+      if (!!value) {
+        tempStatistics[index][option] += value;
       }
     };
 
@@ -197,9 +199,9 @@ export default function StatisticsScreen() {
 
           addAverageTime('timeToSleep', day.timeToSleep, index);
           addAverageTime('timeToWake', day.timeToWake, index);
-          addOptionArray('timeTookToSleep', day.timeTookToSleep, index);
-          addOptionArray('timeTookToWake', day.timeTookToWake, index);
-          addOptionArray('delayedAlarms', day.delayedAlarms, index);
+          addOptionArray('timeTookToSleep', +day.timeTookToSleep, index);
+          addOptionArray('timeTookToWake', +day.timeTookToWake, index);
+          addOptionNumber('delayedAlarms', +day.delayedAlarms, index);
 
         } else {
           dataSleep.push(0);
@@ -251,8 +253,8 @@ export default function StatisticsScreen() {
               if (+day.hours > tempStatistics[2].bestSleep) {
                 tempStatistics[2].bestSleep = +day.hours;
               }
-            } 
-  
+            }
+
             if (!!day.quality) {
               sumQuality += Number(day.quality);
               if (['7', '8', '9', '10'].includes(day.quality)) {
@@ -268,12 +270,12 @@ export default function StatisticsScreen() {
                 // addOptionArray('badFactors', day.drinks, 2);
               }
             }
-  
+
             addAverageTime('timeToSleep', day.timeToSleep, 2);
             addAverageTime('timeToWake', day.timeToWake, 2);
-            addOptionArray('timeTookToSleep', day.timeTookToSleep, 2);
-            addOptionArray('timeTookToWake', day.timeTookToWake, 2);
-            addOptionArray('delayedAlarms', day.delayedAlarms, 2);
+            addOptionArray('timeTookToSleep', +day.timeTookToSleep, 2);
+            addOptionArray('timeTookToWake', +day.timeTookToWake, 2);
+            addOptionNumber('delayedAlarms', +day.delayedAlarms, 2);
           }
         }
 
@@ -387,13 +389,13 @@ export default function StatisticsScreen() {
             <StatOption optionTitle={'Лучшие показатели сна'} optionDescription={printHours(statistics[currentPeriod].bestSleep)} />
             <StatOption optionTitle={'Сколько будильников было отложено'} optionDescription={statistics[currentPeriod].delayedAlarms} />
             <StatOption optionTitle={'Среднее время, необходимое для того, чтобы уснуть'} optionDescription={`${calcAverage(statistics[currentPeriod].timeTookToSleep)} мин`} />
-            <StatOption optionTitle={'Среднее время, необходимое для того, чтобы проснуться'} optionDescription={`${calcAverage(statistics[currentPeriod].timeTookToWake)} мин`} />
+            <StatOption optionTitle={'Среднее время, необходимое для того, чтобы проснуться'} optionDescription={` ${calcAverage(statistics[currentPeriod].timeTookToWake)} мин`} />
             <View style={statisticsScreenStyles.sleepQualityChart}>
               <LineChart data={sleepQualityChartData} height={200} width={screenWidth} chartConfig={sleepQualityChartConfig} />
             </View>
             <StatOption optionTitle={'Среднее качество сна'} optionDescription={calcAverage(sleepQualityChartValues[currentPeriod])} />
-            <StatOption optionTitle={'Факторы, способствующие хорошему сну'} optionDescription={getThreeMaxFactors(statistics[currentPeriod].goodFactors).map((item) => (<Text>{'\n'}{item}</Text>))} />
-            <StatOption optionTitle={'Факторы, способствующие плохому сну'} optionDescription={getThreeMinFactors(statistics[currentPeriod].badFactors).map((item) => (<Text>{'\n'}{item}</Text>))} />
+            <StatOption optionTitle={'Факторы, способствующие хорошему сну'} optionDescription={getThreeMaxFactors(statistics[currentPeriod].goodFactors).map((item) => (<Text key={item}>{'\n'}{item}</Text>))} />
+            <StatOption optionTitle={'Факторы, способствующие плохому сну'} optionDescription={getThreeMinFactors(statistics[currentPeriod].badFactors).map((item) => (<Text key={item}>{'\n'}{item}</Text>))} />
           </View>
         </ScrollView>
       </View>

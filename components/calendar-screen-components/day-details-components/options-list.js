@@ -6,8 +6,9 @@ export default function OptionsList(props) {
     const { data, selectedOption, onSelect } = props;
 
     function listItem({ text }) {
+        const checked = data.several ? selectedOption.includes(text) : text === selectedOption;
         return (<TouchableOpacity onPress={() => onSelect(text)} key={text} >
-            <View style={[styles.listItem, text === selectedOption ? styles.listItemChecked : null]}>
+            <View style={[styles.listItem, checked ? styles.listItemChecked : null]}>
                 <Text style={[styles.description, styles.text]}>{text}</Text>
             </View>
         </TouchableOpacity>);

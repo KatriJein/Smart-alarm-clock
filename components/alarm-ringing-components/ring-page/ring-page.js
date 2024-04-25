@@ -12,6 +12,7 @@ import { addAlarm } from '../../../store/alarmReducer'
 import { interruptSound } from '../../AlarmSound';
 import stop from '../../../assets/svg/stop2.png';
 import zzz from '../../../assets/svg/zzz2.png';
+import { addDelayedAlarm, addOption } from '../../../store/calendarReducer'
 
 export default function RingPage({navigation, route}) {
     const params = route.params;
@@ -26,6 +27,10 @@ export default function RingPage({navigation, route}) {
         if (puzzlePage === "" || params) {
           setPageText("Останавливаю...");
           let date = buildDate();
+          if (correspondingAlarm.smartAlarm) {
+            dispatch(addOption({date: buildDate(), option: 'timeToSleep', value: correspondingAlarm.timeToSleep}));
+            dispatch(addOption({date: buildDate(), option: 'timeToWake', value: correspondingAlarm.time}));
+          }
           await stopAlarm();
           if (stats[date] === undefined) {
             await remindOfTracker(date);
@@ -44,6 +49,7 @@ export default function RingPage({navigation, route}) {
       let newTime = buildNewAlarmTime(correspondingAlarm.time, Number(correspondingAlarm.interval));
       const newAlarm = {...correspondingAlarm, time: newTime};
       dispatch(addAlarm(newAlarm));
+      dispatch(addDelayedAlarm({date: buildDate(), time: Number(correspondingAlarm.interval)}))
       await stopAlarm();
     }
 

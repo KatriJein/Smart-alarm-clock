@@ -11,10 +11,14 @@ import { addAverageHours } from '../../../store/statisticsReducer';
 const defaultState = {
     hours: null,
     quality: null,
-    mood: null,
-    activity: null,
-    dayMood: null,
-    factors: null
+    activity: [],
+    businessDuringDay: [],
+    drinks: [],
+    timeToSleep: null,
+    timeToWake: null,
+    delayedAlarms: 0,
+    timeTookToSleep: null,
+    timeTookToWake: null,
 };
 
 export default function DayDetails({ route }) {
@@ -25,24 +29,55 @@ export default function DayDetails({ route }) {
 
     const dispatch = useDispatch();
 
-    function handleOptionSelect(sectionId, option) {
+    function handleSingleOptionSelect(sectionId, option) {
         setSelectedOptions(prev => ({
             ...prev,
             [sectionId]: option
         }));
     };
 
+    function handleSeveralOptionSelect(sectionId, option) {
+        let options = [...selectedOptions[sectionId]];
+        if (sectionId === 'activity' && option === 'активности не было' && !options.includes(option)) {
+            setSelectedOptions(prev => ({
+                ...prev,
+                [sectionId]: ['активности не было']
+            }));
+            return;
+        }
+        if (sectionId === 'activity' && options.includes('активности не было')) {
+            if (option === 'активности не было') {
+                setSelectedOptions(prev => ({
+                    ...prev,
+                    [sectionId]: []
+                }));
+            }
+            return;
+        }
+        if (options.includes(option)) {
+            options = options.filter((item) => (item !== option))
+        } else {
+            options.push(option);
+        }
+        setSelectedOptions(prev => ({
+            ...prev,
+            [sectionId]: options
+        }));
+    };
+
     function handleBackButton() {
         if (selectedOptions != defaultState) {
-            dispatch(addDate({date: date.dateString, options: {...selectedOptions}}));
+            dispatch(addDate({ date: date.dateString, options: { ...selectedOptions } }));
         }
     };
+
+    console.log(selectedOptions);
 
     return (
         <Gradient key={date.dateString}>
             <View style={styles.container}>
                 <DayDetailsHeader onClick={handleBackButton} change={selectedOptions != defaultState} date={date} />
-                <DayDetailsOptions selectedOptions={selectedOptions} handleOptionSelect={handleOptionSelect} />
+                <DayDetailsOptions selectedOptions={selectedOptions} handleSingleOptionSelect={handleSingleOptionSelect} handleSeveralOptionSelect={handleSeveralOptionSelect} />
             </View>
         </Gradient>
 

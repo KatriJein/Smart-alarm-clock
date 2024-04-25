@@ -2,15 +2,16 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { vw } from 'react-native-expo-viewport-units';
 
 export default function OptionsInput(props) {
-    const { selectedOption, onSelect } = props;
+    const { selectedOption, onSelect, optionTitle, optionPlaceholder } = props;
     return (
         <View style={styles.container}>
-            <Text style={[styles.text, styles.title]}>Часов сна</Text>
+            <Text style={[styles.text, styles.title]}>{optionTitle}:</Text>
             <TextInput
-                placeholder='8'
+                placeholder={optionPlaceholder}
                 style={[styles.text, styles.input]}
                 keyboardType='numeric' value={selectedOption}
-                onChangeText={onSelect}>
+                onChangeText={onSelect}
+                maxLength={2}>
             </TextInput>
         </View>
     );
@@ -21,8 +22,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 'auto',
         flexDirection: 'row',
-        columnGap: 30,
-        padding: 10
+        padding: 10,
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     text: {
         fontFamily: 'kyiv-type',
@@ -30,6 +32,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: Math.round(vw(6.5)),
+        width: '80%',
     },
     input: {
         borderColor: '#000',
@@ -38,7 +41,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 2,
         textAlign: 'center',
-        borderRadius: 13
+        borderRadius: 13,
+        height: 40,
+        width: 45,
+        marginRight: 2
     }
 });
 

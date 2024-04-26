@@ -1,8 +1,14 @@
 import { Audio, InterruptionModeAndroid } from "expo-av";
-import rain from "../assets/sounds/rain.mp3"
-import birds from "../assets/sounds/birds.mp3"
-import frogs from "../assets/sounds/frogs.mp3"
-import river from "../assets/sounds/river.mp3"
+import classic from "../assets/sounds/classic-alarm.mp3"
+import birds from "../assets/sounds/chirping.mp3"
+import cute from "../assets/sounds/cute.mp3"
+import krid from "../assets/sounds/egor-krid.mp3"
+import electric from "../assets/sounds/electronic-signal.mp3"
+import school from "../assets/sounds/for-school.mp3"
+import loud from "../assets/sounds/loud.mp3"
+import minions from "../assets/sounds/minions.mp3"
+import pain from "../assets/sounds/pain.mp3"
+import siren from "../assets/sounds/siren.mp3"
 import { Vibration } from "react-native";
 import { postponeSound } from "./common-functions/CommonFunctions";
 import * as Notifications from "expo-notifications"
@@ -38,16 +44,28 @@ export const continueSound = async () => {
 
 const chooseSong = (fileName) => {
     switch (fileName) {
-        case "rain.mp3":
-            return rain;
-        case "birds.mp3":
+        case "classic-alarm.mp3":
+            return classic;
+        case "chirping.mp3":
             return birds;
-        case "river.mp3":
-            return river;
-        case "frogs.mp3":
-            return frogs;
+        case "cute.mp3":
+            return cute;
+        case "egor-krid.mp3":
+            return krid;
+        case "electronic-signal.mp3":
+            return electric;
+        case "for-school.mp3":
+            return school;
+        case "loud.mp3":
+            return loud;
+        case "minions.mp3":
+            return minions;
+        case "pain.mp3":
+            return pain;
+        case "siren.mp3":
+            return siren;
         default:
-            return rain;
+            return classic;
     }
 
 }

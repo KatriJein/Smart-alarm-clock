@@ -24,7 +24,7 @@ export default function AlarmPage({ route }) {
     id: createId(),
     name: 'Будильник',
     time: dayjs().format('HH:mm'),
-    sound: 'Дождь',
+    sound: 'Классический',
     volume: 50,
     interval: 5,
     puzzle: 'Нет',

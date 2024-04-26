@@ -91,8 +91,12 @@ const INPUT_WORDS = ['Кукуруза', 'Карамель', 'Экспериме
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_PASSWORD_LENGTH = 20;
 
-const SOUND_NAMES = ["Дождь", "Ручей", "Лягушки", "Птички"]
-const CORRELATE_SOUND_NAMES = {[SOUND_NAMES[0]]: "rain.mp3", [SOUND_NAMES[1]]: "river.mp3", [SOUND_NAMES[2]]: "frogs.mp3", [SOUND_NAMES[3]]: "birds.mp3"}
+const SOUND_NAMES = ["Классический", "Электронный", "Милый", "Птички", "Сирена", "Рок", "Очень громкий", "Ты буди-буди-буди",
+ "Миньоны", "Школьный",]
+const CORRELATE_SOUND_NAMES = {[SOUND_NAMES[0]]: "classic-alarm.mp3", [SOUND_NAMES[1]]: "electronic-signal.mp3", [SOUND_NAMES[2]]: "cute.mp3",
+                                [SOUND_NAMES[3]]: "chirping.mp3", [SOUND_NAMES[4]]: "siren.mp3", [SOUND_NAMES[5]]: "pain.mp3",
+                                [SOUND_NAMES[6]]: "loud.mp3", [SOUND_NAMES[7]]: "egor-krid.mp3", [SOUND_NAMES[8]]: "minions.mp3",
+                                [SOUND_NAMES[9]]: "for-school.mp3"}
 
 export const THEMES = ["Кварц", "Ночная"]
 

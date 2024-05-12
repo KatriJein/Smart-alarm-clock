@@ -1,7 +1,6 @@
 
 import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native'
 import React from 'react'
-import { inputOptionStyles } from '../styles/input-option-styles';
 import { useState } from 'react';
 import ButtonBack from '../../button-back';
 import { vw } from 'react-native-expo-viewport-units';
@@ -51,16 +50,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         columnGap: 10
     },
-    textInputModal: {
-        width: vw(15),
-        borderColor: 'pink',
-        borderWidth: 2,
-        fontFamily: 'montserrat-alt-medium',
-        fontSize: 22,
-        padding: 8,
-        textAlign: 'center',
-        borderRadius: 10
-    },
     container: {
         width: 'auto',
         height: 'auto',
@@ -69,7 +58,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     text: {
-        fontFamily: 'kyiv-type',
+        fontFamily: 'lato-regular',
         color: '#000'
     },
     title: {

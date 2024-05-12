@@ -72,7 +72,6 @@ export const alarmsSlice = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
 export const { addAlarm, updateNotificationId, switchAlarm, deleteAlarm } = alarmsSlice.actions
 
 export default alarmsSlice.reducer

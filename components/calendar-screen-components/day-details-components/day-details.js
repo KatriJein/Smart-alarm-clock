@@ -6,7 +6,6 @@ import Gradient from '../../Gradient';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { addDate } from '../../../store/calendarReducer';
-import { addAverageHours } from '../../../store/statisticsReducer';
 
 const defaultState = {
     hours: null,

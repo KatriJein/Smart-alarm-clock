@@ -11,7 +11,7 @@ export const choiceStyles = StyleSheet.create({
         borderRadius: 13
     },
     text: {
-        fontFamily: 'kyiv-type',
+        fontFamily: 'lato-regular',
         fontSize: 18,
         color: '#000'
     }, 

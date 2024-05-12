@@ -35,16 +35,5 @@ const styles = StyleSheet.create({
     container: {
         height: '80%',
     },
-    text: {
-        fontFamily: 'montserrat-alt-medium',
-        color: '#000'
-    },
-    text1: {
-        fontSize: Math.round(vw(8))
-    },
-    text2: {
-        fontSize: Math.round(vw(6.5)),
-        marginTop: '0.5%'
-    }
 });
 

@@ -53,7 +53,16 @@ export const ringPageStyles = StyleSheet.create({
     },
     button: {
         width: vw(22),
-        height: vw(22)
+        height: vw(22),
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    sleep: {
+        backgroundColor: '#494D76',
+    },
+    stop: {
+        backgroundColor: '#EDB0C9',
     },
     buttons: {
         width: '100%',

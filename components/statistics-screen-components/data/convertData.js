@@ -1,18 +1,23 @@
 import dayjs from "dayjs";
+var utc = require('dayjs/plugin/utc')
+dayjs.extend(utc);
+
+const localeObject = {
+    name: 'es',
+    weekStart: 1,
+    yearStart: 4,
+}
+
+dayjs.locale('ru-my-settings', localeObject);
 
 function getMonday(date) {
-    // console.log(dayjs(date).startOf('week').day(2).toDate());
-    // const day = date.getDay();
-    // const diff = date.getDate() - day + (day == 0 ? -6 : 1);
-    // return new Date(date.setDate(diff + 1));
-    return dayjs(date).startOf('week').day(2).toDate();
+    const date2 = dayjs(date).startOf('week');
+    return dayjs(date2).utc(true).toDate();
 }
 
 function getSunday(date) {
-    // const day = date.getDay();
-    // const diff = day !== 0 ? 7 - day : 0;
-    // return new Date(date.setDate(date.getDate() + diff));
-    return dayjs(date).endOf('week').day(7).add(2, 'seconds').toDate();
+    const date2 = dayjs(date).endOf('week');
+    return dayjs(date2).utc(true).toDate();
 }
 
 function createArrayDates(start, end) {

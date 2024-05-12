@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import { printHours } from '../../const';
+import { vh } from 'react-native-expo-viewport-units';
 
 export default function CalendarScreen({ route }) {
 
@@ -47,14 +48,13 @@ export default function CalendarScreen({ route }) {
 const stylesHeader = StyleSheet.create({
   header: {
     width: '100%',
-    height: '30%',
     alignItems: 'center',
+    paddingVertical: 20
   },
   title: {
     fontFamily: 'montserrat-alt-medium',
     fontSize: 38,
     justifyContent: 'center',
-    marginTop: '12%'
   },
   sleep: {
     flexDirection: 'row',
@@ -78,12 +78,10 @@ const stylesHeader = StyleSheet.create({
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
     marginTop: STATUSBAR_HEIGHT
   },
   calendar: {
     width: '100%',
-    height: '70%',
   }
 });

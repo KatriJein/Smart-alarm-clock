@@ -1,9 +1,9 @@
 
-import { View, Text, StyleSheet, Button, Pressable, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { styles as alarmsBarStyles } from './styles/alarms-bar-styles'
-import plusAdd from "../../assets/alarmAdd.png"
-import { useNavigation } from '@react-navigation/native'
+import { View, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { styles as alarmsBarStyles } from './styles/alarms-bar-styles';
+import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function AlarmsBar() {
 
@@ -12,12 +12,8 @@ export default function AlarmsBar() {
   return (
     <View style={alarmsBarStyles.alarmsBar}>
       <TouchableOpacity style={alarmsBarStyles.pressable} onPress={() => navigation.navigate("Alarm details", {alarm: null})}>
-        <Image source={plusAdd}></Image>
+        <Ionicons name="add" size={40} color="black" />
       </TouchableOpacity>
     </View>
   )
 }
-
-//<Pressable style={alarmsBarStyles.pressable}>
-  //<Text style={alarmsBarStyles.toMainText}>{`<`} На главную</Text>
-//</Pressable>

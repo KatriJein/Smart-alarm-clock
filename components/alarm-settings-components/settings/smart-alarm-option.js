@@ -1,7 +1,6 @@
 
-import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native'
-import React, { useEffect } from 'react'
-import { inputOptionStyles } from '../styles/input-option-styles';
+import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native'
+import React from 'react'
 import { useState } from 'react';
 import ButtonBack from '../../button-back';
 import { vw } from 'react-native-expo-viewport-units';
@@ -12,8 +11,6 @@ import SwitchButton from '../../common-components/switch-button';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import dayjs from 'dayjs';
 import { parseTimeToDate } from '../../../const';
-import initialSign from "../../../assets/littleDisabledOption.png";
-import enabledSign from "../../../assets/littleEnabledOption.png";
 import { calculateBestWakeUpTimes } from '../../../const';
 
 export default function SmartAlarmOption({ optionTitle, value, onChange }) {
@@ -57,7 +54,6 @@ export default function SmartAlarmOption({ optionTitle, value, onChange }) {
         <View style={settingOptionStyles.container}>
             <Text style={settingOptionStyles.optionName}>{optionTitle}:</Text>
             <TouchableOpacity style={styles.choiceView} onPress={() => setModalVisible(true)}>
-                {/* <Text style={[settingOptionStyles.optionChoice]}></Text> */}
                 <Ionicons style={settingOptionStyles.arrow} name="chevron-forward-outline" size={25} color="black" />
             </TouchableOpacity>
             <Modal
@@ -71,7 +67,7 @@ export default function SmartAlarmOption({ optionTitle, value, onChange }) {
                         <View style={styles.container}>
                             <View style={styles.option}>
                                 <Text style={[styles.text, styles.title, { top: -2 }]}>Функция умный будильник:</Text>
-                                <SwitchButton style={styles.switch} initialSign={initialSign} enabledSign={enabledSign} width={65} height={32} circleSize={24}
+                                <SwitchButton style={styles.switch} initialSign={<Ionicons name="close-outline" size={22} color="black" />} enabledSign={<Ionicons name="checkmark-outline" size={22} color="black" />} width={65} height={32} circleSize={24}
                                     initialColor='rgba(180, 180, 180, 1)' enabledColor='rgba(237, 156, 190, 1)' onPress={(value) => setSwitch(value)} isEnabled={switchh} />
                             </View>
                             {switchh && <View style={{ rowGap: 10 }}><View style={styles.option}>
@@ -106,8 +102,6 @@ export default function SmartAlarmOption({ optionTitle, value, onChange }) {
                                     is24Hour={true}
                                     display='spinner'
                                     onChange={onChangeF} />}</View>}
-
-
                         </View>
                     </View>
                 </Gradient>

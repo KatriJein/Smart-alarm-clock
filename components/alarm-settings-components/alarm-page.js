@@ -1,6 +1,6 @@
 
 import { View, Text, StyleSheet, ScrollView, BackHandler } from 'react-native';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { commonStyles } from '../../common-styles';
 import AlarmTitle from './alarm-title';
 import TimeSelect from './time-select';
@@ -9,13 +9,11 @@ import ButtonBack from '../button-back';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { addAlarm, updateNotificationId } from '../../store/alarmReducer';
-import { addWakeUpTime, addFallAsleepTime } from '../../store/statisticsReducer';
 import Gradient from '../Gradient';
 import dayjs from 'dayjs';
 import { createId } from '../../const';
 import * as Notifications from "expo-notifications"
 import { CalculateSecondsToRing, isLateForToday } from '../common-functions/CommonFunctions';
-import { updateSound } from '../AlarmSound';
 import { scheduleAlarm } from '../common-functions/CommonFunctions';
 import { CORRELATE_SOUND_NAMES } from '../../const';
 
@@ -86,29 +84,8 @@ export default function AlarmPage({ route }) {
       const res = await scheduleAlarm(currentAlarm.name, currentAlarm.description, seconds, CORRELATE_SOUND_NAMES[currentAlarm.sound], currentAlarm.useVibration, currentAlarm.volume);
       dispatch(updateNotificationId({alarmId: currentAlarm.id, notificationId: res}));
     }
-    if (currentAlarm.smartAlarm) {
-      dispatch(addWakeUpTime(currentAlarm.timeToWakeUp));
-      dispatch(addFallAsleepTime(currentAlarm.timeToSleep));
-    }
     navigation.navigate('AlarmsList');
   }
-
-
-
-  // const route = useRoute();
-  // const { alarmTime } = route.params;
-  // const [alarmName, setAlarmName] = useState("Название");
-  // const [time, setTime] = useState('15:30');
-  // const [soundOption, setSoundOption] = useState("");
-  // const [volume, setVolume] = useState(50);
-  // const [intervalOption, setIntervalOption] = useState("");
-  // const [daysOption, setDaysOption] = useState("");
-  // const [puzzleOption, setPuzzleOption] = useState("");
-  // const [alarmDescription, setAlarmDescription] = useState("");
-  // const [useVibration, setUseVibration] = useState(false);
-  // const [useNeighbourNotWakeUpOption, setUseNeighbourNotWakeUpOption] = useState(false);
-
-  // const SettingsContext = optionsContext;
 
   return (
     <Gradient>

@@ -98,7 +98,7 @@ const CORRELATE_SOUND_NAMES = {[SOUND_NAMES[0]]: "classic-alarm.mp3", [SOUND_NAM
                                 [SOUND_NAMES[6]]: "loud.mp3", [SOUND_NAMES[7]]: "egor-krid.mp3", [SOUND_NAMES[8]]: "minions.mp3",
                                 [SOUND_NAMES[9]]: "for-school.mp3"}
 
-export const THEMES = ["Кварц", "Ночная"]
+export const THEMES = ["Кварц"]
 
 function printHours(hour) {
     if (hour === 1) {

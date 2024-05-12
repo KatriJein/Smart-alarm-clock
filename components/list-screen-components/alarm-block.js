@@ -28,7 +28,7 @@ export default function AlarmBlock(props) {
     const opacity = useSharedValue(1);
 
     const { width: SCREEN_WIDTH } = Dimensions.get('window');
-    const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.35;
+    const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.15;
 
     async function deleteAlarmHandler() {
         await Notifications.cancelScheduledNotificationAsync(alarm.notificationId);

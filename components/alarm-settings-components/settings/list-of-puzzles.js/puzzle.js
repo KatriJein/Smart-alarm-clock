@@ -1,6 +1,6 @@
 
 import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { DEFAULT_AMOUNTS, NAME_OF_DAY_OF_WEEK } from '../../../../const';
 import { vw } from 'react-native-expo-viewport-units';
 import { CORRELATE_PUZZLE_AMOUNT_OPTION } from '../../../../const';
@@ -19,6 +19,7 @@ export default function Puzzle(props) {
     const [hasChosenAmount, setHasChosenAmount] = useState(false);
     const [hasInputPassword, setHasInputPassword] = useState(false);
     const [passwordInputModalVisible, setPasswordInputModalVisible] = useState(false);
+    const password = useRef("");
 
     const onPuzzleOptionPress = () => {
         const choices = CORRELATE_PUZZLE_AMOUNT_OPTION[value];
@@ -66,12 +67,12 @@ export default function Puzzle(props) {
         <Modal
         animationType='slide'
         visible={passwordInputModalVisible}
-        onRequestClose={() => { setPasswordInputModalVisible(false); onPasswordChange("defaultPass1") }}>
+        onRequestClose={() => { setPasswordInputModalVisible(false); onPasswordChange(hasInputPassword ? password.current : "defaultPass1") }}>
             <Gradient>
                 <View style={styles.modal}>
                     {hasInputPassword ? <ButtonBack onBackPress={() => setPasswordInputModalVisible(false)} /> : <></>}
                     <View style={styles.passwordView}>
-                        <Password onChange={(value) => onPasswordChange(value)} setIsGoodPassword={setHasInputPassword}/>
+                        <Password onChange={(value) => {onPasswordChange(value); password.current = value}} setIsGoodPassword={setHasInputPassword}/>
                     </View>
                 </View>
             </Gradient>

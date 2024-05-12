@@ -39,9 +39,9 @@ export default function App() {
     let isVibration = notification.request.content.data.isVibration;
     let volume = notification.request.content.data.volume / 100;
     await updateSound(fileName, isVibration, [3000, 4000, 3000, 4000], volume);
-    setIsRinging(true);
     updateNotification(notification.request.identifier);
     await startSound();
+    setIsRinging(true);
   }
 
   const [appIsReady, setAppIsReady] = useState(false);

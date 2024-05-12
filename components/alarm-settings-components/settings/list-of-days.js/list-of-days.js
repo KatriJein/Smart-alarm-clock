@@ -1,13 +1,12 @@
 
-import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native'
-import React, { useEffect } from 'react'
-import { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
 import { NAME_OF_DAY_OF_WEEK } from '../../../../const';
 import Day from './day';
 import { vw } from 'react-native-expo-viewport-units';
 
 export default function ListOfDays(props) {
-    const {selectedDays, onPress} = props;
+    const { selectedDays, onPress } = props;
     return (
         <View style={styles.container}>
             <Text style={[styles.text, styles.title]}>Повтор</Text>
@@ -21,11 +20,11 @@ const styles = StyleSheet.create({
         width: '95%',
         height: 'auto',
         borderRadius: 13,
-        justifyContent: 'center', 
+        justifyContent: 'center',
         alignItems: 'center'
     },
     text: {
-        fontFamily: 'kyiv-type',
+        fontFamily: 'lato-regular',
         color: '#000'
     },
     title: {

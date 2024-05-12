@@ -12,7 +12,7 @@ const NAME_OF_MONTHS = {
     2: 'февраля',
     3: 'марта',
     4: 'апреля',
-    5: 'майя',
+    5: 'мая',
     6: 'июня',
     7: 'июля',
     8: 'августа',
@@ -111,7 +111,6 @@ function printHours(hour) {
 };
 
 function calcAverage(arr) {
-    // console.log(arr);
     let count = 0;
     if (arr.length > 0) {
         const sum = arr.reduce(function(x, y) {
@@ -136,7 +135,7 @@ function convertTimeToMin(time) {
 
 function getAverageTime(totalMinutes, numEntries) {
     if (numEntries === 0) {
-        return 'не указано';
+        return 'xx:xx';
     }
     const averageMinutes = totalMinutes / numEntries;
     const averageHours = Math.floor(averageMinutes / 60);

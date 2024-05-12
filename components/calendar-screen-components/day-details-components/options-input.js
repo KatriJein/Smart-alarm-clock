@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     text: {
-        fontFamily: 'kyiv-type',
+        fontFamily: 'lato-regular',
         color: '#000'
     },
     title: {
@@ -37,9 +37,9 @@ const styles = StyleSheet.create({
     input: {
         borderColor: '#000',
         borderWidth: 1,
-        fontSize: Math.round(vw(5)),
-        paddingHorizontal: 8,
-        paddingVertical: 2,
+        fontSize: Math.round(vw(5.5)),
+        paddingHorizontal: 9,
+        paddingVertical: 3,
         textAlign: 'center',
         borderRadius: 13,
         height: 40,

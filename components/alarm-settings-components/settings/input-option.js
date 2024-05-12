@@ -31,7 +31,8 @@ export default function InputOption({ optionTitle, value, onChange }) {
                 placeholder='Описание будильника'
                 style={[styles.text, styles.input]}
                 value={value}
-                onChangeText={onChange}>
+                onChangeText={onChange}
+                maxLength={30}>
               </TextInput>
             </View>
           </View>
@@ -49,16 +50,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     columnGap: 10
   },
-  textInputModal: {
-    width: vw(15),
-    borderColor: 'pink',
-    borderWidth: 2,
-    fontFamily: 'montserrat-alt-medium',
-    fontSize: 22,
-    padding: 8,
-    textAlign: 'center',
-    borderRadius: 10
-  },
   container: {
     width: '90%',
     height: 'auto',
@@ -68,7 +59,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   text: {
-    fontFamily: 'kyiv-type',
+    fontFamily: 'lato-regular',
     color: '#000'
   },
   title: {

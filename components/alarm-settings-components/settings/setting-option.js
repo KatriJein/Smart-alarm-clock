@@ -1,15 +1,12 @@
 
-import { View, Text, Image, Pressable, TouchableOpacity, Modal, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { settingOptionStyles } from '../styles/setting-option-styles';
-import nextArrow from "../../../assets/nextArrow.png";
 import { Ionicons } from '@expo/vector-icons';
-import { CORRELATE_SOUND_NAMES } from '../../../const';
 import Gradient from '../../Gradient';
 import ButtonBack from '../../button-back';
-import SongsList from './songs-list/songs-list';
 
-export default function SettingChoiceOption({children, optionTitle, currentOption}) {
+export default function SettingChoiceOption({ children, optionTitle, currentOption }) {
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -21,17 +18,17 @@ export default function SettingChoiceOption({children, optionTitle, currentOptio
         <Ionicons style={settingOptionStyles.arrow} name="chevron-forward-outline" size={25} color="black" />
       </TouchableOpacity>
       <Modal
-                animationType='slide'
-                visible={modalVisible}
-                onRequestClose={() => { setModalVisible(false) }}
-            >
-                <Gradient>
-                    <View style={styles.modal}>
-                        <ButtonBack onBackPress={() => setModalVisible(false)} />
-                        {children}
-                    </View>
-                </Gradient>
-            </Modal>
+        animationType='slide'
+        visible={modalVisible}
+        onRequestClose={() => { setModalVisible(false) }}
+      >
+        <Gradient>
+          <View style={styles.modal}>
+            <ButtonBack onBackPress={() => setModalVisible(false)} />
+            {children}
+          </View>
+        </Gradient>
+      </Modal>
     </View>
   )
 }

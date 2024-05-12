@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         width: '95%'
     },
     amountTitle: {
-        fontFamily: 'kyiv-type',
+        fontFamily: 'lato-regular',
         marginBottom: 10,
         fontSize: 28
     }

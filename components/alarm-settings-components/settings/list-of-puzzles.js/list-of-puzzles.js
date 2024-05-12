@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     text: {
-        fontFamily: 'kyiv-type',
+        fontFamily: 'lato-regular',
         color: '#000'
     },
     title: {

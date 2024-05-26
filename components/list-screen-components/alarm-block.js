@@ -4,7 +4,6 @@ import React from 'react';
 import SwitchButton from '../common-components/switch-button';
 import { styles as alarmBlockStyles } from './styles/alarm-block-styles';
 import { useNavigation } from '@react-navigation/native';
-import * as Notifications from "expo-notifications"
 import { CalculateSecondsToRing, scheduleAlarm } from '../common-functions/CommonFunctions';
 import { humanizeListOfDays } from '../../const';
 import { switchAlarm, updateNotificationId, deleteAlarm } from '../../store/alarmReducer';
@@ -14,6 +13,7 @@ import { runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, w
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
+import notifee from "@notifee/react-native"
 
 let LIST_ITEM_HEIGHT = 122;
 
@@ -31,7 +31,7 @@ export default function AlarmBlock(props) {
     const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.15;
 
     async function deleteAlarmHandler() {
-        await Notifications.cancelScheduledNotificationAsync(alarm.notificationId);
+        await notifee.cancelTriggerNotification(alarm.notificationId);
         dispatch(deleteAlarm({ id: alarm.id }));
     }
 
@@ -79,13 +79,13 @@ export default function AlarmBlock(props) {
     const switchAlarmMode = async (hasBeenEnabled) => {
         dispatch(switchAlarm({ alarmId: alarm.id, hasBeenEnabled: hasBeenEnabled }));
         if (hasBeenEnabled) {
-            await Notifications.cancelScheduledNotificationAsync(alarm.notificationId);
+            await notifee.cancelTriggerNotification(alarm.notificationId);
             let seconds = CalculateSecondsToRing(alarm.time, alarm.days);
             const res = await scheduleAlarm(alarm.name, alarm.description, seconds, CORRELATE_SOUND_NAMES[alarm.sound], alarm.useVibration, alarm.volume);
             dispatch(updateNotificationId({alarmId: alarm.id, notificationId: res}));
             }
         else {
-            await Notifications.cancelScheduledNotificationAsync(alarm.notificationId);
+            await notifee.cancelTriggerNotification(alarm.notificationId);
             dispatch(updateNotificationId({ alarmId: alarm.id, notificationId: "" }))
         }
     }

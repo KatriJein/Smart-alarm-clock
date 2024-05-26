@@ -12,10 +12,10 @@ import { addAlarm, updateNotificationId } from '../../store/alarmReducer';
 import Gradient from '../Gradient';
 import dayjs from 'dayjs';
 import { createId } from '../../const';
-import * as Notifications from "expo-notifications"
 import { CalculateSecondsToRing, isLateForToday } from '../common-functions/CommonFunctions';
 import { scheduleAlarm } from '../common-functions/CommonFunctions';
 import { CORRELATE_SOUND_NAMES } from '../../const';
+import notifee from "@notifee/react-native"
 
 export default function AlarmPage({ route }) {
   const defaultState = {
@@ -77,7 +77,7 @@ export default function AlarmPage({ route }) {
     }
     dispatch(addAlarm(currentAlarm));
     if (!currentAlarm.notificationId !== "") {
-      Notifications.cancelScheduledNotificationAsync(currentAlarm.notificationId);
+      await notifee.cancelTriggerNotification(currentAlarm.notificationId);
     }
     if (currentAlarm.isEnabled) {
       let seconds = CalculateSecondsToRing(currentAlarm.time, currentAlarm.days);

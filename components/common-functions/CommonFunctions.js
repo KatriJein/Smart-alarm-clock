@@ -1,6 +1,7 @@
 import * as Notifications from "expo-notifications"
 import { ActionContinueSound, ActionNone, ActionRing, ActionStop } from "../Constants";
 import dayjs from "dayjs";
+import notifee, { TriggerType } from "@notifee/react-native"
 
 const calculateDaysDelta = (isLateForToday, currentDay, alarmDays) => {
     for (let day of alarmDays) {
@@ -31,64 +32,76 @@ export const CalculateSecondsToRing = (time, alarmDays) => {
 }
 
 export const scheduleAlarm = async (title, description, seconds, songName, isVibration, volume, vibrationPattern=[3000,4000,3000,4000]) => {
-    const res = await Notifications.scheduleNotificationAsync({
-        content: {
-            autoDismiss: false,
-            sticky: true,
-            title,
-            body: description,
-            data: {
-                action: ActionRing,
-                songName,
-                isVibration,
-                vibrationPattern,
-                volume
+    const res = await notifee.createTriggerNotification({
+        android: {
+            channelId: "alarmsETC",
+            ongoing: true,
+            autoCancel: false,
+            lightUpScreen: true,
+            pressAction: {
+                id: "default"
             }
         },
-        trigger: {
-            seconds: 2
+        title,
+        body: description,
+        data: {
+            action: ActionRing,
+            songName,
+            isVibration: isVibration ? 1 : 0,
+            volume
         }
-    })
+    }, {
+        type: TriggerType.TIMESTAMP,
+        timestamp: new Date(Date.now() + seconds * 1000).getTime()
+    });
     return res;
 }
 
 export const stopAlarm = async () => {
-    await Notifications.scheduleNotificationAsync({
-        content: {
-            title: "Будильник остановлен!",
-            data: {
-                action: ActionStop
-            }
+    await notifee.createTriggerNotification({
+        android: {
+            channelId: "alarmsETC",
         },
-        trigger: null
-    })
+        title: "Будильник остановлен",
+        data: {
+            action: ActionStop
+        },
+    }, {
+        type: TriggerType.TIMESTAMP,
+        timestamp: new Date(Date.now() + 200).getTime()
+    });
 }
 
 export const remindOfTracker = async (date) => {
-    await Notifications.scheduleNotificationAsync({
-        content: {
-            title: `${date}: Укажите данные о сне!`,
-            data: {
-                action: ActionNone
+    await notifee.createTriggerNotification({
+        android: {
+            channelId: "alarmsETC",
+            pressAction: {
+                id: 'default'
             }
         },
-        trigger: {
-            seconds: 5
-        }
-    })
+        title: `${date}: Укажите данные о сне!`,
+        data: {
+            action: ActionNone
+        },
+    }, {
+        type: TriggerType.TIMESTAMP,
+        timestamp: new Date(Date.now() + 5000).getTime()
+    });
 }
 
 export const postponeSound = async () => {
-    const res = await Notifications.scheduleNotificationAsync({
-        content: {
-            title: "Прошло 10 секунд, я продолжаю петь :)",
-            data: {
-                action: ActionContinueSound
-            }
+    const res = await notifee.createTriggerNotification({
+        android: {
+            channelId: "alarmsETC"
         },
-        trigger: {
-            seconds: 10
+        title: "Прошло 10 секунд, я продолжаю петь :)",
+        data: {
+            action: ActionContinueSound
         }
+    }, {
+        type: TriggerType.TIMESTAMP,
+        timestamp: new Date(Date.now() + 10000).getTime()
     });
     return res;
 }

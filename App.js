@@ -11,7 +11,6 @@ import * as Font from 'expo-font';
 import CalendarStack from './components/calendar-screen-components/calendar-navigations';
 import { store } from './store/store.js';
 import { Provider } from 'react-redux';
-import * as Notifications from "expo-notifications";
 import { Audio, InterruptionModeAndroid } from 'expo-av';
 import { startSound, cancelSound, continueSound, updateSound } from './components/AlarmSound';
 import { updateNotification, getNotificationId } from './components/CurrentNotification';
@@ -20,14 +19,15 @@ import { RingStack } from './components/alarm-ringing-components/navigations/Rin
 import AlarmsStack from './components/list-screen-components/alarms-navigation.js';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor } from './store/store.js';
+import notifee, { AndroidImportance, AndroidVisibility, AuthorizationStatus, EventType } from "@notifee/react-native"
 
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
+notifee.createChannel({
+  name: "alarmsEtc",
+  id: "alarmsETC",
+  bypassDnd: true,
+  importance: AndroidImportance.HIGH,
+  visibility: AndroidVisibility.PUBLIC
 });
 
 SplashScreen.preventAutoHideAsync();
@@ -35,13 +35,20 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const startAlarm = async (notification) => {
-    let fileName = notification.request.content.data.songName;
-    let isVibration = notification.request.content.data.isVibration;
-    let volume = notification.request.content.data.volume / 100;
-    await updateSound(fileName, isVibration, [3000, 4000, 3000, 4000], volume);
-    updateNotification(notification.request.identifier);
+    let fileName = notification.data.songName;
+    let isVibration = notification.data.isVibration === 1 ? true : false;
+    let volume = notification.data.volume / 100;
+    await updateSound(fileName, isVibration,  [3000, 4000, 3000, 4000], volume);
+    updateNotification(notification.id);
     await startSound();
     setIsRinging(true);
+  }
+
+  const checkNotificationsPermission = async () => {
+    const settings = await notifee.getNotificationSettings();
+    if (settings.authorizationStatus != AuthorizationStatus.AUTHORIZED) {
+      await notifee.openNotificationSettings("alarmsETC");
+    }
   }
 
   const [appIsReady, setAppIsReady] = useState(false);
@@ -71,41 +78,42 @@ export default function App() {
     }
 
     prepare();
-    const foregroundSubscription = Notifications.addNotificationReceivedListener(async notification => {
-      let action = notification.request.content.data.action;
-      if (action === ActionRing && getNotificationId() === "") {
-        await startAlarm(notification);
-      }
-      if (action === ActionStop) {
-        await Notifications.dismissNotificationAsync(getNotificationId());
-        updateNotification("");
-        setIsRinging(false);
-        await cancelSound();
-      }
-      if (action === ActionContinueSound) {
-        await continueSound();
-      }
-
-    });
-    const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(async response => {
-      let action = response.notification.request.content.data.action;
-      if (action === ActionRing && getNotificationId() === "") {
-        await startAlarm(response.notification);
-      }
-      if (action === ActionContinueSound) {
-        await continueSound();
+    notifee.onForegroundEvent(async ({type, detail}) => {
+      if (type === EventType.DELIVERED) {
+        let notification = detail.notification;
+        let action = notification.data.action;
+        if (action === ActionRing && getNotificationId() === "") {
+          await startAlarm(notification);
+        }
+        if (action === ActionStop) {
+          await notifee.cancelDisplayedNotification(getNotificationId());
+          updateNotification("");
+          setIsRinging(false);
+          await cancelSound();
+        }
+        if (action === ActionContinueSound) {
+          await continueSound();
+        }
       }
     });
-
-    return () => {
-      foregroundSubscription.remove();
-      backgroundSubscription.remove();
-    }
+    notifee.onBackgroundEvent(async ({type, detail}) => {
+      if (type == EventType.DELIVERED) {
+        let notification = detail.notification;
+        let action =notification.data.action;
+        if (action === ActionRing && getNotificationId() === "") {
+          await startAlarm(notification);
+        }
+        if (action === ActionContinueSound) {
+          await continueSound();
+        }
+      }
+    });
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
       await SplashScreen.hideAsync();
+      await checkNotificationsPermission();
     }
   }, [appIsReady]);
 

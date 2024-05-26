@@ -11,7 +11,7 @@ import pain from "../assets/sounds/pain.mp3"
 import siren from "../assets/sounds/siren.mp3"
 import { Vibration } from "react-native";
 import { postponeSound } from "./common-functions/CommonFunctions";
-import * as Notifications from "expo-notifications"
+import notifee from "@notifee/react-native"
 
 const sound = new Audio.Sound();
 let songMelody = null;
@@ -21,7 +21,7 @@ let soundVolume = 50;
 let continueSoundNotificationId = "";
 
 export const cancelSound = async () => {
-    await Notifications.cancelScheduledNotificationAsync(continueSoundNotificationId);
+    await notifee.cancelTriggerNotification(continueSoundNotificationId);
     if (sound._loaded) {
         await sound.stopAsync();
         await sound.unloadAsync();

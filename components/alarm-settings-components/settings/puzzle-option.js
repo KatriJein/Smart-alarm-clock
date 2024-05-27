@@ -1,41 +1,12 @@
 
-import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native'
-import { inputOptionStyles } from '../styles/input-option-styles';
+import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import ButtonBack from '../../button-back';
-import { Image, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { settingOptionStyles } from '../styles/setting-option-styles';
-import nextArrow from "../../../assets/nextArrow.png"
-import { humanizeListOfDays } from '../../../const';
-import ListOfDays from './list-of-days.js/list-of-days';
-import { useEffect } from 'react';
-import { NAME_OF_DAY_OF_WEEK } from '../../../const';
 import { Ionicons } from '@expo/vector-icons';
 import ListOfPuzzles from './list-of-puzzles.js/list-of-puzzles';
 import { PUZZLES } from '../../../const';
 import Gradient from '../../Gradient';
-
-function initDays(selectedDays) {
-    const days = {};
-    Object.keys(NAME_OF_DAY_OF_WEEK).forEach(item => {
-        if (selectedDays.includes(+item)) {
-            days[item] = true;
-        } else {
-            days[item] = false;
-        }
-    })
-    return days;
-};
-
-function convertToArray(object) {
-    const arr = [];
-    Object.entries(object).forEach(([key, value]) => {
-        if (value) {
-            arr.push(+key);
-        }
-    })
-    return arr;
-};
 
 export default function PuzzleOption(props) {
     const { optionTitle, current, onPuzzleChange, onAmountChange, onPasswordChange } = props;
@@ -70,13 +41,5 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    textInputModal: {
-        borderColor: 'black',
-        borderWidth: 2,
-        width: '80%',
-        fontFamily: 'montserrat-alt-medium',
-        fontSize: 20,
-        padding: 10
     },
 });

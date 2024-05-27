@@ -28,7 +28,7 @@ export default function SwitchButton(props) {
     <Pressable onPress={() => updateSwitchButton()}>
         <View style={[switchButtonStyles.alarmSwitchButton, {backgroundColor, justifyContent: circlePos, width: width, height: height}]}>
             <View style={[switchButtonStyles.circle, {width: circleSize, height: circleSize}]}>
-                <Image source={circleText}/>
+                {circleText}
             </View>
         </View>
     </Pressable>

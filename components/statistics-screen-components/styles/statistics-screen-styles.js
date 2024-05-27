@@ -5,13 +5,11 @@ import { vw } from "react-native-expo-viewport-units";
 
 export const statisticsScreenStyles = StyleSheet.create({
     scrollContainer: {
-        width: vw(100),
+        width: vw(98),
         padding: 10,
+        backgroundColor: '#f7e3e7',
+        borderRadius: 15
     },
-    // scrollContainerContent: {
-    //     // alignItems: "center",
-
-    // },
     title: {
         fontSize: 38,
         fontFamily: 'montserrat-alt-medium',
@@ -21,17 +19,23 @@ export const statisticsScreenStyles = StyleSheet.create({
         fontFamily: 'montserrat-alt-medium',
     },
     periodSelect: {
-        alignSelf: "flex-start",
+        alignSelf: "center",
+        marginBottom: 10,
+        marginTop: -10
     },
     sleepChart: {
         alignSelf: "center",
-        marginVertical: vw(5),
-        left: -8
+        marginVertical: vw(2),
+        backgroundColor: 'white',
+        borderRadius: 15,
+        width: vw(95)
     },
     sleepQualityChart: {
         alignSelf: "center",
-        marginVertical: vw(5),
-        left: -15
+        marginVertical: vw(2),
+        backgroundColor: 'white',
+        borderRadius: 15,
+        width: vw(95)
     },
     containerText: {
         flexDirection: 'row', 

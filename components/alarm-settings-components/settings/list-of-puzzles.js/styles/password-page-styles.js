@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const passwordPageStyles = StyleSheet.create({
     title: {
-        fontFamily: 'kyiv-type',
+        fontFamily: 'lato-regular',
         fontSize: 26,
     },
     passwordInput: {
@@ -10,7 +10,7 @@ export const passwordPageStyles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 10,
         fontSize: 18,
-        fontFamily: 'kyiv-type',
+        fontFamily: 'lato-regular',
         textAlign: 'center',
         marginTop: 20
     },

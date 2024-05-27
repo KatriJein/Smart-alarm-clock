@@ -2,26 +2,18 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, Vibration, View } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import AlarmsListScreen from './components/list-screen-components/list-screen';
 import SettingsScreen from './components/settings-screen-components/settings-screen';
 import StatisticsScreen from './components/statistics-screen-components/statistics-screen';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StatusBarStyle } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AlarmPage from './components/alarm-settings-components/alarm-page';
 import { useCallback, useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import CalendarStack from './components/calendar-screen-components/calendar-navigations';
-import { store } from './store/store.js'
-import { Provider } from 'react-redux'
-import DayDetails from './components/calendar-screen-components/day-details-components/day-details';
-import * as Notifications from "expo-notifications"
-import * as TaskManager from "expo-task-manager"
+import { store } from './store/store.js';
+import { Provider } from 'react-redux';
+import * as Notifications from "expo-notifications";
 import { Audio, InterruptionModeAndroid } from 'expo-av';
 import { startSound, cancelSound, continueSound, updateSound } from './components/AlarmSound';
-import RingPage from './components/alarm-ringing-components/ring-page/ring-page';
-import CardsPuzzle from './components/alarm-ringing-components/puzzle-cards/cards-puzzle';
 import { updateNotification, getNotificationId } from './components/CurrentNotification';
 import { ActionContinueSound, ActionRing, ActionStop } from './components/Constants';
 import { RingStack } from './components/alarm-ringing-components/navigations/RingStack';
@@ -40,27 +32,16 @@ Notifications.setNotificationHandler({
 
 SplashScreen.preventAutoHideAsync();
 const Tab = createBottomTabNavigator();
-// const AlarmsNavigationStack = createNativeStackNavigator();
-
-// const AlarmsStack = () => {
-//   return(
-//   <AlarmsNavigationStack.Navigator>
-//     <AlarmsNavigationStack.Screen name='AlarmList' component={AlarmsListScreen} options={{headerShown: false}}/>
-//     <AlarmsNavigationStack.Screen name='AlarmSettings' component={AlarmPage} options={{headerShown: false}}/>
-//   </AlarmsNavigationStack.Navigator>
-//   )
-// }
 
 export default function App() {
-
   const startAlarm = async (notification) => {
     let fileName = notification.request.content.data.songName;
     let isVibration = notification.request.content.data.isVibration;
     let volume = notification.request.content.data.volume / 100;
     await updateSound(fileName, isVibration, [3000, 4000, 3000, 4000], volume);
-    setIsRinging(true);
     updateNotification(notification.request.identifier);
     await startSound();
+    setIsRinging(true);
   }
 
   const [appIsReady, setAppIsReady] = useState(false);
@@ -75,6 +56,7 @@ export default function App() {
           'inter-regular': require('./assets/fonts/Inter-Regular.ttf'),
           'kyiv-type': require('./assets/fonts/KyivTypeSans-Regular.ttf'),
           'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
+          'roboto-medium': require('./assets/fonts/Roboto-Medium.ttf'),
         });
         await Audio.setAudioModeAsync({
           staysActiveInBackground: true,

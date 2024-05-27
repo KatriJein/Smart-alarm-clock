@@ -185,9 +185,9 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    marginTop: 85,
+    marginTop: 20,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   text: {
     fontFamily: 'montserrat-alt-medium',

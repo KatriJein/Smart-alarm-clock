@@ -7,7 +7,7 @@ const initialState = {
       id: 'test',
       name: 'Утрений',
       time: '15:30',
-      sound: 'Дождь',
+      sound: 'Классический',
       volume: 15,
       interval: 5,
       puzzle: 'Нет',
@@ -27,7 +27,7 @@ const initialState = {
       id: 'test2',
       name: 'Утрений',
       time: '15:30',
-      sound: 'Дождь',
+      sound: 'Классический',
       volume: 15,
       interval: 5,
       puzzle: 'Нет',
@@ -72,7 +72,6 @@ export const alarmsSlice = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
 export const { addAlarm, updateNotificationId, switchAlarm, deleteAlarm } = alarmsSlice.actions
 
 export default alarmsSlice.reducer

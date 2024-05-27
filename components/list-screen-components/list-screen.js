@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { commonStyles } from '../../common-styles';
 import AlarmsBar from './alarms-bar';
 import AlarmBlock from './alarm-block';
@@ -7,24 +7,31 @@ import { useSelector } from 'react-redux';
 import Gradient from '../Gradient';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
-
-
-export default function AlarmsListScreen({ navigation }) {
+export default function AlarmsListScreen() {
   const alarmsList = useSelector(state => state.alarms.alarms);
+
+  const renderItem = ({ item }) => (
+    <GestureHandlerRootView style={styles.background}>
+      <AlarmBlock key={item.id} alarm={item} simultaneousHandlers={scrollRef}/>
+    </GestureHandlerRootView>
+  );
+
   const scrollRef = useRef(null);
   return (
     <Gradient>
-      <GestureHandlerRootView style={{ flex: 1 }}>
         <View style={commonStyles.container}>
           <AlarmsBar />
           <Text style={listScreenStyles.pageTitle}>Будильники</Text>
-          <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false} style={listScreenStyles.scrollView}>
-            {Object.values(alarmsList).map(item => (<AlarmBlock key={item.id} alarm={item} simultaneousHandlers={scrollRef} description={"На "} alarmTime={"6:30"} alarmDays={"Ср, Чт"} />))}
-          </ScrollView>
+          <FlatList
+            data={Object.values(alarmsList)}
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            style={listScreenStyles.scrollView}
+          />
         </View>
-      </GestureHandlerRootView>
     </Gradient>
   );
 }

@@ -3,9 +3,8 @@ import { LocaleConfig } from 'react-native-calendars';
 import { CalendarList } from 'react-native-calendars';
 import { vw } from 'react-native-expo-viewport-units';
 import { useNavigation } from '@react-navigation/native';
-import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { buildDate } from '../common-functions/CommonFunctions';
 
 
@@ -27,10 +26,11 @@ LocaleConfig.locales['ru'] = {
     monthNamesShort: ['Янв.', 'Фев.', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авг.', 'Сент.', 'Окт.', 'Ноя.', 'Дек.'],
     dayNames: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
     dayNamesShort: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-    today: "Сегодня"
+    today: "Сегодня",
 };
 
 LocaleConfig.defaultLocale = 'ru';
+
 function getMarkedDays(days) {
     const marked = {};
     Object.keys(days).forEach(item => {
@@ -64,7 +64,7 @@ export default function Calendar(props) {
         navigation.navigate("Day details", { date });
     }
 
-    function dayView({ date, state, marking }) {
+    const dayView = useCallback(({ date, state, marking }) => {
         const isFutureDay = date.dateString > today.current;
         return <TouchableOpacity disabled={isFutureDay} onPress={() => onPressDay(date)} activeOpacity={0.6}>
             <View style={[stylesDay.container, isFutureDay ? {opacity: 0.5} : {}]}>
@@ -72,7 +72,7 @@ export default function Calendar(props) {
                 <View style={marking ? stylesDay.marked : ''} />
             </View>
         </TouchableOpacity>
-    }
+    })
 
     return (
         <CalendarList
@@ -110,13 +110,10 @@ export default function Calendar(props) {
                 }
             }}
             firstDay={1}
-            // scrollEnabled={true}
-            // showScrollIndicator={true}
             monthFormat={'MMMM, yyyy'}
         />
     );
 }
-
 
 
 const stylesDay = StyleSheet.create({
@@ -139,7 +136,7 @@ const stylesDay = StyleSheet.create({
         justifyContent: 'center'
     },
     text: {
-        fontFamily: 'inter-regular',
+        fontFamily: 'lato-regular',
         fontSize: Math.round(vw(5.5)),
     },
 });

@@ -1,17 +1,17 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, Text, View, Dimensions } from 'react-native';
 import { commonStyles } from '../../common-styles';
 import { statisticsScreenStyles } from './styles/statistics-screen-styles';
 import { useEffect, useRef, useState } from 'react';
 import RoundSelector from '../common-components/round-selector';
-import { dataObject, fillDataObject, updateLabels, updateSleepChartData, updateSleepQualityChartData, updateTextData } from './data/statistics-data-helper';
+import { dataObject, fillDataObject, updateLabels } from './data/statistics-data-helper';
 import { LineChart } from 'react-native-chart-kit';
-import { Dimensions } from 'react-native';
 import Gradient from '../Gradient';
 import { useSelector } from 'react-redux';
-import { calcAverage, getAverageTime, convertTimeToMin, printHours, getThreeMaxFactors, getThreeMinFactors } from '../../const';
-import { createDataForMonthChart, createDataForYearChart, createDataForWeekChart } from './data/convertData';
+import { calcAverage, getAverageTime, convertTimeToMin, getThreeMaxFactors, getThreeMinFactors } from '../../const';
 import StatOption from './stat-option';
-import { getMonday, getSunday, createArrayDates, createArrayData } from './data/convertData'
+import { getMonday, getSunday, createArrayDates } from './data/convertData';
+import StatList from './stat-list';
+import { vw } from 'react-native-expo-viewport-units';
 
 const defaultStateChart = {
   0: Array(7).fill(0),
@@ -72,12 +72,9 @@ const defaultStatistics = {
 };
 
 export default function StatisticsScreen() {
-
   const periods = useRef(['За неделю', 'За месяц', 'За год']);
-  const [textData, setTextData] = useState(dataObject);
+  // const [textData, setTextData] = useState(dataObject);
   const [chartLabels, setChartLabels] = useState([]);
-  // const [sleepChartValues, setSleepChartValues] = useState([1]);
-  // const [sleepQualityChartValues, setSleepQualityChartValues] = useState([1]);
 
   const [currentPeriod, setCurrentPeriod] = useState(0);
 
@@ -85,9 +82,7 @@ export default function StatisticsScreen() {
   const [sleepQualityChartValues, setSleepQualityChartValues] = useState({ ...defaultStateChart });
   const [statistics, setStatistics] = useState({ ...defaultStatistics });
 
-
   const days = useSelector(state => state.calendar.dailyStats);
-  // const statistics = useSelector(state => state.statistics);
 
   useEffect(() => {
     let tempSleepChartValues = { ...defaultStateChart };
@@ -183,15 +178,9 @@ export default function StatisticsScreen() {
             dataSleepQuality.push(+day.quality);
             if (['7', '8', '9', '10'].includes(day.quality)) {
               addFactors('goodFactors', [...day.activity, ...day.businessDuringDay, ...day.drinks], index, Number(day.quality));
-              // addOptionArray('goodFactors', day.activity, index);
-              // addOptionArray('goodFactors', day.businessDuringDay, index);
-              // addOptionArray('goodFactors', day.drinks, index);
             }
             if (['1', '2', '3', '4'].includes(day.quality)) {
               addFactors('badFactors', [...day.activity, ...day.businessDuringDay, ...day.drinks], index, Number(day.quality));
-              // addOptionArray('badFactors', day.activity, index);
-              // addOptionArray('badFactors', day.businessDuringDay, index);
-              // addOptionArray('badFactors', day.drinks, index);
             }
           } else {
             dataSleepQuality.push(0);
@@ -259,15 +248,9 @@ export default function StatisticsScreen() {
               sumQuality += Number(day.quality);
               if (['7', '8', '9', '10'].includes(day.quality)) {
                 addFactors('goodFactors', [...day.activity, ...day.businessDuringDay, ...day.drinks], 2, Number(day.quality));
-                // addOptionArray('goodFactors', day.activity, 2);
-                // addOptionArray('goodFactors', day.businessDuringDay, 2);
-                // addOptionArray('goodFactors', day.drinks, 2);
               }
               if (['1', '2', '3', '4'].includes(day.quality)) {
                 addFactors('badFactors', [...day.activity, ...day.businessDuringDay, ...day.drinks], 2, Number(day.quality));
-                // addOptionArray('badFactors', day.activity, 2);
-                // addOptionArray('badFactors', day.businessDuringDay, 2);
-                // addOptionArray('badFactors', day.drinks, 2);
               }
             }
 
@@ -305,13 +288,16 @@ export default function StatisticsScreen() {
   const screenWidth = Dimensions.get("window").width;
 
   const sleepHoursChartConfig = {
-    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFrom: "#E7D2D2",
     backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
+    backgroundGradientTo: "#E7D2D2",
     backgroundGradientToOpacity: 0,
     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     strokeWidth: 4, // optional, default 3
     barPercentage: 1,
+    fillShadowGradientFrom: '#facbd3',
+    fillShadowGradientTo: '#facbd3',
+    fillShadowGradientOpacity: 0.7,
     useShadowColorFromDataset: false, // optional
   };
 
@@ -323,6 +309,9 @@ export default function StatisticsScreen() {
     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     strokeWidth: 4, // optional, default 3
     barPercentage: 1,
+    fillShadowGradientFrom: '#facbd3',
+    fillShadowGradientTo: '#facbd3',
+    fillShadowGradientOpacity: 0.7,
     useShadowColorFromDataset: false, // optional
     propsForLabels: {
     }
@@ -333,7 +322,7 @@ export default function StatisticsScreen() {
     datasets: [
       {
         data: sleepChartValues[currentPeriod],
-        color: (opacity = 1) => `rgba(213, 88, 141, ${opacity})`, // optional
+        color: (opacity = 1) => `rgba(250, 203, 211, ${opacity})`, // optional
         strokeWidth: 2 // optional
       }
     ],
@@ -345,11 +334,11 @@ export default function StatisticsScreen() {
     datasets: [
       {
         data: sleepQualityChartValues[currentPeriod],
-        color: (opacity = 1) => `rgba(213, 88, 141, ${opacity})`, // optional
+        color: (opacity = 1) => `rgba(250, 203, 211, ${opacity})`, // optional
         strokeWidth: 2 // optional
       }
     ],
-    legend: ["Качество сна (10-бальная шкала)"] // optional
+    legend: ["Качество сна"] // optional
   };
 
   const onPeriodPress = () => {
@@ -359,10 +348,8 @@ export default function StatisticsScreen() {
   }
 
   const updateStats = (currentOptionIndex) => {
-    setTextData(fillDataObject(currentOptionIndex));
+    // setTextData(fillDataObject(currentOptionIndex));
     setChartLabels(updateLabels(currentOptionIndex));
-    // setSleepChartValues(updateSleepChartData(currentOptionIndex));
-    // setSleepQualityChartValues(updateSleepQualityChartData(currentOptionIndex));
   }
 
   useEffect(() => {
@@ -375,27 +362,27 @@ export default function StatisticsScreen() {
         <View style={statisticsScreenStyles.header}>
           <Text style={statisticsScreenStyles.title}>Статистика</Text>
         </View>
+        <View style={statisticsScreenStyles.periodSelect}>
+          <RoundSelector options={periods.current} optionIndex={currentPeriod} onOptionPress={onPeriodPress} />
+        </View>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
           <View style={statisticsScreenStyles.scrollContainer}>
-            <View style={statisticsScreenStyles.periodSelect}>
-              <RoundSelector options={periods.current} optionIndex={currentPeriod} onOptionPress={onPeriodPress} />
-            </View>
-            <View style={statisticsScreenStyles.sleepChart}>
-              <LineChart data={sleepChartData} height={200} width={screenWidth} chartConfig={sleepHoursChartConfig} />
+            <View style={[statisticsScreenStyles.sleepChart, { marginTop: 0 }]}>
+              <LineChart style={{ left: -18 }} data={sleepChartData} height={200} width={vw(97.5)} chartConfig={sleepHoursChartConfig} />
             </View>
             <StatOption optionTitle={'Среднее кол-во часов сна'} optionDescription={calcAverage(sleepChartValues[currentPeriod])} />
             <StatOption optionTitle={'Среднее время отхода ко сну'} optionDescription={getAverageTime(statistics[currentPeriod].timeToSleep, statistics[currentPeriod].counttimeToSleep)} />
             <StatOption optionTitle={'Среднее время пробуждения'} optionDescription={getAverageTime(statistics[currentPeriod].timeToWake, statistics[currentPeriod].counttimeToWake)} />
-            <StatOption optionTitle={'Лучшие показатели сна'} optionDescription={printHours(statistics[currentPeriod].bestSleep)} />
+            <StatOption optionTitle={'Лучшие показатели сна'} optionDescription={`${statistics[currentPeriod].bestSleep} ч`} />
             <StatOption optionTitle={'Сколько будильников было отложено'} optionDescription={statistics[currentPeriod].delayedAlarms} />
             <StatOption optionTitle={'Среднее время, необходимое для того, чтобы уснуть'} optionDescription={`${calcAverage(statistics[currentPeriod].timeTookToSleep)} мин`} />
-            <StatOption optionTitle={'Среднее время, необходимое для того, чтобы проснуться'} optionDescription={` ${calcAverage(statistics[currentPeriod].timeTookToWake)} мин`} />
+            <StatOption optionTitle={'Среднее время, необходимое для того, чтобы проснуться'} optionDescription={`${calcAverage(statistics[currentPeriod].timeTookToWake)} мин`} />
             <View style={statisticsScreenStyles.sleepQualityChart}>
-              <LineChart data={sleepQualityChartData} height={200} width={screenWidth} chartConfig={sleepQualityChartConfig} />
+              <LineChart style={{ left: -18 }} data={sleepQualityChartData} height={200} width={vw(97.5)} chartConfig={sleepQualityChartConfig} />
             </View>
             <StatOption optionTitle={'Среднее качество сна'} optionDescription={calcAverage(sleepQualityChartValues[currentPeriod])} />
-            <StatOption optionTitle={'Факторы, способствующие хорошему сну'} optionDescription={getThreeMaxFactors(statistics[currentPeriod].goodFactors).map((item) => (<Text key={item}>{'\n'}{item}</Text>))} />
-            <StatOption optionTitle={'Факторы, способствующие плохому сну'} optionDescription={getThreeMinFactors(statistics[currentPeriod].badFactors).map((item) => (<Text key={item}>{'\n'}{item}</Text>))} />
+            <StatList optionTitle={'Факторы, способствующие хорошему сну'} optionDescription={getThreeMaxFactors(statistics[currentPeriod].goodFactors)} color={'#34C924'}/>
+            <StatList optionTitle={'Факторы, способствующие плохому сну'} optionDescription={getThreeMinFactors(statistics[currentPeriod].badFactors)} color={'#DC143C'}/>
           </View>
         </ScrollView>
       </View>

@@ -1,7 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import calendarReducer from './calendarReducer.js';
 import alarmReducer from './alarmReducer.js';
-import statisticsReducer from './statisticsReducer.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   persistStore,
@@ -23,7 +22,6 @@ const persistConfig = {
 const reducer = combineReducers({
   calendar: calendarReducer,
   alarms: alarmReducer,
-  statistics: statisticsReducer,
   settings: settingsReducer
 });
 

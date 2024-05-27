@@ -1,16 +1,10 @@
 
-import { View, Text, StyleSheet, Pressable, Vibration, Dimensions } from 'react-native'
-import React, { useRef } from 'react';
+import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native'
+import React from 'react';
 import SwitchButton from '../common-components/switch-button';
 import { styles as alarmBlockStyles } from './styles/alarm-block-styles';
-import enabledOption from "../../assets/enabledOption.png";
-import disabledOption from "../../assets/disabledOption.png";
 import { useNavigation } from '@react-navigation/native';
-import { Audio } from "expo-av"
 import * as Notifications from "expo-notifications"
-import * as BackgroundFetch from 'expo-background-fetch';
-import * as TaskManager from 'expo-task-manager';
-import { updateSound } from '../AlarmSound';
 import { CalculateSecondsToRing, scheduleAlarm } from '../common-functions/CommonFunctions';
 import { humanizeListOfDays } from '../../const';
 import { switchAlarm, updateNotificationId, deleteAlarm } from '../../store/alarmReducer';
@@ -20,7 +14,6 @@ import { runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, w
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
-import { styleProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
 
 let LIST_ITEM_HEIGHT = 122;
 
@@ -35,7 +28,7 @@ export default function AlarmBlock(props) {
     const opacity = useSharedValue(1);
 
     const { width: SCREEN_WIDTH } = Dimensions.get('window');
-    const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.35;
+    const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.15;
 
     async function deleteAlarmHandler() {
         await Notifications.cancelScheduledNotificationAsync(alarm.notificationId);
@@ -113,7 +106,7 @@ export default function AlarmBlock(props) {
                             </View>
                             <View style={alarmBlockStyles.switchButton}>
                                 <SwitchButton onPress={switchAlarmMode} initialColor={"rgba(201, 201, 201, 1)"} enabledColor={"rgba(224, 132, 171, 1)"}
-                                    initialSign={disabledOption} enabledSign={enabledOption} width={89} height={44} circleSize={36} isEnabled={alarm.isEnabled} />
+                                    initialSign={<Ionicons name="close-outline" size={30} color="black" />} enabledSign={<Ionicons name="checkmark-outline" size={30} color="black" />} width={89} height={44} circleSize={36} isEnabled={alarm.isEnabled} />
                             </View>
                         </View>
                     </Animated.View>

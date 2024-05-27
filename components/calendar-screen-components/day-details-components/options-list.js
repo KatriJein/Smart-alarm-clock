@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         height: 'auto',
     },
     text: {
-        fontFamily: 'kyiv-type',
+        fontFamily: 'lato-regular',
         color: '#000'
     },
     title: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         paddingTop: 6
     },
     description: {
-        fontSize: Math.round(vw(4.5)),
+        fontSize: Math.round(vw(5)),
         marginTop: '0.5%'
     },
     containerList: {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         width: 'auto',
         height: 'auto',
         paddingVertical: 8,
-        paddingHorizontal: 10,
+        paddingHorizontal: 11,
         borderColor: '#fdddeb',
         backgroundColor: '#fdddeb',
         borderRadius: 13

@@ -24,7 +24,7 @@ export default function AlarmSettings(props) {
           <SongsList currentOption={currentAlarm.sound} onChange={(value) => changeOption('sound', value)}/>
         </SettingChoiceOption>
         <Slider
-          style={{ width: 320, transform: [{ scaleY: 2, }], marginTop: 10 }}
+          style={{ width: 320, transform: [{ scaleY: 1, }], marginTop: 10 }}
           minimumTrackTintColor='rgba(217, 51, 113, 1)'
           maximumTrackTintColor='rgba(217, 51, 113, 1)'
           thumbImage={sliderThumb}

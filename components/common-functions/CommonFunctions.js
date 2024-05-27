@@ -34,6 +34,7 @@ export const CalculateSecondsToRing = (time, alarmDays) => {
 export const scheduleAlarm = async (title, description, seconds, songName, isVibration, volume, vibrationPattern=[3000,4000,3000,4000]) => {
     const res = await notifee.createTriggerNotification({
         android: {
+            largeIcon: require("../../assets/icon_pink.png"),
             channelId: "alarmsETC",
             ongoing: true,
             autoCancel: false,
@@ -52,7 +53,7 @@ export const scheduleAlarm = async (title, description, seconds, songName, isVib
         }
     }, {
         type: TriggerType.TIMESTAMP,
-        timestamp: new Date(Date.now() + seconds * 1000).getTime()
+        timestamp: new Date(Date.now() + (title.includes("test") ? 2000 : seconds * 1000)).getTime()
     });
     return res;
 }
@@ -60,6 +61,7 @@ export const scheduleAlarm = async (title, description, seconds, songName, isVib
 export const stopAlarm = async () => {
     await notifee.createTriggerNotification({
         android: {
+            largeIcon: require("../../assets/icon_pink.png"),
             channelId: "alarmsETC",
         },
         title: "Будильник остановлен",
@@ -75,6 +77,7 @@ export const stopAlarm = async () => {
 export const remindOfTracker = async (date) => {
     await notifee.createTriggerNotification({
         android: {
+            largeIcon: require("../../assets/icon_pink.png"),
             channelId: "alarmsETC",
             pressAction: {
                 id: 'default'
@@ -93,6 +96,7 @@ export const remindOfTracker = async (date) => {
 export const postponeSound = async () => {
     const res = await notifee.createTriggerNotification({
         android: {
+            largeIcon: require("../../assets/icon_pink.png"),
             channelId: "alarmsETC"
         },
         title: "Прошло 10 секунд, я продолжаю петь :)",
